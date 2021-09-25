@@ -8,6 +8,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Library.Library.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace LibraryManagement
 {
@@ -23,6 +25,11 @@ namespace LibraryManagement
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<LibraryDbContext>(options =>
+            {
+                options.UseSqlServer(Configuration.GetConnectionString("ConnectLibrary"));
+            });
+
             services.AddRazorPages();
         }
 

@@ -10,7 +10,7 @@ namespace Library.Library.Entities
     {
         public string Id { get; set; } = ""; //max 8
         public string Name { get; set; } = "";
-        public string Abbreviation { get; set; } = "";
+        public string Abbreviation { get; set; } = ""; //Viết tắt
         public string Description { get; set; } = "";
     }
 }
