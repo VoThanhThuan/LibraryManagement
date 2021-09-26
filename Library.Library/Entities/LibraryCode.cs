@@ -12,5 +12,8 @@ namespace Library.Library.Entities
         public string Name { get; set; } = "";
         public string Abbreviation { get; set; } = ""; //Viết tắt
         public string Description { get; set; } = "";
+
+        //Khóa ngoại
+        public virtual Book Book { get; set; }
     }
 }

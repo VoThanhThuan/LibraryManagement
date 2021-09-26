@@ -25,6 +25,8 @@ namespace Library.Library.Entities
         //Khóa ngoại
         public string IdLibraryCode { get; set; } = "";
         public virtual LibraryCode LibraryCode { get; set; }
+        public virtual List<BookInBorrow> BookInBorrows { get; set; }
+        public virtual List<BookInGenre> BookInGenres { get; set; }
 
     }
 }

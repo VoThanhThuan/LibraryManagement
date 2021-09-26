@@ -16,6 +16,9 @@ namespace Library.Library.Data.Configurations
             builder.ToTable("Borrows");
             builder.HasKey(x => x.Id);
             builder.Property(x => x.DateBorrow).HasDefaultValueSql("GETDATE()");
+
+            builder.HasOne(x => x.LibraryCard).WithMany(x => x.Borrows)
+                .HasForeignKey(x => x.IdCard);
         }
     }
 }

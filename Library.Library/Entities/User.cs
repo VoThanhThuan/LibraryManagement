@@ -13,7 +13,7 @@ namespace Library.Library.Entities
         public DateTime? Dob { get; set; }
         public bool sex { get; set; } = true;
         public string Address { get; set; } = "";
-        //Khóa ngoại
+
 
     }
 }

@@ -36,9 +36,6 @@ namespace Library.Library.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("IdLibraryCode")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LibraryCodeId")
                         .HasColumnType("nvarchar(8)");
 
                     b.Property<string>("Name")
@@ -62,7 +59,9 @@ namespace Library.Library.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("LibraryCodeId");
+                    b.HasIndex("IdLibraryCode")
+                        .IsUnique()
+                        .HasFilter("[IdLibraryCode] IS NOT NULL");
 
                     b.ToTable("Books");
                 });
@@ -70,19 +69,13 @@ namespace Library.Library.Migrations
             modelBuilder.Entity("Library.Library.Entities.BookInBorrow", b =>
                 {
                     b.Property<string>("IdBook")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(8)");
 
                     b.Property<Guid>("IdBorrow")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("AmountBorrowed")
                         .HasColumnType("int");
-
-                    b.Property<string>("BookId")
-                        .HasColumnType("nvarchar(8)");
-
-                    b.Property<Guid?>("BorrowId")
-                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("BorrowStatus")
                         .HasColumnType("nvarchar(max)");
@@ -103,9 +96,7 @@ namespace Library.Library.Migrations
 
                     b.HasKey("IdBook", "IdBorrow");
 
-                    b.HasIndex("BookId");
-
-                    b.HasIndex("BorrowId");
+                    b.HasIndex("IdBorrow");
 
                     b.ToTable("BookInBorrow");
                 });
@@ -113,22 +104,14 @@ namespace Library.Library.Migrations
             modelBuilder.Entity("Library.Library.Entities.BookInGenre", b =>
                 {
                     b.Property<string>("IdBook")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(8)");
 
                     b.Property<int>("IdGenre")
                         .HasColumnType("int");
 
-                    b.Property<string>("BookId")
-                        .HasColumnType("nvarchar(8)");
-
-                    b.Property<int?>("GenreId")
-                        .HasColumnType("int");
-
                     b.HasKey("IdBook", "IdGenre");
 
-                    b.HasIndex("BookId");
-
-                    b.HasIndex("GenreId");
+                    b.HasIndex("IdGenre");
 
                     b.ToTable("BookInGenre");
                 });
@@ -150,20 +133,15 @@ namespace Library.Library.Migrations
                     b.Property<Guid>("IdUser")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("LibraryCardId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("Note")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("UserId")
+                    b.Property<Guid>("UserName")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("LibraryCardId");
-
-                    b.HasIndex("UserId");
+                    b.HasIndex("IdCard");
 
                     b.ToTable("Borrows");
                 });
@@ -439,8 +417,8 @@ namespace Library.Library.Migrations
             modelBuilder.Entity("Library.Library.Entities.Book", b =>
                 {
                     b.HasOne("Library.Library.Entities.LibraryCode", "LibraryCode")
-                        .WithMany()
-                        .HasForeignKey("LibraryCodeId");
+                        .WithOne("Book")
+                        .HasForeignKey("Library.Library.Entities.Book", "IdLibraryCode");
 
                     b.Navigation("LibraryCode");
                 });
@@ -448,12 +426,16 @@ namespace Library.Library.Migrations
             modelBuilder.Entity("Library.Library.Entities.BookInBorrow", b =>
                 {
                     b.HasOne("Library.Library.Entities.Book", "Book")
-                        .WithMany()
-                        .HasForeignKey("BookId");
+                        .WithMany("BookInBorrows")
+                        .HasForeignKey("IdBook")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Library.Library.Entities.Borrow", "Borrow")
-                        .WithMany()
-                        .HasForeignKey("BorrowId");
+                        .WithMany("BookInBorrows")
+                        .HasForeignKey("IdBorrow")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Book");
 
@@ -463,12 +445,16 @@ namespace Library.Library.Migrations
             modelBuilder.Entity("Library.Library.Entities.BookInGenre", b =>
                 {
                     b.HasOne("Library.Library.Entities.Book", "Book")
-                        .WithMany()
-                        .HasForeignKey("BookId");
+                        .WithMany("BookInGenres")
+                        .HasForeignKey("IdBook")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Library.Library.Entities.Genre", "Genre")
-                        .WithMany()
-                        .HasForeignKey("GenreId");
+                        .WithMany("BookInGenres")
+                        .HasForeignKey("IdGenre")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Book");
 
@@ -478,16 +464,39 @@ namespace Library.Library.Migrations
             modelBuilder.Entity("Library.Library.Entities.Borrow", b =>
                 {
                     b.HasOne("Library.Library.Entities.LibraryCard", "LibraryCard")
-                        .WithMany()
-                        .HasForeignKey("LibraryCardId");
-
-                    b.HasOne("Library.Library.Entities.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
+                        .WithMany("Borrows")
+                        .HasForeignKey("IdCard")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("LibraryCard");
+                });
 
-                    b.Navigation("User");
+            modelBuilder.Entity("Library.Library.Entities.Book", b =>
+                {
+                    b.Navigation("BookInBorrows");
+
+                    b.Navigation("BookInGenres");
+                });
+
+            modelBuilder.Entity("Library.Library.Entities.Borrow", b =>
+                {
+                    b.Navigation("BookInBorrows");
+                });
+
+            modelBuilder.Entity("Library.Library.Entities.Genre", b =>
+                {
+                    b.Navigation("BookInGenres");
+                });
+
+            modelBuilder.Entity("Library.Library.Entities.LibraryCard", b =>
+                {
+                    b.Navigation("Borrows");
+                });
+
+            modelBuilder.Entity("Library.Library.Entities.LibraryCode", b =>
+                {
+                    b.Navigation("Book");
                 });
 #pragma warning restore 612, 618
         }

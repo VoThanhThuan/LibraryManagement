@@ -12,11 +12,14 @@ namespace Library.Library.Entities
         public DateTime DateBorrow { get; set; } = DateTime.Now;
         public string Note { get; set; } = "";
 
-        //Khóa ngoại
+        //Dữ liệu bindcode không cần khóa
         public Guid IdUser { get; set; }
-        public virtual User User { get; set; }
+        public Guid UserName { get; set; }
+
+        //Khóa ngoại
 
         public Guid IdCard { get; set; }
         public virtual LibraryCard LibraryCard { get; set; }
+        public virtual List<BookInBorrow> BookInBorrows { get; set; }
     }
 }

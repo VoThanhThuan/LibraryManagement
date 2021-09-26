@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Library.Library.Data;
+using LibraryManagement.UI.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace LibraryManagement.UI
@@ -30,6 +31,8 @@ namespace LibraryManagement.UI
                 options.UseSqlServer(Configuration.GetConnectionString("ConnectLibrary"));
             });
             services.AddControllersWithViews();
+
+            //services.AddScoped<UserService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -16,6 +16,11 @@ namespace Library.Library.Data.Configurations
             builder.ToTable("BookInBorrow");
             builder.HasKey(x => new {x.IdBook, x.IdBorrow});
             builder.Property(x => x.TimeBorrowed).HasDefaultValueSql("GETDATE()");
+
+            builder.HasOne(x => x.Book).WithMany(x => x.BookInBorrows)
+                .HasForeignKey(x => x.IdBook);
+            builder.HasOne(x => x.Borrow).WithMany(x => x.BookInBorrows)
+                .HasForeignKey(x => x.IdBorrow);
         }
     }
 }

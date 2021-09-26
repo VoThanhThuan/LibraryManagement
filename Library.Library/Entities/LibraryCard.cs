@@ -16,5 +16,8 @@ namespace Library.Library.Entities
         public bool IsClock { get; set; } = false;
         public int Rank { get; set; } = 0;
         public int Exp { get; set; } = 0; //experience
+
+        /*Khóa ngoại*/
+        public virtual List<Borrow> Borrows { get; set; }
     }
 }

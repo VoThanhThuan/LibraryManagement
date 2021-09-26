@@ -15,6 +15,12 @@ namespace Library.Library.Data.Configurations
         {
             builder.ToTable("BookInGenre");
             builder.HasKey(x => new {x.IdBook, x.IdGenre});
+
+            builder.HasOne(x => x.Book).WithMany(x => x.BookInGenres)
+                .HasForeignKey(x => x.IdBook);
+            builder.HasOne(x => x.Genre).WithMany(x => x.BookInGenres)
+                .HasForeignKey(x => x.IdGenre);
+
         }
     }
 }
