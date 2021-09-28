@@ -1,87 +1,154 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
+using Library.Library.Data;
+using Library.Library.Entities;
 
 namespace LibraryManagement.UI.Controllers
 {
     public class LibraryCardsController : Controller
     {
-        // GET: LibraryCardController
-        public ActionResult Index()
+        private readonly LibraryDbContext _context;
+
+        public LibraryCardsController(LibraryDbContext context)
+        {
+            _context = context;
+        }
+
+        // GET: LibraryCards
+        public async Task<IActionResult> Index()
+        {
+            return View(await _context.LibraryCards.ToListAsync());
+        }
+
+        // GET: LibraryCards/Details/5
+        public async Task<IActionResult> Details(Guid? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var libraryCard = await _context.LibraryCards
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (libraryCard == null)
+            {
+                return NotFound();
+            }
+
+            return View(libraryCard);
+        }
+
+        // GET: LibraryCards/Create
+        public IActionResult Create()
         {
             return View();
         }
 
-        // GET: LibraryCardController/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        // GET: LibraryCardController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: LibraryCardController/Create
+        // POST: LibraryCards/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<IActionResult> Create([Bind("Id,MSSV,Class,PhoneNumber,Karma,IsClock,Rank,Exp")] LibraryCard libraryCard)
         {
-            try
+            if (ModelState.IsValid)
             {
+                libraryCard.Id = Guid.NewGuid();
+                _context.Add(libraryCard);
+                await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            catch
-            {
-                return View();
-            }
+            return View(libraryCard);
         }
 
-        // GET: LibraryCardController/Edit/5
-        public ActionResult Edit(int id)
+        // GET: LibraryCards/Edit/5
+        public async Task<IActionResult> Edit(Guid? id)
         {
-            return View();
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var libraryCard = await _context.LibraryCards.FindAsync(id);
+            if (libraryCard == null)
+            {
+                return NotFound();
+            }
+            return View(libraryCard);
         }
 
-        // POST: LibraryCardController/Edit/5
+        // POST: LibraryCards/Edit/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id,MSSV,Class,PhoneNumber,Karma,IsClock,Rank,Exp")] LibraryCard libraryCard)
         {
-            try
+            if (id != libraryCard.Id)
             {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(libraryCard);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!LibraryCardExists(libraryCard.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
                 return RedirectToAction(nameof(Index));
             }
-            catch
-            {
-                return View();
-            }
+            return View(libraryCard);
         }
 
-        // GET: LibraryCardController/Delete/5
-        public ActionResult Delete(int id)
+        // GET: LibraryCards/Delete/5
+        public async Task<IActionResult> Delete(Guid? id)
         {
-            return View();
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var libraryCard = await _context.LibraryCards
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (libraryCard == null)
+            {
+                return NotFound();
+            }
+
+            return View(libraryCard);
         }
 
-        // POST: LibraryCardController/Delete/5
-        [HttpPost]
+        // POST: LibraryCards/Delete/5
+        [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            var libraryCard = await _context.LibraryCards.FindAsync(id);
+            _context.LibraryCards.Remove(libraryCard);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+
+        private bool LibraryCardExists(Guid id)
+        {
+            return _context.LibraryCards.Any(e => e.Id == id);
         }
     }
 }

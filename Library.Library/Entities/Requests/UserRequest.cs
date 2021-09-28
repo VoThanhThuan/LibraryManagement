@@ -10,6 +10,21 @@ namespace Library.Library.Entities.Requests
 {
     public class UserRequest
     {
+        public User ToUser()
+        {
+            return new User()
+            {
+                Id = Id,
+                Nickname = Nickname,
+                Dob = Dob,
+                sex = sex,
+                Address = Address,
+                Email = Email,
+                PhoneNumber = PhoneNumber,
+                UserName = Username,
+                PasswordHash = Password
+            };
+        }
         public Guid Id { get; set; }
 
         [Required(ErrorMessage = "Nickname là bắt buộc")]
@@ -19,9 +34,8 @@ namespace Library.Library.Entities.Requests
         public DateTime? Dob { get; set; }
         public IFormFile Avatar { get; set; }
         [Required]
-        public bool? sex { get; set; } = true;
+        public bool sex { get; set; } = true;
         public string Address { get; set; } = "";
-        public string Fanpage { get; set; } = "";
 
         [DataType(DataType.EmailAddress)]
         public string Email { get; set; } = "";
@@ -36,6 +50,7 @@ namespace Library.Library.Entities.Requests
 
         [Required(ErrorMessage = "Xác nhận mật khẩu là bắt buộc")]
         [DataType(DataType.Password)]
+        [Compare("Password", ErrorMessage = "Xác nhận mật khẩu không chính xác")]
         public string ConfirmPassword { get; set; } = "";
         public Guid IdRole { get; set; }
     }

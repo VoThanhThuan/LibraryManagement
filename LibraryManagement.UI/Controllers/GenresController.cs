@@ -1,87 +1,153 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
+using Library.Library.Data;
+using Library.Library.Entities;
 
 namespace LibraryManagement.UI.Controllers
 {
     public class GenresController : Controller
     {
-        // GET: GenreController
-        public ActionResult Index()
+        private readonly LibraryDbContext _context;
+
+        public GenresController(LibraryDbContext context)
+        {
+            _context = context;
+        }
+
+        // GET: Genres
+        public async Task<IActionResult> Index()
+        {
+            return View(await _context.Genres.ToListAsync());
+        }
+
+        // GET: Genres/Details/5
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var genre = await _context.Genres
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (genre == null)
+            {
+                return NotFound();
+            }
+
+            return View(genre);
+        }
+
+        // GET: Genres/Create
+        public IActionResult Create()
         {
             return View();
         }
 
-        // GET: GenreController/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        // GET: GenreController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: GenreController/Create
+        // POST: Genres/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<IActionResult> Create([Bind("Id,Name,Description")] Genre genre)
         {
-            try
+            if (ModelState.IsValid)
             {
+                _context.Add(genre);
+                await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            catch
-            {
-                return View();
-            }
+            return View(genre);
         }
 
-        // GET: GenreController/Edit/5
-        public ActionResult Edit(int id)
+        // GET: Genres/Edit/5
+        public async Task<IActionResult> Edit(int? id)
         {
-            return View();
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var genre = await _context.Genres.FindAsync(id);
+            if (genre == null)
+            {
+                return NotFound();
+            }
+            return View(genre);
         }
 
-        // POST: GenreController/Edit/5
+        // POST: Genres/Edit/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description")] Genre genre)
         {
-            try
+            if (id != genre.Id)
             {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(genre);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!GenreExists(genre.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
                 return RedirectToAction(nameof(Index));
             }
-            catch
-            {
-                return View();
-            }
+            return View(genre);
         }
 
-        // GET: GenreController/Delete/5
-        public ActionResult Delete(int id)
+        // GET: Genres/Delete/5
+        public async Task<IActionResult> Delete(int? id)
         {
-            return View();
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var genre = await _context.Genres
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (genre == null)
+            {
+                return NotFound();
+            }
+
+            return View(genre);
         }
 
-        // POST: GenreController/Delete/5
-        [HttpPost]
+        // POST: Genres/Delete/5
+        [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            var genre = await _context.Genres.FindAsync(id);
+            _context.Genres.Remove(genre);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+
+        private bool GenreExists(int id)
+        {
+            return _context.Genres.Any(e => e.Id == id);
         }
     }
 }

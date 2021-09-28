@@ -26,6 +26,7 @@ namespace Library.Library.Data
                     Name = "Admin",
                     NormalizedName = "ADMIN"
                 };
+                context.Roles.Add(admin);
 
                 var librarian = new Role()
                 {
@@ -34,6 +35,7 @@ namespace Library.Library.Data
                     NormalizedName = "LIBRARIAN"
                 };
                 context.Roles.Add(librarian);
+                await context.SaveChangesAsync();
             }
 
             if (!context.Users.Any())
@@ -73,9 +75,9 @@ namespace Library.Library.Data
                 var user2 = new User()
                 {
                     Id = ida,
-                    Nickname = "Anny",
-                    Email = "anny@thuan.com",
-                    NormalizedEmail = "ANNY@THUAN.COM",
+                    Nickname = "Anvy",
+                    Email = "anvy@thuan.com",
+                    NormalizedEmail = "ANVY@THUAN.COM",
                     PhoneNumber = "0123456789",
                     UserName = "Librarian",
                     NormalizedUserName = "LIBRARIAN",
@@ -98,29 +100,52 @@ namespace Library.Library.Data
                 };
                 user3.PasswordHash = _passwordHasher.HashPassword(user3, "Admin123$");
                 context.Users.Add(user3);
+                await context.SaveChangesAsync();
 
                 //Quyền hạng
-                var modelBuilder = new ModelBuilder();
-                modelBuilder.Entity<IdentityUserRole<Guid>>().HasData(new IdentityUserRole<Guid>
+                //var modelBuilder = new ModelBuilder();
+                //modelBuilder.Entity<IdentityUserRole<Guid>>().HasData(new IdentityUserRole<Guid>
+                //{
+                //    RoleId = ra,
+                //    UserId = id0,
+                //});
+                //modelBuilder.Entity<IdentityUserRole<Guid>>().HasData(new IdentityUserRole<Guid>
+                //{
+                //    RoleId = ra,
+                //    UserId = idt,
+                //});
+                //modelBuilder.Entity<IdentityUserRole<Guid>>().HasData(new IdentityUserRole<Guid>
+                //{
+                //    RoleId = rl,
+                //    UserId = ida,
+                //});
+                //modelBuilder.Entity<IdentityUserRole<Guid>>().HasData(new IdentityUserRole<Guid>
+                //{
+                //    RoleId = rl,
+                //    UserId = ids,
+                //});
+
+                context.Add(new IdentityUserRole<Guid>
                 {
                     RoleId = ra,
                     UserId = id0,
-                });                
-                modelBuilder.Entity<IdentityUserRole<Guid>>().HasData(new IdentityUserRole<Guid>
+                });
+                context.Add(new IdentityUserRole<Guid>
                 {
                     RoleId = ra,
                     UserId = idt,
                 });
-                modelBuilder.Entity<IdentityUserRole<Guid>>().HasData(new IdentityUserRole<Guid>
+                context.Add(new IdentityUserRole<Guid>
                 {
                     RoleId = rl,
                     UserId = ida,
                 });
-                modelBuilder.Entity<IdentityUserRole<Guid>>().HasData(new IdentityUserRole<Guid>
+                context.Add(new IdentityUserRole<Guid>
                 {
                     RoleId = rl,
                     UserId = ids,
                 });
+                await context.SaveChangesAsync();
             }
 
             if (!context.Genres.Any())

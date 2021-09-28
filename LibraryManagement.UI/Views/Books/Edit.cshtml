@@ -61,7 +61,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="IdLibraryCode" class="control-label"></label>
-                <input asp-for="IdLibraryCode" class="form-control" />
+                <select asp-for="IdLibraryCode" class="form-control" asp-items="ViewBag.IdLibraryCode"></select>
                 <span asp-validation-for="IdLibraryCode" class="text-danger"></span>
             </div>
             <div class="form-group">

@@ -1,87 +1,153 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
+using Library.Library.Data;
+using Library.Library.Entities;
 
 namespace LibraryManagement.UI.Controllers
 {
     public class LibraryCodesController : Controller
     {
-        // GET: LibraryCodeController
-        public ActionResult Index()
+        private readonly LibraryDbContext _context;
+
+        public LibraryCodesController(LibraryDbContext context)
+        {
+            _context = context;
+        }
+
+        // GET: LibraryCodes
+        public async Task<IActionResult> Index()
+        {
+            return View(await _context.LibraryCodes.ToListAsync());
+        }
+
+        // GET: LibraryCodes/Details/5
+        public async Task<IActionResult> Details(string id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var libraryCode = await _context.LibraryCodes
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (libraryCode == null)
+            {
+                return NotFound();
+            }
+
+            return View(libraryCode);
+        }
+
+        // GET: LibraryCodes/Create
+        public IActionResult Create()
         {
             return View();
         }
 
-        // GET: LibraryCodeController/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        // GET: LibraryCodeController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: LibraryCodeController/Create
+        // POST: LibraryCodes/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<IActionResult> Create([Bind("Id,Name,Abbreviation,Description")] LibraryCode libraryCode)
         {
-            try
+            if (ModelState.IsValid)
             {
+                _context.Add(libraryCode);
+                await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            catch
-            {
-                return View();
-            }
+            return View(libraryCode);
         }
 
-        // GET: LibraryCodeController/Edit/5
-        public ActionResult Edit(int id)
+        // GET: LibraryCodes/Edit/5
+        public async Task<IActionResult> Edit(string id)
         {
-            return View();
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var libraryCode = await _context.LibraryCodes.FindAsync(id);
+            if (libraryCode == null)
+            {
+                return NotFound();
+            }
+            return View(libraryCode);
         }
 
-        // POST: LibraryCodeController/Edit/5
+        // POST: LibraryCodes/Edit/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public async Task<IActionResult> Edit(string id, [Bind("Id,Name,Abbreviation,Description")] LibraryCode libraryCode)
         {
-            try
+            if (id != libraryCode.Id)
             {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(libraryCode);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!LibraryCodeExists(libraryCode.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
                 return RedirectToAction(nameof(Index));
             }
-            catch
-            {
-                return View();
-            }
+            return View(libraryCode);
         }
 
-        // GET: LibraryCodeController/Delete/5
-        public ActionResult Delete(int id)
+        // GET: LibraryCodes/Delete/5
+        public async Task<IActionResult> Delete(string id)
         {
-            return View();
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var libraryCode = await _context.LibraryCodes
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (libraryCode == null)
+            {
+                return NotFound();
+            }
+
+            return View(libraryCode);
         }
 
-        // POST: LibraryCodeController/Delete/5
-        [HttpPost]
+        // POST: LibraryCodes/Delete/5
+        [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public async Task<IActionResult> DeleteConfirmed(string id)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            var libraryCode = await _context.LibraryCodes.FindAsync(id);
+            _context.LibraryCodes.Remove(libraryCode);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+
+        private bool LibraryCodeExists(string id)
+        {
+            return _context.LibraryCodes.Any(e => e.Id == id);
         }
     }
 }

@@ -9,7 +9,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Library.Library.Data;
+using Library.Library.Entities;
 using LibraryManagement.UI.Models;
+using LibraryManagement.UI.Models.Storage;
+using LibraryManagement.UI.Services;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace LibraryManagement.UI
@@ -30,9 +34,16 @@ namespace LibraryManagement.UI
             {
                 options.UseSqlServer(Configuration.GetConnectionString("ConnectLibrary"));
             });
+
+            services.AddIdentity<User, Role>()
+                .AddEntityFrameworkStores<LibraryDbContext>()
+                .AddDefaultTokenProviders();
+            services.AddTransient<IStorageService, FileService>();
+            services.AddScoped<UserService>();
+            services.AddTransient<RoleManager<Role>, RoleManager<Role>>();
+
             services.AddControllersWithViews();
 
-            //services.AddScoped<UserService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

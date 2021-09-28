@@ -50,5 +50,7 @@ namespace Library.Library.Data
         public DbSet<LibraryCode> LibraryCodes { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }
+        public DbSet<IdentityUserRole<Guid>> AppUserRole { get; set; }
+
     }
 }
