@@ -47,8 +47,10 @@ namespace LibraryManagement.UI.Services
         {
             var users = await _context.Users.Select(x => x).ToListAsync();
             var uservm = new List<UserVM>();
+            var host = _config.GetSection("BaseAddress").Value;
             foreach (var user in users)
             {
+                user.Avatar = $"{host}/{user.Avatar}";
                 uservm.Add(await user.ToViewModel(_userManager));
             }
             return uservm;
@@ -57,6 +59,9 @@ namespace LibraryManagement.UI.Services
         public async Task<UserVM> GetUser(Guid id)
         {
             var user = await _context.Users.FindAsync(id);
+            var role = _context.AppUserRole.FirstOrDefault(x => x.UserId == user.Id);
+            var host = _config.GetSection("BaseAddress").Value;
+            user.Avatar = $"{host}/{user.Avatar}";
             return await user.ToViewModel(_userManager);
         }
 
@@ -82,22 +87,26 @@ namespace LibraryManagement.UI.Services
             //_context.Entry(request.ToUser()).State = EntityState.Modified;
 
             //Role assign
-
-            var roles = await _context.Roles.Select(x => x).ToListAsync();
-            var userRole = await _context.AppUserRole.FindAsync(id, request.IdRole);
-            if (userRole == null)
+            var checkRole = _context.AppUserRole.FirstOrDefault(x => x.UserId == user.Id);
+            if (checkRole.RoleId == request.IdRole)
             {
-                foreach (var role in roles)
+                var roles = await _context.Roles.Select(x => x).ToListAsync();
+                var userRole = await _context.AppUserRole.FindAsync(id, request.IdRole);
+                if (userRole == null)
                 {
-                    if (await _userManager.IsInRoleAsync(user, role.Name) == true)
+                    foreach (var role in roles)
                     {
-                        await _userManager.RemoveFromRoleAsync(user, role.Name);
+                        if (await _userManager.IsInRoleAsync(user, role.Name) == true)
+                        {
+                            await _userManager.RemoveFromRoleAsync(user, role.Name);
+                        }
                     }
+
+                    var roleNew = await _context.Roles.FindAsync(request.IdRole);
+
+                    await _userManager.AddToRoleAsync(user, roleNew.Name);
                 }
 
-                var roleNew = await _context.Roles.FindAsync(request.IdRole);
-
-                await _userManager.AddToRoleAsync(user, roleNew.Name);
             }
 
             try
@@ -134,13 +143,10 @@ namespace LibraryManagement.UI.Services
             var role = await _context.Roles.FindAsync(request.IdRole);
             if (request.IdRole == Guid.Empty || role == null)
             {
-                role = await _roleManager.FindByNameAsync("Guest");
+                role = await _roleManager.FindByNameAsync("Librarian");
             }
 
             await _userManager.AddToRoleAsync(user, role.Name);
-
-            _context.Users.Add(user);
-            await _context.SaveChangesAsync();
 
             return (StatusCodes.Status200OK, "Ok", user.ToViewModel());
         }
@@ -197,7 +203,7 @@ namespace LibraryManagement.UI.Services
 
         private async Task<string> SaveFile(IFormFile file)
         {
-            return await _storageService.SaveFile(file, @"avatar/");
+            return await _storageService.SaveFile(file, @"avatar");
         }
         private async Task<int> DeleteFile(string fileName)
         {

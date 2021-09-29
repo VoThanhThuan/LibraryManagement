@@ -16,11 +16,13 @@ namespace LibraryManagement.UI.Controllers
     {
         private readonly LibraryDbContext _context;
         private readonly UserService _user;
+        private readonly RoleService _role;
 
-        public UsersController(LibraryDbContext context, UserService user)
+        public UsersController(LibraryDbContext context, UserService user, RoleService role)
         {
             _context = context;
             _user = user;
+            _role = role;
         }
 
         // GET: Users
@@ -73,19 +75,22 @@ namespace LibraryManagement.UI.Controllers
         }
 
         // GET: Users/Edit/5
-        public async Task<IActionResult> Edit(Guid? id)
+        public async Task<IActionResult> Edit(Guid id)
         {
-            if (id == null)
+            if (id == Guid.Empty)
             {
                 return NotFound();
             }
 
-            var user = await _context.Users.FindAsync(id);
+            //var user = await _context.Users.FindAsync(id);
+            var user = await _user.GetUser(id);
+            var roles = await _role.GetRoles();
             if (user == null)
             {
                 return NotFound();
             }
-            return View(user);
+
+            return View((user.ToRequest(), roles));
         }
 
         // POST: Users/Edit/5
@@ -93,32 +98,21 @@ namespace LibraryManagement.UI.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Nickname,Avatar,Dob,sex,Address,Id,UserName,NormalizedUserName,Email,NormalizedEmail,EmailConfirmed,PasswordHash,SecurityStamp,ConcurrencyStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEnd,LockoutEnabled,AccessFailedCount")] User user)
+        public async Task<IActionResult> Edit(Guid id, UserRequest user)
         {
             if (id != user.Id)
             {
                 return NotFound();
             }
+            ModelState.Remove("Password");
+            ModelState.Remove("ConfirmPassword");
 
             if (ModelState.IsValid)
             {
-                try
-                {
-                    _context.Update(user);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!UserExists(user.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
+                var result = await _user.PutUser(id, user);
+
+                if (!result)
+                    return Conflict();
             }
             return View(user);
         }

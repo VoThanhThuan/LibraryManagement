@@ -40,6 +40,7 @@ namespace LibraryManagement.UI
                 .AddDefaultTokenProviders();
             services.AddTransient<IStorageService, FileService>();
             services.AddScoped<UserService>();
+            services.AddScoped<RoleService>();
             services.AddTransient<RoleManager<Role>, RoleManager<Role>>();
 
             services.AddControllersWithViews();

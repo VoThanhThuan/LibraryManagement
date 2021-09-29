@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using Library.Library.Entities.Requests;
 using Library.Library.Entities.ViewModels;
 using Microsoft.AspNetCore.Identity;
 
@@ -44,6 +45,23 @@ namespace Library.Library.Entities
             };
             user.RoleName = (await userManager.GetRolesAsync(this))[0];
             return user;
+        }
+
+        public UserRequest ToRequest()
+        {
+            return new UserRequest()
+            {
+                Id = Id,
+                Nickname = Nickname,
+                Dob = Dob,
+                sex = sex,
+                Address = Address,
+                Email = Email,
+                PhoneNumber = PhoneNumber,
+                Username = UserName,
+                Password = PasswordHash
+
+            };
         }
 
         public string Nickname { get; set; } = "";
