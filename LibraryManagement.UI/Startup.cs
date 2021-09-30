@@ -33,6 +33,9 @@ namespace LibraryManagement.UI
             services.AddDbContext<LibraryDbContext>(options =>
             {
                 options.UseSqlServer(Configuration.GetConnectionString("ConnectLibrary"));
+            }).AddDbContext<LibraryDbContext>(options =>
+            {
+                options.UseSqlServer(Configuration.GetConnectionString("ConnectLibraryOfSon"));
             });
 
             services.AddIdentity<User, Role>()
