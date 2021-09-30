@@ -14,13 +14,11 @@ namespace LibraryManagement.UI.Controllers
 {
     public class UsersController : Controller
     {
-        private readonly LibraryDbContext _context;
         private readonly UserService _user;
         private readonly RoleService _role;
 
-        public UsersController(LibraryDbContext context, UserService user, RoleService role)
+        public UsersController(UserService user, RoleService role)
         {
-            _context = context;
             _user = user;
             _role = role;
         }
@@ -117,38 +115,16 @@ namespace LibraryManagement.UI.Controllers
             return View(user);
         }
 
-        // GET: Users/Delete/5
-        public async Task<IActionResult> Delete(Guid? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var user = await _context.Users
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (user == null)
-            {
-                return NotFound();
-            }
-
-            return View(user);
-        }
-
         // POST: Users/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            var user = await _context.Users.FindAsync(id);
-            _context.Users.Remove(user);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            var result = await _user.DeleteUser(id);
+            if(result == 200)
+                return RedirectToAction(nameof(Index));
+            return Conflict($"Lỗi xóa {result}");
         }
 
-        private bool UserExists(Guid id)
-        {
-            return _context.Users.Any(e => e.Id == id);
-        }
     }
 }
