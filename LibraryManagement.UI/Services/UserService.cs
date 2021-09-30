@@ -203,6 +203,10 @@ namespace LibraryManagement.UI.Services
 
         private async Task<string> SaveFile(IFormFile file)
         {
+            if (!_storageService.FolderExists("avatar"))
+            {
+                _storageService.CreateDirectory("avatar");
+            }
             return await _storageService.SaveFile(file, @"avatar");
         }
         private async Task<int> DeleteFile(string fileName)

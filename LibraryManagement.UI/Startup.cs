@@ -1,42 +1,45 @@
+﻿using Library.Library.Data;
+using Library.Library.Entities;
+using LibraryManagement.UI.Models.Storage;
+using LibraryManagement.UI.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Library.Library.Data;
-using Library.Library.Entities;
-using LibraryManagement.UI.Models;
-using LibraryManagement.UI.Models.Storage;
-using LibraryManagement.UI.Services;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using System.Data.SqlClient;
+using System.IO;
+using System.Text;
 
 namespace LibraryManagement.UI
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, IWebHostEnvironment webHostEnvironment)
         {
             Configuration = configuration;
+            WebHostEnvironment = webHostEnvironment;
         }
 
         public IConfiguration Configuration { get; }
+        public IWebHostEnvironment WebHostEnvironment { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            if (IsServerConnected(Configuration.GetConnectionString("ConnectLibrary")))
+            Console.OutputEncoding = Encoding.Unicode;
+
+            Console.WriteLine(">>> Đang kiểm tra xem đang chạy trên máy tính của ai...");
+            var whatPC = Path.Combine($"{WebHostEnvironment.ContentRootPath}\\Properties\\WhatPC");
+            if (File.Exists($"{whatPC}\\thuan.dh19pm"))
             {
                 services.AddDbContext<LibraryDbContext>(options =>
                 {
                     options.UseSqlServer(Configuration.GetConnectionString("ConnectLibrary"));
                 });
+                Console.WriteLine(">>> Đang chạy trên máy tính của [Võ Thành Thuận]");
             }
             else
             {
@@ -44,13 +47,13 @@ namespace LibraryManagement.UI
                 {
                     options.UseSqlServer(Configuration.GetConnectionString("ConnectLibraryOfSon"));
                 });
+                Console.WriteLine(">>> Đang chạy trên máy tính của [Nguyễn Ngọc Sơn]");
 
             }
 
-
             services.AddIdentity<User, Role>()
-                .AddEntityFrameworkStores<LibraryDbContext>()
-                .AddDefaultTokenProviders();
+                    .AddEntityFrameworkStores<LibraryDbContext>()
+                    .AddDefaultTokenProviders();
             services.AddTransient<IStorageService, FileService>();
             services.AddScoped<UserService>();
             services.AddScoped<RoleService>();
@@ -88,20 +91,5 @@ namespace LibraryManagement.UI
             });
         }
 
-        private static bool IsServerConnected(string connectionString)
-        {
-            using (var connection = new SqlConnection(connectionString))
-            {
-                try
-                {
-                    connection.Open();
-                    return true;
-                }
-                catch (SqlException)
-                {
-                    return false;
-                }
-            }
-        }
     }
 }
