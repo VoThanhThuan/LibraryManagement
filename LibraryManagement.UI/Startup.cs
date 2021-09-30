@@ -15,6 +15,7 @@ using LibraryManagement.UI.Models.Storage;
 using LibraryManagement.UI.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System.Data.SqlClient;
 
 namespace LibraryManagement.UI
 {
@@ -30,13 +31,22 @@ namespace LibraryManagement.UI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<LibraryDbContext>(options =>
+            if (IsServerConnected(Configuration.GetConnectionString("ConnectLibrary")))
             {
-                options.UseSqlServer(Configuration.GetConnectionString("ConnectLibrary"));
-            }).AddDbContext<LibraryDbContext>(options =>
+                services.AddDbContext<LibraryDbContext>(options =>
+                {
+                    options.UseSqlServer(Configuration.GetConnectionString("ConnectLibrary"));
+                });
+            }
+            else
             {
-                options.UseSqlServer(Configuration.GetConnectionString("ConnectLibraryOfSon"));
-            });
+                services.AddDbContext<LibraryDbContext>(options =>
+                {
+                    options.UseSqlServer(Configuration.GetConnectionString("ConnectLibraryOfSon"));
+                });
+
+            }
+
 
             services.AddIdentity<User, Role>()
                 .AddEntityFrameworkStores<LibraryDbContext>()
@@ -76,6 +86,22 @@ namespace LibraryManagement.UI
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+        }
+
+        private static bool IsServerConnected(string connectionString)
+        {
+            using (var connection = new SqlConnection(connectionString))
+            {
+                try
+                {
+                    connection.Open();
+                    return true;
+                }
+                catch (SqlException)
+                {
+                    return false;
+                }
+            }
         }
     }
 }
