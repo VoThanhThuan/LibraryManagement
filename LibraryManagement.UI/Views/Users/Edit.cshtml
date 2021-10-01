@@ -1,4 +1,6 @@
-﻿@model (Library.Library.Entities.Requests.UserRequest, List<Library.Library.Entities.Role>)
+﻿@using System.Data
+@using Library.Library.Entities
+@model Library.Library.Entities.Requests.UserRequest
 
 @{
     ViewData["Title"] = "Edit";
@@ -14,63 +16,64 @@
     <div class="col-md-4">
         <form asp-action="Edit" method="post" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input asp-for="Item1.Id" class="form-control" hidden />
+            <input asp-for="Id" class="form-control" hidden />
 
             <div class="form-group">
-                <label asp-for="Item1.Nickname" class="control-label"></label>
-                <input asp-for="Item1.Nickname" class="form-control" />
-                <span asp-validation-for="Item1.Nickname" class="text-danger"></span>
+                <label asp-for="Nickname" class="control-label"></label>
+                <input asp-for="Nickname" class="form-control" />
+                <span asp-validation-for="Nickname" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Item1.Avatar" class="control-label"></label>
-                <input asp-for="Item1.Avatar" class="form-control" />
-                <span asp-validation-for="Item1.Avatar" class="text-danger"></span>
+                <label asp-for="Avatar" class="control-label"></label>
+                <input asp-for="Avatar" class="form-control" />
+                <span asp-validation-for="Avatar" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Item1.Dob" class="control-label"></label>
-                <input asp-for="Item1.Dob" class="form-control" />
-                <span asp-validation-for="Item1.Dob" class="text-danger"></span>
+                <label asp-for="Dob" class="control-label"></label>
+                <input asp-for="Dob" class="form-control" />
+                <span asp-validation-for="Dob" class="text-danger"></span>
             </div>
             <div class="form-group form-check">
                 <label class="form-check-label">
-                    <input class="form-check-input" asp-for="Item1.sex" /> @Html.DisplayNameFor(model => model.Item1.sex)
+                    <input class="form-check-input" asp-for="sex" /> @Html.DisplayNameFor(model => model.sex)
                 </label>
             </div>
             <div class="form-group">
-                <label asp-for="Item1.Address" class="control-label"></label>
-                <input asp-for="Item1.Address" class="form-control" />
-                <span asp-validation-for="Item1.Address" class="text-danger"></span>
+                <label asp-for="Address" class="control-label"></label>
+                <input asp-for="Address" class="form-control" />
+                <span asp-validation-for="Address" class="text-danger"></span>
             </div>
-            <input type="hidden" asp-for="Item1.Id" />
+            <input type="hidden" asp-for="Id" />
             <div class="form-group">
-                <label asp-for="Item1.Username" class="control-label"></label>
-                <input asp-for="Item1.Username" class="form-control" />
-                <span asp-validation-for="Item1.Username" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Item1.Email" class="control-label"></label>
-                <input asp-for="Item1.Email" class="form-control" />
-                <span asp-validation-for="Item1.Email" class="text-danger"></span>
+                <label asp-for="Username" class="control-label"></label>
+                <input asp-for="Username" class="form-control" />
+                <span asp-validation-for="Username" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Item1.PhoneNumber" class="control-label"></label>
-                <input asp-for="Item1.PhoneNumber" class="form-control"/>
-                <span asp-validation-for="Item1.PhoneNumber" class="text-danger" ></span>
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PhoneNumber" class="control-label"></label>
+                <input asp-for="PhoneNumber" class="form-control"/>
+                <span asp-validation-for="PhoneNumber" class="text-danger" ></span>
             </div>
             <p>Bỏ trống nếu không muốn thay đổi mật khẩu</p>
             <div class="form-group">
-                <label asp-for="Item1.Password" class="control-label"></label>
-                <input asp-for="Item1.Password" class="form-control" data-val="false"/>
+                <label asp-for="Password" class="control-label"></label>
+                <input asp-for="Password" class="form-control" data-val="false"/>
             </div>
             <div class="form-group">
-                <label asp-for="Item1.ConfirmPassword" class="control-label"></label>
-                <input asp-for="Item1.ConfirmPassword" class="form-control" data-val="false"/>
+                <label asp-for="ConfirmPassword" class="control-label"></label>
+                <input asp-for="ConfirmPassword" class="form-control" data-val="false"/>
             </div>
             <select class="form-select" aria-label="Default select example" name="IdRole">
                 @{
-                    foreach (var role in Model.Item2)
+                    var roles = (List<Role>)ViewBag.Roles;
+                    foreach (var role in roles)
                     {
-                        if (Model.Item1.IdRole == role.Id)
+                        if (Model.IdRole == role.Id)
                         {
                             <option value="@role.Id" selected>@role.Name</option>
                         }

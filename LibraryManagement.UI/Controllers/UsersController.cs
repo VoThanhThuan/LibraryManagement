@@ -49,8 +49,10 @@ namespace LibraryManagement.UI.Controllers
         }
 
         // GET: Users/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
+            ViewData["Roles"] = await _role.GetRoles();
+
             return View();
         }
 
@@ -82,13 +84,15 @@ namespace LibraryManagement.UI.Controllers
 
             //var user = await _context.Users.FindAsync(id);
             var user = await _user.GetUser(id);
-            var roles = await _role.GetRoles();
+            //var roles = await _role.GetRoles();
+            ViewData["Roles"] = await _role.GetRoles();
+
             if (user == null)
             {
                 return NotFound();
             }
 
-            return View((user.ToRequest(), roles));
+            return View(user.ToRequest());
         }
 
         // POST: Users/Edit/5
@@ -112,6 +116,8 @@ namespace LibraryManagement.UI.Controllers
                 if (!result)
                     return Conflict();
             }
+            ViewData["Roles"] = await _role.GetRoles();
+
             return View(user);
         }
 

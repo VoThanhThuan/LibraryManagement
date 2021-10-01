@@ -4,14 +4,14 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Library.Library.Entities.Requests;
 using Library.Library.Enums;
+using Microsoft.AspNetCore.Http;
 
-namespace Library.Library.Entities
+namespace Library.Library.Entities.Requests
 {
-    public class Book
+    public class BookRequest
     {
-        public BookRequest ToRequest()
+        public Book ToBook()
         {
             return new()
             {
@@ -32,7 +32,7 @@ namespace Library.Library.Entities
         [Required]
         public string Id { get; set; } = ""; //max 8
 
-        public string Thumbnail { get; set; } = "";
+        public IFormFile Thumbnail { get; set; }
 
         [Display(Name = "Tên Sách")]
         [Required]
@@ -42,15 +42,16 @@ namespace Library.Library.Entities
         public string PublishingCompany { get; set; } = "";
 
         [Display(Name = "Ngày Xuất Bản")]
+        [DataType(dataType: DataType.Date)]
         public DateTime PublicationDate { get; set; } = DateTime.Now;
 
         [Display(Name = "Tác Giả")]
         public string Author { get; set; } = "";
 
-        [Range(0, 1000, ErrorMessage = "Số lượng không được nhỏ hơn 0 và lớn hơn 1000")]
+        [Range(0, 1000, ErrorMessage = "Số lượng không được nhỏ hơn 0")]
         public int Amount { get; set; } = 0;
 
-        [Range(0, 1000, ErrorMessage = "Số trang không được nhỏ hơn 1 và lớn hơn 1000")]
+        [Range(0, 1000, ErrorMessage = "Số trang không được nhỏ hơn 1")]
         public int PageNumber { get; set; } = 0;
 
         [Display(Name = "Số Ngày Có Thê Mượn")]
@@ -65,9 +66,6 @@ namespace Library.Library.Entities
         [Display(Name = "Mã Thư Viện")]
         [Required]
         public string IdLibraryCode { get; set; } = "";
-        public virtual LibraryCode LibraryCode { get; set; }
-        public virtual List<BookInBorrow> BookInBorrows { get; set; }
-        public virtual List<BookInGenre> BookInGenres { get; set; }
 
     }
 }

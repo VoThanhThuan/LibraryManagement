@@ -112,7 +112,7 @@ namespace LibraryManagement.UI.Services
             try
             {
                 await _userManager.UpdateAsync(user);
-                //await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -203,10 +203,6 @@ namespace LibraryManagement.UI.Services
 
         private async Task<string> SaveFile(IFormFile file)
         {
-            if (!_storageService.FolderExists("avatar"))
-            {
-                _storageService.CreateDirectory("avatar");
-            }
             return await _storageService.SaveFile(file, @"avatar");
         }
         private async Task<int> DeleteFile(string fileName)

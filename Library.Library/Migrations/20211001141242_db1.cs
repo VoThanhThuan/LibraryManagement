@@ -196,15 +196,15 @@ namespace Library.Library.Migrations
                 {
                     Id = table.Column<string>(type: "nvarchar(8)", maxLength: 8, nullable: false),
                     Thumbnail = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PublishingCompany = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
                     PublicationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Author = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
                     Amount = table.Column<int>(type: "int", nullable: false),
                     PageNumber = table.Column<int>(type: "int", nullable: false),
-                    DateCanBorrow = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DateCanBorrow = table.Column<int>(type: "int", nullable: false),
                     Rank = table.Column<int>(type: "int", nullable: false),
-                    IdLibraryCode = table.Column<string>(type: "nvarchar(8)", nullable: true)
+                    IdLibraryCode = table.Column<string>(type: "nvarchar(8)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -214,7 +214,7 @@ namespace Library.Library.Migrations
                         column: x => x.IdLibraryCode,
                         principalTable: "LibraryCode",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -285,8 +285,7 @@ namespace Library.Library.Migrations
                 name: "IX_Books_IdLibraryCode",
                 table: "Books",
                 column: "IdLibraryCode",
-                unique: true,
-                filter: "[IdLibraryCode] IS NOT NULL");
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Borrows_IdCard",

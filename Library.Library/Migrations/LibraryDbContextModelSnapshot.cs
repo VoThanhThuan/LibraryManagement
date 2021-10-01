@@ -32,13 +32,15 @@ namespace Library.Library.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<DateTime>("DateCanBorrow")
-                        .HasColumnType("datetime2");
+                    b.Property<int>("DateCanBorrow")
+                        .HasColumnType("int");
 
                     b.Property<string>("IdLibraryCode")
+                        .IsRequired()
                         .HasColumnType("nvarchar(8)");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("PageNumber")
@@ -60,8 +62,7 @@ namespace Library.Library.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("IdLibraryCode")
-                        .IsUnique()
-                        .HasFilter("[IdLibraryCode] IS NOT NULL");
+                        .IsUnique();
 
                     b.ToTable("Books");
                 });
@@ -418,7 +419,9 @@ namespace Library.Library.Migrations
                 {
                     b.HasOne("Library.Library.Entities.LibraryCode", "LibraryCode")
                         .WithOne("Book")
-                        .HasForeignKey("Library.Library.Entities.Book", "IdLibraryCode");
+                        .HasForeignKey("Library.Library.Entities.Book", "IdLibraryCode")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("LibraryCode");
                 });

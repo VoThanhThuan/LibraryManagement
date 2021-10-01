@@ -7,23 +7,27 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Library.Library.Data;
 using Library.Library.Entities;
+using Library.Library.Entities.Requests;
+using LibraryManagement.UI.Services;
 
 namespace LibraryManagement.UI.Controllers
 {
     public class BooksController : Controller
     {
         private readonly LibraryDbContext _context;
+        private readonly BookService _book;
 
-        public BooksController(LibraryDbContext context)
+        public BooksController(LibraryDbContext context, BookService book)
         {
             _context = context;
+            _book = book;
         }
 
         // GET: Books
         public async Task<IActionResult> Index()
         {
-            var libraryDbContext = _context.Books.Include(b => b.LibraryCode);
-            return View(await libraryDbContext.ToListAsync());
+            var books = await _book.GetBooks();
+            return View(books);
         }
 
         // GET: Books/Details/5
@@ -34,9 +38,7 @@ namespace LibraryManagement.UI.Controllers
                 return NotFound();
             }
 
-            var book = await _context.Books
-                .Include(b => b.LibraryCode)
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var book = await _book.GetBook(id);
             if (book == null)
             {
                 return NotFound();
@@ -57,16 +59,14 @@ namespace LibraryManagement.UI.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Thumbnail,Name,PublishingCompany,PublicationDate,Author,Amount,PageNumber,DateCanBorrow,Rank,IdLibraryCode")] Book book)
+        public async Task<IActionResult> Create(BookRequest request)
         {
-            if (ModelState.IsValid)
-            {
-                _context.Add(book);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
+            if (!ModelState.IsValid) return RedirectToAction(nameof(Index));
+
+            var book = await _book.PostBook(request);
+                
             ViewData["IdLibraryCode"] = new SelectList(_context.LibraryCodes, "Id", "Id", book.IdLibraryCode);
-            return View(book);
+            return View(book.ToRequest());
         }
 
         // GET: Books/Edit/5
@@ -91,33 +91,17 @@ namespace LibraryManagement.UI.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("Id,Thumbnail,Name,PublishingCompany,PublicationDate,Author,Amount,PageNumber,DateCanBorrow,Rank,IdLibraryCode")] Book book)
+        public async Task<IActionResult> Edit(string id, BookRequest request)
         {
-            if (id != book.Id)
+            if (id != request.Id)
             {
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(book);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!BookExists(book.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
+            if (!ModelState.IsValid) return RedirectToAction(nameof(Index));
+
+            var book = await _book.PutBook(request);
+
             ViewData["IdLibraryCode"] = new SelectList(_context.LibraryCodes, "Id", "Id", book.IdLibraryCode);
             return View(book);
         }
@@ -146,9 +130,9 @@ namespace LibraryManagement.UI.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string id)
         {
-            var book = await _context.Books.FindAsync(id);
-            _context.Books.Remove(book);
-            await _context.SaveChangesAsync();
+            var result = await _book.DeleteBook(id);
+            if (result is not 200)
+                return Conflict();
             return RedirectToAction(nameof(Index));
         }
 

@@ -1,4 +1,5 @@
-﻿@model Library.Library.Entities.Requests.UserRequest
+﻿@using Library.Library.Entities
+@model Library.Library.Entities.Requests.UserRequest
 
 @{
     ViewData["Title"] = "Create";
@@ -63,6 +64,16 @@
                 <input asp-for="Email" class="form-control" />
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
+            <select class="form-select" aria-label="Default select example" name="IdRole">
+                @{
+                    var roles = (List<Role>)ViewBag.Roles;
+                    foreach (var role in roles)
+                    {
+                        <option value="@role.Id">@role.Name</option>
+                    }
+                }
+            </select>
+
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>

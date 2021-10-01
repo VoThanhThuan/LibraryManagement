@@ -29,7 +29,7 @@ namespace LibraryManagement.UI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            Console.OutputEncoding = Encoding.Unicode;
+            Console.OutputEncoding = Encoding.UTF8;
 
             Console.WriteLine(">>> Đang kiểm tra xem đang chạy trên máy tính của ai...");
             var whatPC = Path.Combine($"{WebHostEnvironment.ContentRootPath}\\Properties\\WhatPC");
@@ -51,13 +51,17 @@ namespace LibraryManagement.UI
 
             }
 
+            MakeMyFoler();
+
             services.AddIdentity<User, Role>()
                     .AddEntityFrameworkStores<LibraryDbContext>()
                     .AddDefaultTokenProviders();
+            services.AddTransient<RoleManager<Role>, RoleManager<Role>>();
+
             services.AddTransient<IStorageService, FileService>();
             services.AddScoped<UserService>();
             services.AddScoped<RoleService>();
-            services.AddTransient<RoleManager<Role>, RoleManager<Role>>();
+            services.AddScoped<BookService>();
 
             services.AddControllersWithViews();
 
@@ -89,6 +93,21 @@ namespace LibraryManagement.UI
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+        }
+
+
+        private void MakeMyFoler()
+        {
+            var root = Path.Combine(WebHostEnvironment.WebRootPath);
+            if (!Directory.Exists($"{root}/books"))
+            {
+                Directory.CreateDirectory($"{root}/books");
+            }
+
+            if (!Directory.Exists($"{root}/avatar"))
+            {
+                Directory.CreateDirectory($"{root}/avatar");
+            }
         }
 
     }

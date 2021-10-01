@@ -103,27 +103,6 @@ namespace Library.Library.Data
                 await context.SaveChangesAsync();
 
                 //Quyền hạng
-                //var modelBuilder = new ModelBuilder();
-                //modelBuilder.Entity<IdentityUserRole<Guid>>().HasData(new IdentityUserRole<Guid>
-                //{
-                //    RoleId = ra,
-                //    UserId = id0,
-                //});
-                //modelBuilder.Entity<IdentityUserRole<Guid>>().HasData(new IdentityUserRole<Guid>
-                //{
-                //    RoleId = ra,
-                //    UserId = idt,
-                //});
-                //modelBuilder.Entity<IdentityUserRole<Guid>>().HasData(new IdentityUserRole<Guid>
-                //{
-                //    RoleId = rl,
-                //    UserId = ida,
-                //});
-                //modelBuilder.Entity<IdentityUserRole<Guid>>().HasData(new IdentityUserRole<Guid>
-                //{
-                //    RoleId = rl,
-                //    UserId = ids,
-                //});
 
                 context.Add(new IdentityUserRole<Guid>
                 {
@@ -170,14 +149,50 @@ namespace Library.Library.Data
                 var manhua = new Genre()
                 {
                     Name = "Tiểu Thuyết",
-                    Description = "Tiểu thuyết là một thể loại văn xuôi có hư cấu, thông qua nhân vật, hoàn cảnh, sự việc để phản ánh bức tranh xã hội rộng lớn và những vấn đề của cuộc sống con người, biểu hiện tính chất tường thuật, tính chất kể chuyện bằng ngôn ngữ văn xuôi theo những chủ đề xác định."
+                    Description =
+                        "Tiểu thuyết là một thể loại văn xuôi có hư cấu, thông qua nhân vật, hoàn cảnh, sự việc để phản ánh bức tranh xã hội rộng lớn và những vấn đề của cuộc sống con người, biểu hiện tính chất tường thuật, tính chất kể chuyện bằng ngôn ngữ văn xuôi theo những chủ đề xác định."
                 };
                 context.Genres.Add(manhua);
-
             }
 
+            if (!context.LibraryCodes.Any())
+            {
+                var vh = new LibraryCode()
+                {
+                    Id = "VHHD0001",
+                    Name = "Văn Học Hiện Đại",
+                    Abbreviation = "VHHD",
+                    Description =
+                        "Văn học hậu hiện đại là trào lưu văn học xuất hiện sau Chiến tranh thế giới thứ hai tại xã hội Tây phương, đỉnh cao là vào những năm 70, 80, với hàng loạt các kỹ thuật sáng tác và tư tưởng văn nghệ mới để phản ứng lại các quy chuẩn của văn học hiện đại, trong khi đó cũng phát triển thêm các kỹ thuật và giả định cơ bản của văn học hiện đại."
+                };
+                context.LibraryCodes.Add(vh);
+                var tith = new LibraryCode()
+                {
+                    Id = "TITH0001",
+                    Name = "Tiểu Thuyết",
+                    Abbreviation = "TT",
+                    Description =
+                        "Tiểu thuyết là một thể loại văn xuôi có hư cấu, thông qua nhân vật, hoàn cảnh, sự việc để phản ánh bức tranh xã hội rộng lớn và những vấn đề của cuộc sống con người, biểu hiện tính chất tường thuật, tính chất kể chuyện bằng ngôn ngữ văn xuôi theo những chủ đề xác định."
+                };
+                context.LibraryCodes.Add(tith);
+
+                var trtr = new LibraryCode()
+                {
+                    Id = "TRTR0001",
+                    Name = "Truyện Tranh",
+                    Abbreviation = "TT",
+                    Description =
+                        "Ghé thăm website truyện tranh của [Võ Thành Thuận] để đọc những trang truyện tuyển chọn hay nhất."
+                };
+                context.LibraryCodes.Add(trtr);
+            }
+            
             await context.SaveChangesAsync();
 
         }
+
     }
+
 }
+
+
