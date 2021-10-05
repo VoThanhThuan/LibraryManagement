@@ -48,7 +48,6 @@ namespace LibraryManagement.UI
                     options.UseSqlServer(Configuration.GetConnectionString("ConnectLibraryOfSon"));
                 });
                 Console.WriteLine(">>> Đang chạy trên máy tính của [Nguyễn Ngọc Sơn]");
-
             }
 
             MakeMyFoler();
