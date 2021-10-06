@@ -5,76 +5,214 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
+<div class="page-title text-center">
+    <span class="menu-toggle">
+        <span class="icon-box-toggle">
+            <span>
+                <i class="fal fa-horizontal-rule icon-line-top"></i>
+                <i class="fal fa-horizontal-rule icon-line-center"></i>
+                <i class="fal fa-horizontal-rule icon-line-bottom"></i>
+            </span>
+        </span>
+    </span>
+    <div class="title-wrap">
+        <h1 class="title">List Account</h1>
+    </div>
+</div>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Nickname)
-            </th>            
-            <th>
-                @Html.DisplayNameFor(model => model.Username)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Avatar)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Dob)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.sex)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Address)
-            </th>
+<div class="page-content-inner">
+    <div>
+        <div class="list-flex-toolbar">
+            <div class="search">
+                <div class="control">
+                    <input class="input" type="text" placeholder="Search...">
+                    <div class="form-icon" data-v-aad2da70=""><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--feather" width="1.1em" height="1.1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" data-icon="feather:search" data-v-aad2da70=""><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><path d="M21 21l-4.35-4.35"></path></g></svg></div>
+                </div>
+            </div>
+            <div class="button">
+                <a href="#" class="v-button is-primary is-elevated">
+                    <span class="icon">
+                        <i class="far fa-plus"></i>
+                    </span>
+                    <span>Add User</span>
+                </a>
+            </div>
+        </div>
+        <div class="flex-table">
+            <div class="flex-table-header">
+                <span class="is-grow-2">User</span>
+                <span>Email</span>
+                <span>@Html.DisplayNameFor(model => model.RoleName)</span>
+                <span>@Html.DisplayNameFor(model => model.Username)</span>
+                <span>@Html.DisplayNameFor(model => model.Address)</span>
+                <span class="call-end">actions</span>
+            </div>
 
-            <th>
-                @Html.DisplayNameFor(model => model.Email)
-            </th>
+            @foreach (var item in Model)
+            {
+                <div class="flex-list-inner">
+                    <div>
+                        <div class="flex-table-item">
+                            <div class="flex-table-cell is-media is-grow2">
+                                <div class="is-avatar is-medium">
+                                    <img class="avatar" src="./src/img/2.png" alt="">
+                                </div>
+                                <div>
+                                    <span class="item-name">@Html.DisplayFor(modelItem => item.Nickname)</span>
+                                    <span class="item-meta">
+                                        <span>@Html.DisplayFor(modelItem => item.PhoneNumber)</span>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="flex-table-cell">
+                                <span class="light-text">@Html.DisplayFor(modelItem => item.Email)</span>
+                            </div>
 
-            <th>
-                @Html.DisplayNameFor(model => model.PhoneNumber)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nickname)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Username)
-            </td>
-            <td>
-                <img src="@item.Avatar" alt="@item.Nickname" width="64px" height="64px" />
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Dob)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.sex)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Address)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PhoneNumber)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+                            @if (item.RoleName.ToLower() != "admin")
+                            {
+                                <div class="flex-table-cell">
+                                    <span class="is-success tag" style="background: #10785d; ">@Html.DisplayFor(modelItem => item.RoleName)</span>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="flex-table-cell">
+                                    <span class="is-success tag">@Html.DisplayFor(modelItem => item.RoleName)</span>
+                                </div>
+                            }
+
+                            <div class="flex-table-cell">
+                                <span class="light-text"> @Html.DisplayFor(modelItem => item.Username)</span>
+                            </div>
+                            <div class="flex-table-cell">
+                                <span class="light-text"> @Html.DisplayFor(modelItem => item.Address)</span>
+                            </div>
+                            <div class="flex-table-cell call-end">
+                                <div class="is-right dropdown is-pushed-mobile">
+                                    <a href="#" class="is-trigger dropdown-trigger" data-v-25f969c0="">
+                                        <span data-v-25f969c0=""><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--feather" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" data-icon="feather:more-vertical"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1"></circle><circle cx="12" cy="5" r="1"></circle><circle cx="12" cy="19" r="1"></circle></g></svg></span>
+                                    </a>
+                                </div>
+                                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                                <div class="dropdown-menu-flex" data-v-25f969c0="" data-hide="">
+                                    <div class="dropdown-content-flex" data-v-25f969c0="">
+                                        <a class="is-media-flex" href="#">
+                                            <div class="icon-flex">
+                                                <i class="fal fa-eye"></i>
+                                            </div>
+                                            <div class="meta-flex">
+                                                <span>Xem</span>
+                                                <span>Xem thông tin</span>
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <div class="dropdown-content-flex" data-v-25f969c0="">
+                                        <a class="is-media-flex" href="#">
+                                            <div class="icon-flex">
+                                                <i class="fas fa-wrench"></i>
+                                            </div>
+                                            <div class="meta-flex">
+                                                <span>Sửa</span>
+                                                <span>Sửa thông tin</span>
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <hr class="dropdown-divider-flex">
+                                    <div class="dropdown-content-flex" data-v-25f969c0="">
+                                        <a class="is-media-flex" href="#">
+                                            <div class="icon-flex">
+                                                <i class="fal fa-trash-alt"></i>
+                                            </div>
+                                            <div class="meta-flex">
+                                                <span>Xóa</span>
+                                                <span>Xóa khỏi danh sách</span>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+
+        </div>
+    </div>
+</div> 
+
+@*<h1>Index</h1>
+
+    <p>
+        <a asp-action="Create">Create New</a>
+    </p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Nickname)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Username)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Avatar)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Dob)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.sex)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Address)
+                </th>
+
+                <th>
+                    @Html.DisplayNameFor(model => model.Email)
+                </th>
+
+                <th>
+                    @Html.DisplayNameFor(model => model.PhoneNumber)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+
+    @foreach (var item in Model) {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nickname)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Username)
+                </td>
+                <td>
+                    <img src="@item.Avatar" alt="@item.Nickname" width="64px" height="64px" />
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Dob)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.sex)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Address)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PhoneNumber)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+    }
+        </tbody>
+    </table>*@

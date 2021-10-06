@@ -4,45 +4,142 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - LibraryManagement.UI</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" />
+    <link href="./css/_Layout.css" rel="stylesheet" />
+    <link href="./css/reset.css" rel="stylesheet" />
+    <link href="./css/index.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.2.0/css/all.css">
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">LibraryManagement.UI</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    </ul>
+    <div id="root" class="modal">
+        <!-- Navbar Mobile -->
+        <nav class="mobile-main-sidebar">
+
+        </nav>
+        <!-- <div class="overplay"></div> -->
+        <!-- Navbar Desktop -->
+        <div class="main-sidebar">
+            <div class="sidebar-brand">
+                <a href="/">
+                    <svg id="OBJECTS" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 160 160" xml:space="preserve" class="" width="36px" data-v-47361cec=""><g class="" data-v-47361cec=""><g data-v-47361cec=""><path class="right" d="M67.3,55.7L75.6,70l3.7,6.4l22.1,38.3l35.9-0.1L78.2,14.1L61.2,45L67.3,55.7z M130.1,114.5l-21.3,0.1" data-v-47361cec=""></path><path class="left" d="M39.1,145.9l11.7-20.3l2.7-4.7l3.7-6.4l22.1-38.3L61.2,45L3.6,145.9H39.1z M64.8,51.5l2.5,4.2l8.3,14.2V70
+                        L64.8,51.5z" data-v-47361cec=""></path><path class="bottom" d="M39,145.9h117.4l-19.1-31.4l-80.1,0.1L39,145.9z M53.4,121l-10.6,18.5l7.9-13.9L53.4,121z" data-v-47361cec=""></path></g></g></svg>
+                </a>
+            </div>
+            <div class="sidebar-inner">
+                <ul class="icon-menu">
+                    <li class="li-menu">
+                        <a class="tab-icon active" href="#"><i class="far fa-user-circle"></i></a>
+                    </li>
+                    <li class="li-menu">
+                        <a class="tab-icon" href="#"><i class="far fa-address-card"></i></a>
+                    </li>
+                    <li class="li-menu">
+                        <a class="tab-icon" href="#"><i class="fal fa-book"></i></a>
+                    </li>
+                    <li class="li-menu">
+                        <a class="tab-icon" href="#"><i class="fal fa-books"></i></a>
+                    </li>
+                    <li class="li-menu">
+                        <a class="tab-icon" href="#"><i class="fal fa-undo-alt"></i></a>
+                    </li>
+                    <li class="li-menu">
+                        <a class="tab-icon" href="#"><i class="fal fa-chart-bar"></i></a>
+                    </li>
+                </ul>
+                <ul class="bottom-menu">
+                    <li>
+                        <a class="is-dropdown">
+                            <img class="avatar" src="./src/img/2.png" alt="">
+                            <!-- <div class="dot"></div> -->
+                        </a>
+                    </li>
+                    <div class="dropdown-menu">
+                        <div class="dropdown-content">
+                            <div class="dropdown-head">
+                                <div class="v-avatar is-large">
+                                    <img src="./src/img/2.png" alt="">
+                                </div>
+                                <div class="meta">
+                                    <span class="dropdown-name">Nguyễn Ngọc Sơn</span>
+                                    <span class="dropdown-office">Quản lý</span>
+                                </div>
+                            </div>
+
+                            <a class="dropdown-item is-media li-menu" href="#">
+                                <div class="icon">
+                                    <i class="fal fa-user"></i>
+                                </div>
+                                <div class="meta">
+                                    <span>Profile</span>
+                                    <span>View your profile</span>
+                                </div>
+                            </a>
+                            <hr class="dropdown-divider">
+
+                            <a class="dropdown-item is-media li-menu" href="#">
+                                <div class="icon">
+                                    <i class="fal fa-user"></i>
+                                </div>
+                                <div class="meta">
+                                    <span>Profile</span>
+                                    <span>View your profile</span>
+                                </div>
+                            </a>
+                            <hr class="dropdown-divider">
+
+                            <a class="dropdown-item is-media li-menu" href="#">
+                                <div class="icon">
+                                    <i class="fal fa-user"></i>
+                                </div>
+                                <div class="meta">
+                                    <span>Profile</span>
+                                    <span>View your profile</span>
+                                </div>
+                            </a>
+                            <hr class="dropdown-divider">
+
+                            <a class="dropdown-item is-media li-menu" href="#">
+                                <div class="icon">
+                                    <i class="fal fa-cog"></i>
+                                </div>
+                                <div class="meta">
+                                    <span>Setting</span>
+                                    <span>Account settings</span>
+                                </div>
+                            </a>
+                            <hr class="dropdown-divider">
+
+                            <div class="dropdown-item is-button">
+                                <button type="button" class="v-button is-fullwidth is-hover">
+                                    <span class="icon">
+                                        <i class="fal fa-sign-out"></i>
+                                    </span>
+                                    <span>Đăng Xuất</span>
+                                </button>
+                            </div>
+
+                        </div>
+                    </div>
+                </ul>
+            </div>
+        </div>
+
+
+        <div class="view-wrapper">
+            <div class="page-content-wrapper">
+                <div class="page-content">
+                    @RenderBody()
                 </div>
             </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
+        </div>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2021 - LibraryManagement.UI - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="./js/_Layout.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
+
+@*<div class="container">
+    <main role="main" class="pb-3">
+        @RenderBody()
+    </main>
+</div>*@

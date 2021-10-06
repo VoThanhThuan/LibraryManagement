@@ -1,0 +1,330 @@
+﻿@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600&display=swap");
+
+html {
+    font-family: "Montserrat", sans-serif;
+}
+
+body {
+    width: 100%;
+    height: 100vh;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    background: #222225;
+    font-weight: 400;
+    line-height: 1.5;
+}
+
+div {
+    color: #a2a5b9;
+}
+
+span {
+    font-style: inherit;
+    font-weight: inherit;
+}
+
+h2 {
+    color: #10cb8a;
+    font-weight: 400;
+    font-size: 1.75rem;
+}
+
+a {
+    text-decoration: none;
+}
+
+p {
+    color: #999999;
+    margin-top: 10px;
+    font-weight: 300;
+    font-family: 'Roboto', sans-serif;
+    font-size: 15px;
+}
+
+input:focus {
+    outline: none;
+}
+
+input {
+    padding-top: 14px;
+    padding-right: 40px;
+    height: 60px;
+    border-radius: 10px;
+    padding-left: 55px;
+    -webkit-transition: all .3s;
+    transition: all .3s;
+    background: #2c2c30;
+    color: #a9a9b2;
+    border: 1.2px solid transparent;
+    width: 300px;
+}
+
+    input[type=checkbox], input[type=radio] {
+        vertical-align: baseline;
+    }
+
+    input:hover {
+        border: .5px solid #404045;
+    }
+
+    input:focus {
+        border-color: #10cb8a !important;
+    }
+
+.is-active {
+    opacity: 1 !important;
+    -webkit-transform: translate(100%) rotate(360deg) !important;
+    transform: translate(100%) rotate(360deg) !important;
+    background-color: #10cb8a !important;
+}
+
+.is-inactive {
+    -webkit-transform: translate(100%) rotate(360deg) !important;
+    transform: translate(100%) rotate(360deg) !important;
+    opacity: 0 !important;
+}
+
+.is-br {
+    border-color: #10cb8a !important;
+}
+
+.is-form {
+    position: relative;
+    max-width: 420px;
+    margin: 0 auto;
+}
+
+    .is-form .hero-body {
+        -webkit-box-flex: 1;
+        -ms-flex-positive: 1;
+        flex-grow: 1;
+        -ms-flex-negative: 0;
+        flex-shrink: 0;
+        padding: 3rem 1.5rem;
+    }
+
+        .is-form .hero-body .form-text {
+            padding: 0 20px;
+        }
+
+        .is-form .hero-body .login-wrapper {
+            padding: 30px 20px;
+        }
+
+            .is-form .hero-body .login-wrapper .control {
+                position: relative;
+                width: 100%;
+                margin-top: 16px;
+                -webkit-box-sizing: border-box;
+                box-sizing: border-box;
+                clear: both;
+                font-size: 14px;
+                position: relative;
+                text-align: inherit;
+            }
+
+                .is-form .hero-body .login-wrapper .control .auth-label {
+                    position: absolute;
+                    top: 6px;
+                    left: 55px;
+                    font-size: 10px;
+                    font-weight: 500;
+                    z-index: 2;
+                    -webkit-transition: all .3s;
+                    transition: all .3s;
+                }
+
+                .is-form .hero-body .login-wrapper .control .auth-icon {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    height: 60px;
+                    width: 60px;
+                    display: -webkit-box;
+                    display: -ms-flexbox;
+                    display: flex;
+                    -webkit-box-pack: center;
+                    -ms-flex-pack: center;
+                    justify-content: center;
+                    -webkit-box-align: center;
+                    -ms-flex-align: center;
+                    align-items: center;
+                }
+
+                    .is-form .hero-body .login-wrapper .control .auth-icon i {
+                        font-size: 24px;
+                        font-weight: lighter;
+                        -webkit-transition: all .3s;
+                        transition: all .3s;
+                    }
+
+            .is-form .hero-body .login-wrapper .is-flex {
+                display: -webkit-box;
+                display: -ms-flexbox;
+                display: flex;
+                -webkit-box-align: center;
+                -ms-flex-align: center;
+                align-items: center;
+            }
+
+                .is-form .hero-body .login-wrapper .is-flex .remember-toggle {
+                    width: 65px;
+                    display: block;
+                    position: relative;
+                    cursor: pointer;
+                    font-size: 22px;
+                    -webkit-user-select: none;
+                    -moz-user-select: none;
+                    -ms-user-select: none;
+                    user-select: none;
+                    -webkit-transform: scale(0.9);
+                    transform: scale(0.9);
+                }
+
+                    .is-form .hero-body .login-wrapper .is-flex .remember-toggle .toggler {
+                        position: relative;
+                        display: block;
+                        height: 34px;
+                        width: 61px;
+                        border: 2px solid #404045;
+                        border-radius: 100px;
+                        -webkit-transition: all .3s;
+                        transition: all .3s;
+                    }
+
+                        .is-form .hero-body .login-wrapper .is-flex .remember-toggle .toggler .active {
+                            position: absolute;
+                            top: 2px;
+                            left: 2px;
+                            height: 26px;
+                            width: 26px;
+                            border-radius: 999px;
+                            background: #404045;
+                            display: -webkit-box;
+                            display: -ms-flexbox;
+                            display: flex;
+                            -webkit-box-pack: center;
+                            -ms-flex-pack: center;
+                            justify-content: center;
+                            -webkit-box-align: center;
+                            -ms-flex-align: center;
+                            align-items: center;
+                            -webkit-transform: translate(0) rotate(0);
+                            transform: translate(0) rotate(0);
+                            -webkit-transition: all .3s ease;
+                            transition: all .3s ease;
+                            border-color: #10cb8a;
+                            opacity: 0;
+                            z-index: 0;
+                        }
+
+                        .is-form .hero-body .login-wrapper .is-flex .remember-toggle .toggler .inactive {
+                            position: absolute;
+                            top: 2px;
+                            left: 2px;
+                            height: 26px;
+                            width: 26px;
+                            border-radius: 999px;
+                            background: #404045;
+                            display: -webkit-box;
+                            display: -ms-flexbox;
+                            display: flex;
+                            -webkit-box-pack: center;
+                            -ms-flex-pack: center;
+                            justify-content: center;
+                            -webkit-box-align: center;
+                            -ms-flex-align: center;
+                            align-items: center;
+                            -webkit-transform: translate(0) rotate(0);
+                            transform: translate(0) rotate(0);
+                            -webkit-transition: all .3s ease;
+                            transition: all .3s ease;
+                            border-color: #cfcfcf;
+                            opacity: 1;
+                            z-index: 1;
+                        }
+
+                        .is-form .hero-body .login-wrapper .is-flex .remember-toggle .toggler svg {
+                            color: #ffffff;
+                            height: 14px;
+                            width: 14px;
+                            stroke-width: 3px;
+                        }
+
+                .is-form .hero-body .login-wrapper .is-flex .remember-me {
+                    font-size: 11px;
+                    color: #999999;
+                    font-weight: 500;
+                }
+
+                .is-form .hero-body .login-wrapper .is-flex a {
+                    display: block;
+                    margin-left: auto;
+                    color: #999999;
+                    font-weight: 500;
+                    font-size: 11px;
+                    -webkit-transition: color .3s;
+                    transition: color .3s;
+                }
+
+                    .is-form .hero-body .login-wrapper .is-flex a:hover {
+                        color: #10cb8a;
+                    }
+
+            .is-form .hero-body .login-wrapper .button-wrap {
+                display: -webkit-box;
+                display: -ms-flexbox;
+                display: flex;
+                -webkit-box-align: center;
+                -ms-flex-align: center;
+                align-items: center;
+                margin: 40px 0;
+            }
+
+                .is-form .hero-body .login-wrapper .button-wrap .button {
+                    height: 46px;
+                    width: 140px;
+                    margin-left: 6px;
+                    border-color: #10cb8a;
+                    background: #10cb8a;
+                    color: #fff;
+                    border-radius: 999px;
+                    border: none;
+                }
+
+                    .is-form .hero-body .login-wrapper .button-wrap .button:hover {
+                        -webkit-box-shadow: 0 14px 26px -12px #10cb8a6b, 0 4px 23px 0 #0000001f, 0 8px 10px -5px #10cb8a33 !important;
+                        box-shadow: 0 14px 26px -12px #10cb8a6b, 0 4px 23px 0 #0000001f, 0 8px 10px -5px #10cb8a33 !important;
+                        opacity: .8;
+                    }
+
+                .is-form .hero-body .login-wrapper .button-wrap .v-button {
+                    padding: 8px 22px;
+                    line-height: 1.1;
+                    font-size: .95rem;
+                    font-family: 'Roboto',sans-serif;
+                    -webkit-transition: all .3s;
+                    transition: all .3s;
+                    cursor: pointer;
+                    margin-right: 12px;
+                }
+
+                .is-form .hero-body .login-wrapper .button-wrap span {
+                    font-size: 14px;
+                    font-family: 'Roboto',sans-serif;
+                }
+
+                    .is-form .hero-body .login-wrapper .button-wrap span a {
+                        color: #10cb8a;
+                        font-weight: 500;
+                        padding: 0 2px;
+                    }
+/*# sourceMappingURL=login.css.map */
