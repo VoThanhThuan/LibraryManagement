@@ -1,15 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Library.Library.Data;
 using Library.Library.Entities;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.Configuration;
 
 namespace LibraryManagement.UI.Controllers
 {
+    [Authorize]
     public class LibraryCodesController : Controller
     {
         private readonly LibraryDbContext _context;
@@ -18,6 +22,7 @@ namespace LibraryManagement.UI.Controllers
         {
             _context = context;
         }
+
 
         // GET: LibraryCodes
         public async Task<IActionResult> Index()

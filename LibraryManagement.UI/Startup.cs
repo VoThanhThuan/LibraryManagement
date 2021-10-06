@@ -12,6 +12,8 @@ using Microsoft.Extensions.Hosting;
 using System;
 using System.IO;
 using System.Text;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Http;
 
 namespace LibraryManagement.UI
 {
@@ -50,11 +52,28 @@ namespace LibraryManagement.UI
                 Console.WriteLine(">>> Đang chạy trên máy tính của [Nguyễn Ngọc Sơn]");
             }
 
+            services.AddIdentity<User, Role>()
+                .AddEntityFrameworkStores<LibraryDbContext>()
+                .AddDefaultTokenProviders();
+
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(options =>
+                {
+                    options.LoginPath = new PathString("/Login");
+                    options.AccessDeniedPath = new PathString("/Login");
+                    options.SlidingExpiration = true;
+                });
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = "/Login";
+
+            });
+
+            services.AddSession(options => { options.IdleTimeout = TimeSpan.FromHours(1); });
+
             MakeMyFoler();
 
-            services.AddIdentity<User, Role>()
-                    .AddEntityFrameworkStores<LibraryDbContext>()
-                    .AddDefaultTokenProviders();
+
             services.AddTransient<RoleManager<Role>, RoleManager<Role>>();
 
             services.AddTransient<IStorageService, FileService>();
@@ -79,12 +98,16 @@ namespace LibraryManagement.UI
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            app.UseAuthentication();
 
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseSession();
 
             app.UseEndpoints(endpoints =>
             {

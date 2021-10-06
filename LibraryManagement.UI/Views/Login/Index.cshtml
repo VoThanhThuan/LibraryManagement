@@ -1,13 +1,19 @@
-﻿<!DOCTYPE html>
-<html lang="en">
+﻿@model Library.Library.Entities.Requests.LoginRequest
+
+@{
+    Layout = null;
+}
+
+
+<!DOCTYPE html>
+<html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
 
-    <link rel="stylesheet" href="../../wwwroot/css/reset.css">
-    <link rel="stylesheet" href="./login.css">
+    <link rel="stylesheet" href="/css/reset.css">
+    <link rel="stylesheet" href="/css/login.css">
 
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.2.0/css/all.css">
 </head>
@@ -18,24 +24,28 @@
                 <h2>Sign In</h2>
                 <p>Welcome back to your account.</p>
             </div>
-            <form action="" class="login-wrapper">
+            <form action="Login" class="login-wrapper" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
                 <div class="control has-validation">
-                    <input type="text" class="input-border ">
+                    <input asp-for="Username" type="text" class="input-border">
                     <div class="auth-label">User Name</div>
                     <div class="auth-icon">
                         <i class="fal fa-user-circle" data-v-624364a8></i>
                     </div>
+                    <span asp-validation-for="Username" class="text-danger"></span>
                 </div>
                 <div class="control has-validation">
-                    <input type="password" class="input-border ">
+                    <input asp-for="Password" type="password" class="input-border">
                     <div class="auth-label">Password</div>
                     <div class="auth-icon">
                         <i class="fal fa-lock-alt" data-v-624364a8=""></i>
                     </div>
+                    <span asp-validation-for="Password" class="text-danger"></span>
                 </div>
 
                 <div class="control is-flex">
-                    <input class="checkbox" type="checkbox" hidden name="">
+                    <input asp-for="RememberMe" class="checkbox" type="checkbox" hidden>
                     <label class="remember-toggle">
                         <span class="toggler">
                             <span class="active">
@@ -74,15 +84,15 @@
         const active = document.querySelector('.active')
         const inactive = document.querySelector('.inactive')
 
-        rememberToggle.addEventListener('click', () =>{
+        rememberToggle.addEventListener('click', () => {
 
-            if(checked.checked != true){
+            if (checked.checked != true) {
                 checked.checked = true
                 inactive.classList.add('is-inactive')
                 active.classList.add('is-active')
                 toggler.classList.add('is-br')
             }
-            else{
+            else {
                 checked.checked = false
                 inactive.classList.remove('is-inactive')
                 active.classList.remove('is-active')

@@ -6,6 +6,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="Views\Login\Index.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="5.0.10" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="5.0.10" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.9" />
@@ -24,6 +28,10 @@
   <ItemGroup>
     <Folder Include="wwwroot\avatar\" />
     <Folder Include="wwwroot\books\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Views\Login\Index.cshtml" />
   </ItemGroup>
 
 </Project>
