@@ -221,8 +221,10 @@ namespace LibraryManagement.UI.Services
             //{
             //    return null;
             //}
-            if (!result.Succeeded)
-                return null;
+
+            //await _signInManager.SignInAsync(user, isPersistent: true);
+            //if (!result.Succeeded)
+            //    return null;
 
             var roles = await _userManager.GetRolesAsync(user); //lấy quyền người dùng
             var claims = new[]

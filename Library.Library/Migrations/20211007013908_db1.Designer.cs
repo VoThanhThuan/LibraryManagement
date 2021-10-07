@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Library.Library.Migrations
 {
     [DbContext(typeof(LibraryDbContext))]
-    [Migration("20211006172458_db2")]
-    partial class db2
+    [Migration("20211007013908_db1")]
+    partial class db1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
