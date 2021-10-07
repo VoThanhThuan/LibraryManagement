@@ -42,14 +42,12 @@ namespace LibraryManagement.UI.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var a = await HttpContext.AuthenticateAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            await HttpContext.AuthenticateAsync();
+            await _user.SignOut();
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return View();
         }
 
         //Login/
-
         [HttpPost]
         public async Task<IActionResult> Index(LoginRequest request)
         {

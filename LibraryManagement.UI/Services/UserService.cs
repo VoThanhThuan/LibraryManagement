@@ -248,6 +248,11 @@ namespace LibraryManagement.UI.Services
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
+        public async Task SignOut()
+        {
+            await _signInManager.SignOutAsync();
+        }
+
         public string DecryptString(string cipherText)
         {
             //<>Mã hóa SymmetricS
