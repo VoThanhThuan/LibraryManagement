@@ -216,10 +216,15 @@ namespace LibraryManagement.UI.Services
             if (user == null) return null;
 
             var result = await _signInManager.PasswordSignInAsync(user, request.Password, request.RememberMe, true);
-            if (!result.Succeeded)
-            {
-                return null;
-            }
+            //var checkpass = _passwordHasher.VerifyHashedPassword(user, user.PasswordHash, request.Password);
+            //if (checkpass != PasswordVerificationResult.Success)
+            //{
+            //    return null;
+            //}
+
+            //await _signInManager.SignInAsync(user, isPersistent: true);
+            //if (!result.Succeeded)
+            //    return null;
 
             var roles = await _userManager.GetRolesAsync(user); //lấy quyền người dùng
             var claims = new[]

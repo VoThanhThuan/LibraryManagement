@@ -53,7 +53,7 @@ namespace Library.Library.Data
                     NormalizedUserName = "ADMIN",
                     SecurityStamp = Guid.NewGuid().ToString()
                 };
-                user0.PasswordHash = _passwordHasher.HashPassword(user0, "Admin123$");
+                user0.PasswordHash = _passwordHasher.HashPassword(user0, "admin");
                 context.Users.Add(user0);
 
                 var idt = Guid.NewGuid();
@@ -68,7 +68,7 @@ namespace Library.Library.Data
                     NormalizedUserName = "ADMIN",
                     SecurityStamp = Guid.NewGuid().ToString()
                 };
-                user1.PasswordHash = _passwordHasher.HashPassword(user1, "Admin123$");
+                user1.PasswordHash = _passwordHasher.HashPassword(user1, "admin");
                 context.Users.Add(user1);
 
                 var ida = Guid.NewGuid();
@@ -83,7 +83,7 @@ namespace Library.Library.Data
                     NormalizedUserName = "LIBRARIAN",
                     SecurityStamp = Guid.NewGuid().ToString()
                 };
-                user2.PasswordHash = _passwordHasher.HashPassword(user2, "Admin123$");
+                user2.PasswordHash = _passwordHasher.HashPassword(user2, "admin");
                 context.Users.Add(user2);
 
                 var ids = Guid.NewGuid();
@@ -98,7 +98,7 @@ namespace Library.Library.Data
                     NormalizedUserName = "LIBRARIAN",
                     SecurityStamp = Guid.NewGuid().ToString()
                 };
-                user3.PasswordHash = _passwordHasher.HashPassword(user3, "Admin123$");
+                user3.PasswordHash = _passwordHasher.HashPassword(user3, "admin");
                 context.Users.Add(user3);
                 await context.SaveChangesAsync();
 
