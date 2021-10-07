@@ -10,6 +10,14 @@
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.2.0/css/all.css">
 </head>
 <body>
+    <!--Thông Báo-->
+    @if (ViewBag.alert != null)
+    {
+        <p>@ViewBag.alert</p>
+        ViewBag.alert = null;
+    }
+    <!--End [Thông Báo]-->
+
     <div id="root" class="modal">
         <!-- Navbar Mobile -->
         <nav class="mobile-main-sidebar">
@@ -139,7 +147,7 @@
 </html>
 
 @*<div class="container">
-    <main role="main" class="pb-3">
-        @RenderBody()
-    </main>
-</div>*@
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>*@

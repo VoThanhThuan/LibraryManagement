@@ -70,6 +70,8 @@ namespace LibraryManagement.UI.Controllers
             var book = await _book.PostBook(request);
                 
             ViewData["IdLibraryCode"] = new SelectList(_context.LibraryCodes, "Id", "Id", book.IdLibraryCode);
+            ViewData["alert"] = $"Đã thêm sách {request.Name} thành công.";
+
             return View(book.ToRequest());
         }
 
@@ -107,6 +109,8 @@ namespace LibraryManagement.UI.Controllers
             var book = await _book.PutBook(request);
 
             ViewData["IdLibraryCode"] = new SelectList(_context.LibraryCodes, "Id", "Id", book.IdLibraryCode);
+            ViewData["alert"] = $"Đã cập nhật sách {request.Name} thành công.";
+
             return View(book);
         }
 
@@ -135,8 +139,10 @@ namespace LibraryManagement.UI.Controllers
         public async Task<IActionResult> DeleteConfirmed(string id)
         {
             var result = await _book.DeleteBook(id);
-            if (result is not 200)
+            if (result is not null)
                 return Conflict();
+            ViewData["alert"] = $"Xóa thành công sách {result.Name}.";
+
             return RedirectToAction(nameof(Index));
         }
 

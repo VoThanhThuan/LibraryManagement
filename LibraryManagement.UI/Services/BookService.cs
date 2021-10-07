@@ -72,17 +72,17 @@ namespace LibraryManagement.UI.Services
             return book;
         }
 
-        public async Task<int> DeleteBook(string id)
+        public async Task<Book> DeleteBook(string id)
         {
             var book = await _context.Books.FindAsync(id);
 
             var result = await _storageService.DeleteFileAsync(book.Thumbnail);
             if (result is not 200)
-                return 500;
+                return null;
             _context.Books.Remove(book);
             await _context.SaveChangesAsync();
 
-            return 200;
+            return book;
             
         }
 

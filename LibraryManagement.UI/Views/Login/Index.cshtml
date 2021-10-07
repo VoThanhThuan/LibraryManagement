@@ -20,6 +20,7 @@
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.2.0/css/all.css">
 </head>
 <body>
+
     <div class="is-form">
         <div class="hero-body">
             <div class="form-text">
@@ -86,21 +87,21 @@
         const active = document.querySelector('.active')
         const inactive = document.querySelector('.inactive')
 
-        rememberToggle.addEventListener('click', () => {
+        rememberToggle.addEventListener('click',
+            () => {
 
-            if (checked.checked != true) {
-                checked.checked = true
-                inactive.classList.add('is-inactive')
-                active.classList.add('is-active')
-                toggler.classList.add('is-br')
-            }
-            else {
-                checked.checked = false
-                inactive.classList.remove('is-inactive')
-                active.classList.remove('is-active')
-                toggler.classList.remove('is-br')
-            }
-        })
+                if (checked.checked != true) {
+                    checked.checked = true
+                    inactive.classList.add('is-inactive')
+                    active.classList.add('is-active')
+                    toggler.classList.add('is-br')
+                } else {
+                    checked.checked = false
+                    inactive.classList.remove('is-inactive')
+                    active.classList.remove('is-active')
+                    toggler.classList.remove('is-br')
+                }
+            })
 
     </script>
 </body>

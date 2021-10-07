@@ -122,6 +122,7 @@ namespace LibraryManagement.UI.Controllers
                     return Conflict();
             }
             ViewData["Roles"] = await _role.GetRoles();
+            ViewData["alert"] = "Đã cập nhật thành công.";
 
             return View(user);
         }
@@ -132,8 +133,11 @@ namespace LibraryManagement.UI.Controllers
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
             var result = await _user.DeleteUser(id);
-            if(result == 200)
+            if (result == 200)
+            {
+                ViewData["alert"] = "Xóa Thành Công.";
                 return RedirectToAction(nameof(Index));
+            }
             return Conflict($"Lỗi xóa {result}");
         }
 

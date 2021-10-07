@@ -73,6 +73,7 @@ namespace LibraryManagement.UI.Controllers
                 CookieAuthenticationDefaults.AuthenticationScheme,
                 userPrincipal,
                 authProperties);
+            ViewData["alert"] = $"Đăng nhập thành công.";
 
             return RedirectToAction("Index", "Home");
         }

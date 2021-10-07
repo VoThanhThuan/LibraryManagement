@@ -64,6 +64,8 @@ namespace LibraryManagement.UI.Controllers
             {
                 _context.Add(genre);
                 await _context.SaveChangesAsync();
+                ViewData["alert"] = "Tạo mới thành công.";
+
                 return RedirectToAction(nameof(Index));
             }
             return View(genre);
@@ -115,6 +117,8 @@ namespace LibraryManagement.UI.Controllers
                         throw;
                     }
                 }
+                ViewData["alert"] = "Cập nhật thành công.";
+
                 return RedirectToAction(nameof(Index));
             }
             return View(genre);
@@ -146,6 +150,8 @@ namespace LibraryManagement.UI.Controllers
             var genre = await _context.Genres.FindAsync(id);
             _context.Genres.Remove(genre);
             await _context.SaveChangesAsync();
+            ViewData["alert"] = "Xóa thành công.";
+
             return RedirectToAction(nameof(Index));
         }
 

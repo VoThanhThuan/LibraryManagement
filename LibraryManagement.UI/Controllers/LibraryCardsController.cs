@@ -65,6 +65,8 @@ namespace LibraryManagement.UI.Controllers
                 libraryCard.Id = Guid.NewGuid();
                 _context.Add(libraryCard);
                 await _context.SaveChangesAsync();
+                ViewData["alert"] = $"Đã thêm mới thẻ thư viên cho sinh viên {libraryCard.MSSV}.";
+
                 return RedirectToAction(nameof(Index));
             }
             return View(libraryCard);
@@ -116,6 +118,8 @@ namespace LibraryManagement.UI.Controllers
                         throw;
                     }
                 }
+                ViewData["alert"] = $"Cập nhật thẻ thư viên của sinh viên {libraryCard.MSSV} thành công.";
+
                 return RedirectToAction(nameof(Index));
             }
             return View(libraryCard);
@@ -147,6 +151,8 @@ namespace LibraryManagement.UI.Controllers
             var libraryCard = await _context.LibraryCards.FindAsync(id);
             _context.LibraryCards.Remove(libraryCard);
             await _context.SaveChangesAsync();
+            ViewData["alert"] = $"Đã xóa thẻ của sinh viên {libraryCard.MSSV}.";
+
             return RedirectToAction(nameof(Index));
         }
 

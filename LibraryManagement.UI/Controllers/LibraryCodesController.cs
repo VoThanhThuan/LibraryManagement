@@ -65,6 +65,8 @@ namespace LibraryManagement.UI.Controllers
             {
                 _context.Add(libraryCode);
                 await _context.SaveChangesAsync();
+                ViewData["alert"] = "Tạo mới mã thư viện thành công.";
+
                 return RedirectToAction(nameof(Index));
             }
             return View(libraryCode);
@@ -116,6 +118,8 @@ namespace LibraryManagement.UI.Controllers
                         throw;
                     }
                 }
+                ViewData["alert"] = $"Cập nhật thành công {libraryCode.Name}.";
+
                 return RedirectToAction(nameof(Index));
             }
             return View(libraryCode);
@@ -147,6 +151,8 @@ namespace LibraryManagement.UI.Controllers
             var libraryCode = await _context.LibraryCodes.FindAsync(id);
             _context.LibraryCodes.Remove(libraryCode);
             await _context.SaveChangesAsync();
+            ViewData["alert"] = $"Xóa thành công {libraryCode.Name}.";
+
             return RedirectToAction(nameof(Index));
         }
 
