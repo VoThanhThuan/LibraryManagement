@@ -91,7 +91,18 @@
         rememberToggle.addEventListener('click',
             () => {
 
-<<<<<<< HEAD
+                if (checked.checked != true) {
+                    checked.checked = true
+                    inactive.classList.add('is-inactive')
+                    active.classList.add('is-active')
+                    toggler.classList.add('is-br')
+                } else {
+                    checked.checked = false
+                    inactive.classList.remove('is-inactive')
+                    active.classList.remove('is-active')
+                    toggler.classList.remove('is-br')
+                }
+            })
             if (checked.checked != true) {
                 checked.checked = true
                 inactive.classList.add('is-inactive')
@@ -107,20 +118,6 @@
                 remember.classList.remove('is-remember')
             }
         })
-=======
-                if (checked.checked != true) {
-                    checked.checked = true
-                    inactive.classList.add('is-inactive')
-                    active.classList.add('is-active')
-                    toggler.classList.add('is-br')
-                } else {
-                    checked.checked = false
-                    inactive.classList.remove('is-inactive')
-                    active.classList.remove('is-active')
-                    toggler.classList.remove('is-br')
-                }
-            })
->>>>>>> 9c2a1478e87e85f8637cf699c4b7e455f5d53afe
 
     </script>
 </body>
