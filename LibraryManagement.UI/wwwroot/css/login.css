@@ -86,6 +86,10 @@ input {
     background-color: #10cb8a !important;
 }
 
+.is-remember {
+    color: #10cb8a !important;
+}
+
 .is-inactive {
     -webkit-transform: translate(100%) rotate(360deg) !important;
     transform: translate(100%) rotate(360deg) !important;

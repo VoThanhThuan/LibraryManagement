@@ -83,6 +83,7 @@
         const toggler = document.querySelector('.toggler')
         const active = document.querySelector('.active')
         const inactive = document.querySelector('.inactive')
+        const remember = document.querySelector('.remember-me')
 
         rememberToggle.addEventListener('click', () => {
 
@@ -91,12 +92,14 @@
                 inactive.classList.add('is-inactive')
                 active.classList.add('is-active')
                 toggler.classList.add('is-br')
+                remember.classList.add('is-remember')
             }
             else {
                 checked.checked = false
                 inactive.classList.remove('is-inactive')
                 active.classList.remove('is-active')
                 toggler.classList.remove('is-br')
+                remember.classList.remove('is-remember')
             }
         })
 
