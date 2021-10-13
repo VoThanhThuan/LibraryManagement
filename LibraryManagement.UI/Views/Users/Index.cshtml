@@ -55,7 +55,7 @@
                         <div class="flex-table-item">
                             <div class="flex-table-cell is-media is-grow2">
                                 <div class="is-avatar is-medium">
-                                    <img class="avatar" src="./src/img/2.png" alt="">
+                                    <img class="avatar" src="@item.Avatar" alt="">
                                 </div>
                                 <div>
                                     <span class="item-name">@Html.DisplayFor(modelItem => item.Nickname)</span>
@@ -88,51 +88,11 @@
                                 <span class="light-text"> @Html.DisplayFor(modelItem => item.Address)</span>
                             </div>
                             <div class="flex-table-cell call-end">
-                                @*<div class="is-right dropdown is-pushed-mobile">
-            <a href="#" class="is-trigger dropdown-trigger" data-v-25f969c0="">
-                <span data-v-25f969c0=""><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--feather" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" data-icon="feather:more-vertical"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1"></circle><circle cx="12" cy="5" r="1"></circle><circle cx="12" cy="19" r="1"></circle></g></svg></span>
-            </a>
-        </div>*@
-                                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-
-                                <div class="dropdown-menu-flex" data-v-25f969c0="" data-hide="">
-                                    <div class="dropdown-content-flex" data-v-25f969c0="">
-                                        <a class="is-media-flex" href="#">
-                                            <div class="icon-flex">
-                                                <i class="fal fa-eye"></i>
-                                            </div>
-                                            <div class="meta-flex">
-                                                <span>Xem</span>
-                                                <span>Xem thông tin</span>
-                                            </div>
-                                        </a>
-                                    </div>
-                                    <div class="dropdown-content-flex" data-v-25f969c0="">
-                                        <a class="is-media-flex" href="#">
-                                            <div class="icon-flex">
-                                                <i class="fas fa-wrench"></i>
-                                            </div>
-                                            <div class="meta-flex">
-                                                <span>Sửa</span>
-                                                <span>Sửa thông tin</span>
-                                            </div>
-                                        </a>
-                                    </div>
-                                    <hr class="dropdown-divider-flex">
-                                    <div class="dropdown-content-flex" data-v-25f969c0="">
-                                        <a class="is-media-flex" href="#">
-                                            <div class="icon-flex">
-                                                <i class="fal fa-trash-alt"></i>
-                                            </div>
-                                            <div class="meta-flex">
-                                                <span>Xóa</span>
-                                                <span>Xóa khỏi danh sách</span>
-                                            </div>
-                                        </a>
-                                    </div>
-                                </div>
+                                <div class="">
+                                    <a asp-action="Edit" asp-route-id="@item.Id"><i class="fal fa-wrench"></i></a> |
+                                    <a asp-action="Details" asp-route-id="@item.Id"><i class="fal fa-info-circle"></i></a> |
+                                    <a asp-action="Delete" asp-route-id="@item.Id"><i class="fal fa-trash-alt"></i></a>
+                                </div>   
                             </div>
                         </div>
                     </div>
@@ -143,77 +103,3 @@
     </div>
 </div> 
 
-@*<h1>Index</h1>
-
-    <p>
-        <a asp-action="Create">Create New</a>
-    </p>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Nickname)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Username)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Avatar)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Dob)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.sex)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Address)
-                </th>
-
-                <th>
-                    @Html.DisplayNameFor(model => model.Email)
-                </th>
-
-                <th>
-                    @Html.DisplayNameFor(model => model.PhoneNumber)
-                </th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-
-    @foreach (var item in Model) {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Nickname)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Username)
-                </td>
-                <td>
-                    <img src="@item.Avatar" alt="@item.Nickname" width="64px" height="64px" />
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Dob)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.sex)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Address)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Email)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.PhoneNumber)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                </td>
-            </tr>
-    }
-        </tbody>
-    </table>*@

@@ -1,4 +1,21 @@
-﻿.page-title {
+﻿.isprimary{
+    color: #10cb8a !important;
+}
+.is-gray{
+    color: #a2a5b9 !important;
+}
+.i-checked {
+    background-color: #10cb8a !important;
+}
+    .i-checked::after {
+        background: #fff !important;
+        transform: translate3d(22px, 2px, 0) !important;
+    }
+    
+
+
+
+.page-title {
     position: relative;
     height: 6rem;
     margin-bottom: 2rem;
@@ -495,3 +512,434 @@
                 line-height: 1.2;
             }
 /*# sourceMappingURL=index.css.map */
+
+/*Form Create, edit, delete, detels*/
+h3 {
+    font-size: 1.7rem !important;
+    font-weight: 600 !important;
+    line-height: 1.3;
+    font-family: "Montserrat", sans-serif;
+}
+
+.is-stuck {
+    position: fixed;
+    top: 0;
+    left: 0;
+    margin-left: 8rem;
+    width: calc(100% - 8rem);
+    z-index: 14;
+    padding-right: 80px;
+    border-left: .1rem solid #404045;
+    background: #222225;
+}
+
+.form-layout {
+    max-width: 74rem;
+    margin: 0 auto;
+}
+
+    .form-layout .form-outer {
+        -webkit-box-flex: 1;
+        -ms-flex: 1;
+        flex: 1;
+        display: inline-block;
+        width: 100%;
+        padding: .2rem;
+        background-color: #313135;
+        border-radius: .6rem;
+        border: .1rem solid #404045;
+        -webkit-transition: all 0.3s;
+        transition: all 0.3s;
+        padding: 0;
+    }
+
+        .form-layout .form-outer .form-header {
+            padding: 1.2rem 2rem;
+            border-color: #404045;
+            border-bottom: .1rem solid #404045;
+            -webkit-transition: all 0.3s;
+            transition: all 0.3s;
+        }
+
+        .form-layout .form-outer .form-header-inner {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            align-items: center;
+            -webkit-box-pack: justify;
+            -ms-flex-pack: justify;
+            justify-content: space-between;
+        }
+
+            .form-layout .form-outer .form-header-inner .left {
+                color: #a9a9b2;
+            }
+
+            .form-layout .form-outer .form-header-inner .right .buttons {
+                -webkit-box-align: center;
+                -ms-flex-align: center;
+                align-items: center;
+                display: -webkit-box;
+                display: -ms-flexbox;
+                display: flex;
+                -ms-flex-wrap: wrap;
+                flex-wrap: wrap;
+                -webkit-box-pack: start;
+                -ms-flex-pack: start;
+                justify-content: flex-start;
+                margin-bottom: -.7rem;
+            }
+
+                .form-layout .form-outer .form-header-inner .right .buttons .button {
+                    cursor: pointer;
+                    -webkit-appearance: none;
+                    -webkit-box-align: center;
+                    -ms-flex-align: center;
+                    align-items: center;
+                    border: 1px solid transparent;
+                    border-radius: 4px;
+                    -webkit-box-shadow: none;
+                    box-shadow: none;
+                    display: -webkit-inline-box;
+                    display: -ms-inline-flexbox;
+                    display: inline-flex;
+                    position: relative;
+                    vertical-align: top;
+                    margin-bottom: .7rem;
+                }
+
+                .form-layout .form-outer .form-header-inner .right .buttons .v-button {
+                    padding: 8px 22px 8px 22px;
+                    height: 38px;
+                    line-height: 1.1;
+                    font-size: 1.35rem;
+                    font-family: "Roboto", sans-serif;
+                    -webkit-transition: all 0.3s;
+                    transition: all 0.3s;
+                }
+
+                .form-layout .form-outer .form-header-inner .right .buttons .is-primary {
+                    background: #3b3b40;
+                    border-color: #404045;
+                    color: #a9a9b2;
+                }
+
+                    .form-layout .form-outer .form-header-inner .right .buttons .is-primary:hover {
+                        border-color: #10cb8a;
+                        color: #10cb8a;
+                    }
+
+                .form-layout .form-outer .form-header-inner .right .buttons .is-dark-outline {
+                    color: #a9a9b2;
+                    background: #3b3b40;
+                    border-color: #404045;
+                }
+
+                    .form-layout .form-outer .form-header-inner .right .buttons .is-dark-outline:hover {
+                        border-color: #10cb8a;
+                        color: #10cb8a;
+                    }
+
+                        .form-layout .form-outer .form-header-inner .right .buttons .is-dark-outline:hover i {
+                            color: #10cb8a;
+                        }
+
+                    .form-layout .form-outer .form-header-inner .right .buttons .is-dark-outline .icon {
+                        -webkit-box-align: center;
+                        -ms-flex-align: center;
+                        align-items: center;
+                        display: -webkit-inline-box;
+                        display: -ms-inline-flexbox;
+                        display: inline-flex;
+                        -webkit-box-pack: center;
+                        -ms-flex-pack: center;
+                        justify-content: center;
+                        margin-left: calc(-0.5em - 1px);
+                        margin-right: 0.25em;
+                    }
+
+                        .form-layout .form-outer .form-header-inner .right .buttons .is-dark-outline .icon i {
+                            font-size: 1.4rem;
+                        }
+
+                    .form-layout .form-outer .form-header-inner .right .buttons .is-dark-outline span {
+                        font-style: inherit;
+                        font-weight: inherit;
+                    }
+
+                .form-layout .form-outer .form-header-inner .right .buttons .button:not(:last-child) {
+                    margin-right: .7rem;
+                }
+
+        .form-layout .form-outer .form-body {
+            padding: 2rem 4rem 4rem 4rem;
+        }
+
+            .form-layout .form-outer .form-body .form-fieldset {
+                padding: 2rem 0;
+                max-width: 48rem;
+                margin: 0 auto;
+            }
+
+                .form-layout .form-outer .form-body .form-fieldset .fieldset-heading {
+                    margin-bottom: 2rem;
+                }
+
+                    .form-layout .form-outer .form-body .form-fieldset .fieldset-heading h4 {
+                        font-weight: bolder;
+                        font-size: 1.6rem;
+                        color: #a9a9b2;
+                        font-family: "Montserrat", sans-serif;
+                    }
+
+                    .form-layout .form-outer .form-body .form-fieldset .fieldset-heading p {
+                        font-size: 1.2rem;
+                        font-weight: 500;
+                    }
+
+                .form-layout .form-outer .form-body .form-fieldset .columns {
+                    display: -webkit-box;
+                    display: -ms-flexbox;
+                    display: flex;
+                    margin-left: -1.05rem;
+                    margin-right: -1.05rem;
+                    margin-top: -1.05rem;
+                }
+
+                    .form-layout .form-outer .form-body .form-fieldset .columns .column {
+                        padding-top: .7rem;
+                        padding-bottom: .7rem;
+                        padding: 1.05rem;
+                        display: block;
+                        -ms-flex-preferred-size: 0;
+                        flex-basis: 0;
+                        -webkit-box-flex: 1;
+                        -ms-flex-positive: 1;
+                        flex-grow: 1;
+                        -ms-flex-negative: 1;
+                        flex-shrink: 1;
+                    }
+
+                    .form-layout .form-outer .form-body .form-fieldset .columns:last-child {
+                        margin-bottom: -1.05rem;
+                    }
+
+                .form-layout .form-outer .form-body .form-fieldset .is-multiline {
+                    -ms-flex-wrap: wrap;
+                    flex-wrap: wrap;
+                }
+
+                    .form-layout .form-outer .form-body .form-fieldset .is-multiline .is-6 {
+                        -webkit-box-flex: 0;
+                        -ms-flex: none;
+                        flex: none;
+                        width: 50%;
+                    }
+
+                    .form-layout .form-outer .form-body .form-fieldset .is-multiline .is-12 {
+                        -webkit-box-flex: 0;
+                        -ms-flex: none;
+                        flex: none;
+                        width: 100%;
+                    }
+
+                .form-layout .form-outer .form-body .form-fieldset .field {
+                    font-family: "Roboto", sans-serif;
+                    font-size: 1.26rem;
+                    color: #a2a5b9 !important;
+                }
+
+                    .form-layout .form-outer .form-body .form-fieldset .field .control {
+                        -webkit-box-sizing: border-box;
+                        box-sizing: border-box;
+                        clear: both;
+                        font-size: 1.6rem;
+                        position: relative;
+                        text-align: inherit;
+                        margin-top: .5rem;
+                    }
+
+                        .form-layout .form-outer .form-body .form-fieldset .field .control .input {
+                            width: 100%;
+                            max-width: 100%;
+                            height: 38px;
+                            padding: .6rem .95rem .6rem 3.8rem;
+                            -webkit-transition: all .3s;
+                            transition: all .3s;
+                            color: #a9a9b2;
+                            border: none;
+                            border-radius: .3rem;
+                            background-color: #27272a;
+                        }
+
+                        .form-layout .form-outer .form-body .form-fieldset .field .control .choose-file {
+                            width: 100%;
+                            height: 38px;
+                            border: none;
+                            border-radius: .3rem;
+                            padding: .8rem .95rem .6rem 1rem;
+                            background-color: #27272a;
+                        }
+
+                        .form-layout .form-outer .form-body .form-fieldset .field .control .radio-sex {
+                            display: -webkit-box;
+                            display: -ms-flexbox;
+                            display: flex;
+                            -webkit-box-align: center;
+                            -ms-flex-align: center;
+                            align-items: center;
+                            -webkit-box-pack: space-evenly;
+                            -ms-flex-pack: space-evenly;
+                            justify-content: space-evenly;
+                            padding: 0 !important;
+                        }
+
+                            .form-layout .form-outer .form-body .form-fieldset .field .control .radio-sex i {
+                                font-size: 1.8rem;
+                            }
+
+                            .form-layout .form-outer .form-body .form-fieldset .field .control .radio-sex span {
+                                font-size: 1.4rem;
+                            }
+
+                        .form-layout .form-outer .form-body .form-fieldset .field .control .switch-block {
+                            padding: 1rem 0;
+                            padding-left: 1rem;
+                            display: -webkit-box;
+                            display: -ms-flexbox;
+                            display: flex;
+                            -webkit-box-align: center;
+                            -ms-flex-align: center;
+                            align-items: center;
+                        }
+
+                            .form-layout .form-outer .form-body .form-fieldset .field .control .switch-block .form-switch {
+                                position: relative;
+                                display: inline-block;
+                                cursor: pointer;
+                                -webkit-tap-highlight-color: transparent;
+                            }
+
+                                .form-layout .form-outer .form-body .form-fieldset .field .control .switch-block .form-switch .is-switch {
+                                    position: absolute;
+                                    opacity: 0;
+                                    pointer-events: none;
+                                    vertical-align: baseline;
+                                }
+
+                                .form-layout .form-outer .form-body .form-fieldset .field .control .switch-block .form-switch i {
+                                    position: relative;
+                                    display: inline-block;
+                                    width: 4.6rem;
+                                    height: 2.6rem;
+                                    background-color: #222225;
+                                    border-radius: 2.3rem;
+                                    vertical-align: text-bottom;
+                                    -webkit-transition: all 0.3s linear;
+                                    transition: all 0.3s linear;
+                                }
+
+                                    .form-layout .form-outer .form-body .form-fieldset .field .control .switch-block .form-switch i::before {
+                                        content: "";
+                                        position: absolute;
+                                        left: 0;
+                                        width: 4.2rem;
+                                        height: 2.2rem;
+                                        border-radius: 1.1rem;
+                                        -webkit-transform: translate3d(0.2rem, 2px, 0) scale3d(1, 1, 1);
+                                        transform: translate3d(0.2rem, 2px, 0) scale3d(1, 1, 1);
+                                        -webkit-transition: all 0.25s linear;
+                                        transition: all 0.25s linear;
+                                    }
+
+                                    .form-layout .form-outer .form-body .form-fieldset .field .control .switch-block .form-switch i::after {
+                                        content: "";
+                                        position: absolute;
+                                        left: 0;
+                                        width: 22px;
+                                        height: 22px;
+                                        background-color: #58585f;
+                                        border-radius: 11px;
+                                        -webkit-transform: translate3d(2px, 2px, 0);
+                                        transform: translate3d(2px, 2px, 0);
+                                        -webkit-transition: all 0.2s ease-in-out;
+                                        transition: all 0.2s ease-in-out;
+                                    }
+
+                                .form-layout .form-outer .form-body .form-fieldset .field .control .switch-block .form-switch:active i::after {
+                                    width: 2.8rem;
+                                    -webkit-transform: translate3d(2px, 2px, 0);
+                                    transform: translate3d(2px, 2px, 0);
+                                }
+
+                                .form-layout .form-outer .form-body .form-fieldset .field .control .switch-block .form-switch:active input:checked + i::after {
+                                    -webkit-transform: translate3d(16px, 2px, 0);
+                                    transform: translate3d(16px, 2px, 0);
+                                }
+
+                                .form-layout .form-outer .form-body .form-fieldset .field .control .switch-block .form-switch input:checked + i {
+                                    background-color: #10cb8a !important;
+                                }
+
+                                    .form-layout .form-outer .form-body .form-fieldset .field .control .switch-block .form-switch input:checked + i::before {
+                                        -webkit-transform: translate3d(18px, 2px, 0) scale3d(0, 0, 0) !important;
+                                        transform: translate3d(18px, 2px, 0) scale3d(0, 0, 0) !important;
+                                    }
+
+                                    .form-layout .form-outer .form-body .form-fieldset .field .control .switch-block .form-switch input:checked + i::after {
+                                        background: #fff !important;
+                                        -webkit-transform: translate3d(22px, 2px, 0);
+                                        transform: translate3d(22px, 2px, 0);
+                                    }
+
+                            .form-layout .form-outer .form-body .form-fieldset .field .control .switch-block .text {
+                                margin-left: 6px;
+                                font-weight: 600;
+                                font-size: 1.2rem;
+                            }
+
+                                .form-layout .form-outer .form-body .form-fieldset .field .control .switch-block .text span:nth-child(1) {
+                                    color: #a2a5b9;
+                                }
+
+                                .form-layout .form-outer .form-body .form-fieldset .field .control .switch-block .text span:nth-child(3) {
+                                    color: #10cb8a;
+                                }
+
+                        .form-layout .form-outer .form-body .form-fieldset .field .control .input:focus ~ .form-icon {
+                            -webkit-transition: .3s ease-in;
+                            transition: .3s ease-in;
+                            color: #10cb8a;
+                        }
+
+                        .form-layout .form-outer .form-body .form-fieldset .field .control .input:focus {
+                            border: .1rem solid #10cb8a;
+                            -webkit-transition: .3s ease-in;
+                            transition: .3s ease-in;
+                        }
+
+                        .form-layout .form-outer .form-body .form-fieldset .field .control .form-icon {
+                            position: absolute;
+                            top: 0;
+                            left: 0;
+                            height: 4rem;
+                            width: 4rem;
+                            font-weight: 600;
+                            display: -webkit-box;
+                            display: -ms-flexbox;
+                            display: flex;
+                            -webkit-box-pack: center;
+                            -ms-flex-pack: center;
+                            justify-content: center;
+                            -webkit-box-align: center;
+                            -ms-flex-align: center;
+                            align-items: center;
+                            color: #9397ae;
+                        }
+
+                            .form-layout .form-outer .form-body .form-fieldset .field .control .form-icon svg {
+                                font-size: 18px;
+                            }
+/*# sourceMappingURL=account.css.map */

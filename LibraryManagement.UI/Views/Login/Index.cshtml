@@ -90,35 +90,21 @@
 
         rememberToggle.addEventListener('click',
             () => {
-
                 if (checked.checked != true) {
                     checked.checked = true
                     inactive.classList.add('is-inactive')
                     active.classList.add('is-active')
                     toggler.classList.add('is-br')
-                } else {
+                    remember.classList.add('is-remember')
+                }
+                else {
                     checked.checked = false
                     inactive.classList.remove('is-inactive')
                     active.classList.remove('is-active')
                     toggler.classList.remove('is-br')
+                    remember.classList.remove('is-remember')
                 }
             })
-            if (checked.checked != true) {
-                checked.checked = true
-                inactive.classList.add('is-inactive')
-                active.classList.add('is-active')
-                toggler.classList.add('is-br')
-                remember.classList.add('is-remember')
-            }
-            else {
-                checked.checked = false
-                inactive.classList.remove('is-inactive')
-                active.classList.remove('is-active')
-                toggler.classList.remove('is-br')
-                remember.classList.remove('is-remember')
-            }
-        })
-
     </script>
 </body>
 </html>
