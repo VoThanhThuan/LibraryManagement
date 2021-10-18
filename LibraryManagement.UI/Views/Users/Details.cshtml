@@ -111,29 +111,16 @@
                                 <label>Sex</label>
                                 <div class="control">
                                     <div class="switch-block input">
-                                        @if (Model.sex != true)
+                                        @if (Model.sex == true)
                                         {
-                                            <label class="form-switch">
-                                                <i></i>
-                                            </label>
                                             <div class="text">
-                                                <span class="text-librarian">Male</span>
-                                                <span>&nbsp; | &nbsp;</span>
-                                                <span class="text-admin" style="color:#808080">Female</span>
+                                                <span class="text-librarian">Nam</span>
                                             </div>
                                         }
                                         else
                                         {
-                                            <label  class="form-switch">
-                                                <i class="i-checked"></i>
-                                            </label>
-                                            <div class="text">
-                                                <span class="text-librarian isprimary">Male</span>
-                                                <span>&nbsp; | &nbsp;</span>
-                                                <span class="text-admin is-gray">Female</span>
-                                            </div>
+                                            <span class="text-librarian">Nữ</span>
                                         }
-
                                     </div>
                                 </div>
                             </div>

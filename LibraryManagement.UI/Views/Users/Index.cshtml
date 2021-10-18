@@ -88,11 +88,17 @@
                                 <span class="light-text"> @Html.DisplayFor(modelItem => item.Address)</span>
                             </div>
                             <div class="flex-table-cell call-end">
-                                <div class="">
-                                    <a asp-action="Edit" asp-route-id="@item.Id"><i class="fal fa-wrench"></i></a> |
-                                    <a asp-action="Details" asp-route-id="@item.Id"><i class="fal fa-info-circle"></i></a> |
+                                <div class="icon-action">
+                                    <a class="" asp-action="Edit" asp-route-id="@item.Id"><i class="fal fa-wrench"></i></a>
+                                </div>
+                                <span class="span-seperate">|</span>
+                                <div class="icon-action">
+                                    <a asp-action="Details" asp-route-id="@item.Id"><i class="fal fa-info-circle"></i></a>
+                                </div>
+                                <span class="span-seperate">|</span>
+                                <div class="icon-action">
                                     <a asp-action="Delete" asp-route-id="@item.Id"><i class="fal fa-trash-alt"></i></a>
-                                </div>   
+                                </div>
                             </div>
                         </div>
                     </div>
