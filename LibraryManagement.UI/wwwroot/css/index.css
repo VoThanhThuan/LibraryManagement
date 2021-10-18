@@ -16,6 +16,11 @@
     height: 20px;
 }
 
+
+.flex-table-6 {
+    
+    flex: 6 !important;
+}
 .icon-action {
     padding: 1.5rem;
 }
@@ -25,6 +30,14 @@
 .span-seperate {
     font-size: 2rem;
 }
+.lt-300 {
+    font-weight: 300;
+    font-size: 1.5rem !important;
+}
+.lt-1_5 {
+    font-size: 1.5rem !important;
+}
+
 
 .page-title {
     position: relative;
@@ -247,6 +260,11 @@
         -ms-flex-positive: 2;
         flex-grow: 2;
     }
+    .page-content-inner .flex-table .is-grow-7 {
+        -webkit-box-flex: 7;
+        -ms-flex-positive: 7;
+        flex-grow: 7;
+    }
 
     .page-content-inner .flex-table .call-end {
         -webkit-box-pack: end;
@@ -315,6 +333,7 @@
             padding: 0 5px;
             font-family: 'Roboto',sans-serif;
         }
+
 
             .page-content-inner .flex-table-item .flex-table-cell .is-avatar {
                 position: relative;
@@ -818,6 +837,17 @@ h3 {
                             -ms-flex-pack: space-evenly;
                             justify-content: space-evenly;
                             padding: 0 !important;
+                        }
+                        .form-layout .form-outer .form-body .form-fieldset .field .control .textarea {
+                            display: block;
+                            max-width: 100%;
+                            min-width: 100%;
+                            padding: calc(2rem - .1rem);
+                            resize: vertical;
+                            color: #a9a9b2;
+                            border-radius: .3rem;
+                            background: #27272a;
+                            border-color: #313135;
                         }
 
                             .form-layout .form-outer .form-body .form-fieldset .field .control .radio-sex i {
