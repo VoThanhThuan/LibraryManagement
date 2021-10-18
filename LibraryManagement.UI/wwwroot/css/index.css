@@ -1,5 +1,24 @@
-﻿.isprimary{
-    color: #10cb8a !important;
+﻿
+::-webkit-scrollbar {
+    width: 1.8rem;
+}
+
+::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #a8bbbf;
+    border-radius: 2rem;
+    border: .6rem solid transparent;
+    background-clip: content-box;
+}
+
+   
+
+
+.isprimary{
+color: #10cb8a !important;
 }
 .is-gray{
     color: #a2a5b9 !important;
@@ -15,7 +34,16 @@
     width: 20px;
     height: 20px;
 }
-
+.text-overflow {
+    width: 100%;
+    max-width: 800px;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    line-height: 1.5;
+}
 
 .flex-table-6 {
     
@@ -842,12 +870,14 @@ h3 {
                             display: block;
                             max-width: 100%;
                             min-width: 100%;
-                            padding: calc(2rem - .1rem);
+                            padding: calc(1.5rem - .1rem);
                             resize: vertical;
                             color: #a9a9b2;
                             border-radius: .3rem;
                             background: #27272a;
                             border-color: #313135;
+                            font-size: 1.5rem;
+                           
                         }
 
                             .form-layout .form-outer .form-body .form-fieldset .field .control .radio-sex i {
