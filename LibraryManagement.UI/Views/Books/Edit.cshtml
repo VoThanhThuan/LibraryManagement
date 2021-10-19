@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@*<div class="page-title text-center">
+<div class="page-title text-center">
     <span class="menu-toggle">
         <span class="icon-box-toggle">
             <span>
@@ -22,8 +22,7 @@
 
 <div class="page-content-inner">
 
-     Form create 
-    <form action="" class="form-layout">
+    <form asp-action="Edit" class="form-layout">
         <div class="form-outer">
             <div class="form-header">
                 <div class="form-header-inner">
@@ -87,7 +86,7 @@
                             <div class="field">
                                 <label>Chọn Ảnh Bìa</label>
                                 <div class="control has-icon">
-                                    <input type="file" value="" class="choose-file" asp-for="Thumbnail">
+                                    <input type="file"  class="choose-file" asp-for="Thumbnail">
                                     <span><Label for="choose-file"></Label></span>
                                 </div>
                             </div>
@@ -176,9 +175,9 @@
         </div>
     </form>
 
-</div>*@
+</div>
 
-<h1>Edit</h1>
+@*<h1>Edit</h1>
 
     <h4>Book</h4>
     <hr />
@@ -246,7 +245,7 @@
 
     <div>
         <a asp-action="Index">Back to List</a>
-    </div>
+    </div>*@
 
     @*@section Scripts {
         @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
