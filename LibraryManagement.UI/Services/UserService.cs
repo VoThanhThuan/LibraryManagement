@@ -82,7 +82,10 @@ namespace LibraryManagement.UI.Services
             if (!string.IsNullOrEmpty(text.RemoveSpaces(request.Password)))
                 user.PasswordHash = _passwordHasher.HashPassword(user, request.Password);
             if (request.Avatar != null)
+            {
+                await DeleteFile(user.Avatar);
                 user.Avatar = await SaveFile(request.Avatar);
+            }
 
             //_context.Entry(request.ToUser()).State = EntityState.Modified;
 

@@ -42,14 +42,14 @@ namespace LibraryManagement.UI.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var a = await HttpContext.AuthenticateAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            await HttpContext.AuthenticateAsync();
+            //var a = await HttpContext.AuthenticateAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            //await HttpContext.AuthenticateAsync();
+            
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return View();
         }
 
         //Login/
-
         [HttpPost]
         public async Task<IActionResult> Index(LoginRequest request)
         {
@@ -68,7 +68,7 @@ namespace LibraryManagement.UI.Controllers
             var authProperties = new AuthenticationProperties
             {
                 ExpiresUtc = DateTimeOffset.UtcNow.AddHours(1),
-                IsPersistent = true //xác thực mỗi lần mở lại browser
+                IsPersistent = request.RememberMe //xác thực mỗi lần mở lại browser
             };
             HttpContext.Session.SetString(scs.Token, token);
             await HttpContext.SignInAsync(

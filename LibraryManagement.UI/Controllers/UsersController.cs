@@ -27,7 +27,7 @@ namespace LibraryManagement.UI.Controllers
             _role = role;
         }
 
-
+        [Authorize]
         // GET: Users
         public async Task<IActionResult> Index()
         {
@@ -76,6 +76,7 @@ namespace LibraryManagement.UI.Controllers
                 else
                     return Conflict();
             }
+            ViewData["Roles"] = await _role.GetRoles();
             return View(user);
         }
 
@@ -126,6 +127,13 @@ namespace LibraryManagement.UI.Controllers
             return View(user);
         }
 
+        // POST: Users/Delete/5
+        [HttpGet]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            var user = await _user.GetUser(id);
+            return View(user);
+        }
         // POST: Users/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]

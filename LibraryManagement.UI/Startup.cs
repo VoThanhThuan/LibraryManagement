@@ -56,12 +56,17 @@ namespace LibraryManagement.UI
                 .AddEntityFrameworkStores<LibraryDbContext>()
                 .AddDefaultTokenProviders();
 
-            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+            services.AddAuthentication(options =>
+                {
+                    options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                    options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                    options.DefaultSignOutScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                })
                 .AddCookie(options =>
                 {
                     options.LoginPath = new PathString("/Login");
                     options.AccessDeniedPath = new PathString("/Login");
-                    options.SlidingExpiration = true;
+                    //options.SlidingExpiration = true;
                 });
             services.ConfigureApplicationCookie(options =>
             {
