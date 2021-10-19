@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="page-title text-center">
+@*<div class="page-title text-center">
     <span class="menu-toggle">
         <span class="icon-box-toggle">
             <span>
@@ -22,7 +22,7 @@
 
 <div class="page-content-inner">
 
-    <!-- Form create -->
+     Form create 
     <form action="" class="form-layout">
         <div class="form-outer">
             <div class="form-header">
@@ -38,7 +38,7 @@
                                 </div>
                                 <span>Cancel</span>
                             </a>
-                            <button type="submit" value="Save" class="button v-button is-primary">Edit</button>
+                            <input type="submit" value="Edit" class="button v-button is-primary">
                         </div>
                     </div>
                 </div>
@@ -87,7 +87,7 @@
                             <div class="field">
                                 <label>Chọn Ảnh Bìa</label>
                                 <div class="control has-icon">
-                                    <input type="file" value="" class="choose-file">
+                                    <input type="file" value="" class="choose-file" asp-for="Thumbnail">
                                     <span><Label for="choose-file"></Label></span>
                                 </div>
                             </div>
@@ -163,7 +163,7 @@
                             <div class="field">
                                 <label>Hạng Mượn</label>
                                 <div class="control has-icon">
-                                    <select asp-for="Rank" class="input"></select>
+                                    <select asp-for="Rank" class="input" asp-items="ViewBag.Rank"></select>
                                     <div class="form-icon" data-v-aad2da70="">
                                         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--feather" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" data-icon="feather:mail" data-v-aad2da70=""><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><path d="M22 6l-10 7L2 6"></path></g></svg>
                                     </div>
@@ -176,9 +176,9 @@
         </div>
     </form>
 
-</div>
+</div>*@
 
-@*<h1>Edit</h1>
+<h1>Edit</h1>
 
     <h4>Book</h4>
     <hr />
@@ -246,7 +246,7 @@
 
     <div>
         <a asp-action="Index">Back to List</a>
-    </div>*@
+    </div>
 
     @*@section Scripts {
         @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
