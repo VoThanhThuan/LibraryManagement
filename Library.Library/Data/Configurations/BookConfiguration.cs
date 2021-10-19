@@ -19,8 +19,8 @@ namespace Library.Library.Data.Configurations
             builder.Property(x => x.PublishingCompany).HasMaxLength(255);
             builder.Property(x => x.Author).HasMaxLength(255);
 
-            builder.HasOne(x => x.LibraryCode).WithOne(x => x.Book)
-                .HasForeignKey<Book>(x => x.IdLibraryCode);
+            builder.HasOne(x => x.LibraryCode).WithMany(x => x.Book)
+                .HasForeignKey(x => x.IdLibraryCode);
 
         }
     }

@@ -14,6 +14,6 @@ namespace Library.Library.Entities
         public string Description { get; set; } = "";
 
         //Khóa ngoại
-        public virtual Book Book { get; set; }
+        public virtual List<Book> Book { get; set; }
     }
 }
