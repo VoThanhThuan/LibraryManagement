@@ -50,7 +50,7 @@ namespace LibraryManagement.UI.Services
 
             if (request.Thumbnail is not null)
             {
-                book.Thumbnail = await _storageService.SaveFile(request.Thumbnail, "books");
+                book.Thumbnail = await _storageService.SaveFileAsync(request.Thumbnail, "books");
             }
 
             _context.Books.Update(book);
@@ -64,7 +64,7 @@ namespace LibraryManagement.UI.Services
             var book = request.ToBook();
 
             if(request.Thumbnail is not null)
-                book.Thumbnail = await _storageService.SaveFile(request.Thumbnail, "books");
+                book.Thumbnail = await _storageService.SaveFileAsync(request.Thumbnail, "books");
 
             _context.Books.Add(book);
             await _context.SaveChangesAsync();

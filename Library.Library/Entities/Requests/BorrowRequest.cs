@@ -3,13 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Library.Library.Entities.Requests;
 
-namespace Library.Library.Entities
+namespace Library.Library.Entities.Requests
 {
-    public class Borrow
+    public class BorrowRequest
     {
-
         public BorrowVM ToViewModel()
         {
             return new BorrowVM()
@@ -17,9 +15,18 @@ namespace Library.Library.Entities
                 Id = Id,
                 DateBorrow = DateBorrow,
                 Note = Note,
-                IdUser = IdUser,
-                UserName = UserName
+                IdUser = IdUser
+            };
+        }
 
+        public Borrow ToBorrow()
+        {
+            return new Borrow()
+            {
+                Id = Id,
+                DateBorrow = DateBorrow,
+                Note = Note,
+                IdUser = IdUser
             };
         }
 
@@ -29,12 +36,7 @@ namespace Library.Library.Entities
 
         //Dữ liệu bindcode không cần khóa
         public Guid IdUser { get; set; }
-        public string UserName { get; set; }
-
-        //Khóa ngoại
-
         public Guid IdCard { get; set; }
-        public virtual LibraryCard LibraryCard { get; set; }
-        public virtual List<BookInBorrow> BookInBorrows { get; set; }
+
     }
 }

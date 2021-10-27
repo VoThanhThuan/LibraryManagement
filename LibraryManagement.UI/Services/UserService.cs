@@ -206,7 +206,7 @@ namespace LibraryManagement.UI.Services
 
         private async Task<string> SaveFile(IFormFile file)
         {
-            return await _storageService.SaveFile(file, @"avatar");
+            return await _storageService.SaveFileAsync(file, @"avatar");
         }
         private async Task<int> DeleteFile(string fileName)
         {
@@ -232,6 +232,7 @@ namespace LibraryManagement.UI.Services
             var roles = await _userManager.GetRolesAsync(user); //lấy quyền người dùng
             var claims = new[]
             {
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                 new Claim(ClaimTypes.Email, string.IsNullOrEmpty(user.Email) ? "" : user.Email),
                 new Claim(ClaimTypes.GivenName, user.Nickname),
                 new Claim(ClaimTypes.Role, string.Join(";", roles)),

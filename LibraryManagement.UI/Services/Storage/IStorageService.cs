@@ -20,7 +20,7 @@ namespace LibraryManagement.UI.Models.Storage
         ///     <para>true: sử dụng thư mục MyStaticfile</para>
         /// </param>
         /// <returns>Trả về đường dẫn của file vừa lưu</returns>
-        public Task<string> SaveFile(IFormFile file, string path, bool security = false);
+        public Task<string> SaveFileAsync(IFormFile file, string path, bool security = false);
 
         /// <summary>
         /// Tạo Thư mục mới

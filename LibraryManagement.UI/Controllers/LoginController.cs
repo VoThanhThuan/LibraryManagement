@@ -34,9 +34,9 @@ namespace LibraryManagement.UI.Controllers
 
         [Authorize]
         [HttpGet]
-        public async Task<IActionResult> CheckToken()
+        public IActionResult CheckToken()
         {
-            return Ok();
+            return Ok("Token đúng");
         }
 
         [HttpGet]
@@ -84,7 +84,7 @@ namespace LibraryManagement.UI.Controllers
             IdentityModelEventSource.ShowPII = true;
 
 
-            TokenValidationParameters validationParameters = new TokenValidationParameters
+            var validationParameters = new TokenValidationParameters
             {
                 ValidateLifetime = true,
                 ValidIssuer = _configuration["Tokens:Issuer"],

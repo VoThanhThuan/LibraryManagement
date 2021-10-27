@@ -41,7 +41,7 @@ namespace LibraryManagement.UI
                 {
                     options.UseSqlServer(Configuration.GetConnectionString("ConnectLibrary"));
                 });
-                Console.WriteLine(">>> Đang chạy trên máy tính của [Võ Thành Thuận]");
+                //Console.WriteLine(">>> Đang chạy trên máy tính của [Võ Thành Thuận]");
             }
             else
             {
@@ -49,7 +49,7 @@ namespace LibraryManagement.UI
                 {
                     options.UseSqlServer(Configuration.GetConnectionString("ConnectLibraryOfSon"));
                 });
-                Console.WriteLine(">>> Đang chạy trên máy tính của [Nguyễn Ngọc Sơn]");
+                //Console.WriteLine(">>> Đang chạy trên máy tính của [Nguyễn Ngọc Sơn]");
             }
 
             services.AddIdentity<User, Role>()
@@ -76,15 +76,16 @@ namespace LibraryManagement.UI
 
             services.AddSession(options => { options.IdleTimeout = TimeSpan.FromHours(1); });
 
-            MakeMyFoler();
+            MakeMyFolder();
 
 
             services.AddTransient<RoleManager<Role>, RoleManager<Role>>();
 
             services.AddTransient<IStorageService, FileService>();
-            services.AddScoped<UserService>();
-            services.AddScoped<RoleService>();
-            services.AddScoped<BookService>();
+            services.AddTransient<UserService>();
+            services.AddTransient<RoleService>();
+            services.AddTransient<BookService>();
+            services.AddTransient<BorrowService>();
 
             services.AddControllersWithViews();
 
@@ -123,7 +124,7 @@ namespace LibraryManagement.UI
         }
 
 
-        private void MakeMyFoler()
+        private void MakeMyFolder()
         {
             var root = Path.Combine(WebHostEnvironment.WebRootPath);
             if (!Directory.Exists($"{root}/books"))

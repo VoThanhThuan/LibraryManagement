@@ -27,7 +27,6 @@ namespace LibraryManagement.UI.Controllers
             _role = role;
         }
 
-        [Authorize]
         // GET: Users
         public async Task<IActionResult> Index()
         {

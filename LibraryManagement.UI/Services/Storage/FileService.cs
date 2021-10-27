@@ -83,7 +83,7 @@ namespace LibraryManagement.UI.Models.Storage
 
         }
 
-        public async Task<string> SaveFile(IFormFile file, string path, bool security = false)
+        public async Task<string> SaveFileAsync(IFormFile file, string path, bool security = false)
         {
             var originalFileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim().Value;
             var fileName = $@"{path}/{Guid.NewGuid()}{Path.GetExtension(originalFileName)}";
