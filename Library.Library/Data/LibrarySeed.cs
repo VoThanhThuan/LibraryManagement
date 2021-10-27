@@ -186,7 +186,21 @@ namespace Library.Library.Data
                 };
                 context.LibraryCodes.Add(trtr);
             }
-            
+
+            if (!context.LibraryCards.Any())
+            {
+                context.LibraryCards.Add(new LibraryCard()
+                {
+                    Id = new Guid(),
+                    Class = "DH19PM",
+                    Exp = 1,
+                    IsClock = false,
+                    MSSV = "DPM1851XX",
+                    PhoneNumber = "0123456789",
+                    Rank = 0
+                });
+            }
+
             await context.SaveChangesAsync();
 
         }
