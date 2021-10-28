@@ -5,80 +5,234 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.MSSV)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Class)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PhoneNumber)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Karma)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IsLock)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Rank)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Exp)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ExpLevelUp)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Image)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.MSSV)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Class)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PhoneNumber)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Karma)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsLock)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Rank)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Exp)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ExpLevelUp)
-            </td>
-            <td>
-                <img src="@item.Image" src="@item.MSSV"/>
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<div class="page-title text-center">
+    <span class="menu-toggle">
+        <span class="icon-box-toggle">
+            <span>
+                <i class="fal fa-horizontal-rule icon-line-top"></i>
+                <i class="fal fa-horizontal-rule icon-line-center"></i>
+                <i class="fal fa-horizontal-rule icon-line-bottom"></i>
+            </span>
+        </span>
+    </span>
+    <div class="title-wrap">
+        <h1 class="title">List Library Card</h1>
+    </div>
+</div>
+<div class="page-content-inner">
+    <!-- Card -->
+    <div class="list-flex-toolbar">
+        <div class="search">
+            <div class="control">
+                <input class="input" type="text" placeholder="Search...">
+                <div class="form-icon" data-v-aad2da70=""><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--feather" width="1.1em" height="1.1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" data-icon="feather:search" data-v-aad2da70=""><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><path d="M21 21l-4.35-4.35"></path></g></svg></div>
+            </div>
+        </div>
+        <div class="button">
+            <a asp-action="Create" class="v-button is-primary is-elevated">
+                <span class="icon">
+                    <i class="far fa-plus"></i>
+                </span>
+                <span>Add Library Card</span>
+            </a>
+        </div>
+    </div>
+    <!-- //////////////// -->
+
+    <div class="card-grid">
+        <div class="columns is-multiline">
+            @foreach (var item in Model)
+            {
+                <div class="column is-6">
+                    <div class="card-item">
+                        @if (item.IsLock == false)
+                        {
+                            <div class="card-item-body">
+                                <div class="card-item-body-left">
+                                    <div class="c-avatar is-big">
+                                        <img class="avatar" src="@item.Image" alt="">
+                                    </div>
+                                    <div class="meta">
+                                        <span>MSSV: @item.MSSV</span>
+                                        <span>LỚP: @item.Class</span>
+                                    </div>
+                                </div>
+                                <div class="card-item-body-right">
+                                    <div class="social-actions">
+                                        <a class="social-action" asp-action="Edit" asp-route-id="@item.Id">
+                                            <i class="fas fa-wrench"></i>
+                                        </a>
+                                        <a class="social-action" asp-action="Delete" asp-route-id="@item.Id">
+                                            <i class="fal fa-trash-alt"></i>
+                                        </a>
+                                        <a class="social-action" asp-action="Details" asp-route-id="@item.Id">
+                                            <i class="fas fa-info-circle"></i>
+                                        </a>
+                                        <a class="social-action">
+                                            <i class="fas fa-check"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card-item-footer">
+                                <div class="left">
+                                    <div class="exp">
+                                        <span>EXP</span>
+                                        <span>@item.Exp</span>
+                                    </div>
+                                    <div class="progress-bar">
+                                        <progress class="progress is-tiny" max="100" value="@item.Exp"></progress>
+                                    </div>
+                                </div>
+                                <div class="right">
+                                    <div class="buttons">
+                                        <a href="" class="button i-button b-success">
+                                            <span>Mượn Sách</span>
+                                        </a>
+                                        <a href="" class="button i-button b-success">
+                                            <span>Trả Sách</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="card-item-body">
+                                <div class="card-item-body-left">
+                                    <div class="c-avatar is-big">
+                                        <img class="avatar" src="@item.Image" alt="">
+                                    </div>
+                                    <div class="meta">
+                                        <span>MSSV: @item.MSSV</span>
+                                        <span>LỚP: @item.Class</span>
+                                    </div>
+                                </div>
+                                <div class="card-item-body-right">
+                                    <div class="social-actions">
+                                        <a class="social-action" asp-action="Edit" asp-route-id="@item.Id">
+                                            <i class="fas fa-wrench"></i>
+                                        </a>
+                                        <a class="social-action" asp-action="Delete" asp-route-id="@item.Id">
+                                            <i class="fal fa-trash-alt"></i>
+                                        </a>
+                                        <a class="social-action" asp-action="Details" asp-route-id="@item.Id">
+                                            <i class="fas fa-info-circle"></i>
+                                        </a>
+                                        <a class="social-action is-blocked">
+                                            <i class="fas fa-times"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card-item-footer">
+                                <div class="left">
+                                    <div class="exp">
+                                        <span>EXP</span>
+                                        <span>@item.Exp</span>
+                                    </div>
+                                    <div class="progress-bar">
+                                        <progress class="progress is-tiny is-blocked" max="116" value="@item.Exp"></progress>
+                                    </div>
+                                </div>
+                                <div class="right">
+                                    <div class="buttons">
+                                        <a class="button i-button block">
+                                            <span>Mượn Sách</span>
+                                        </a>
+                                        <a class="button i-button block">
+                                            <span>Trả Sách</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+</div>
+
+
+@*<h1>Index</h1>
+
+    <p>
+        <a asp-action="Create">Create New</a>
+    </p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.MSSV)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Class)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PhoneNumber)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Karma)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.IsLock)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Rank)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Exp)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ExpLevelUp)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Image)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+    @foreach (var item in Model) {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MSSV)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Class)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PhoneNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Karma)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsLock)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Rank)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Exp)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ExpLevelUp)
+                </td>
+                <td>
+                    <img src="@item.Image" src="@item.MSSV"/>
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+    }
+        </tbody>
+    </table>*@

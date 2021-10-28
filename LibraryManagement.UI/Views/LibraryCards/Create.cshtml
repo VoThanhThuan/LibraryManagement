@@ -6,57 +6,176 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Create</h1>
-
-<h4>LibraryCard</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create" enctype="multipart/form-data">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="MSSV" class="control-label"></label>
-                <input asp-for="MSSV" class="form-control" />
-                <span asp-validation-for="MSSV" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Class" class="control-label"></label>
-                <input asp-for="Class" class="form-control" />
-                <span asp-validation-for="Class" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PhoneNumber" class="control-label"></label>
-                <input asp-for="PhoneNumber" class="form-control" />
-                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Image" class="control-label"></label>
-                <input type="file" asp-for="Image" class="form-control" />
-                <span asp-validation-for="Image" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Rank" class="control-label"></label>
-                <select asp-for="Rank" class="form-control">
-                    @{
-                        foreach (var rank in (RankLibrary[]) Enum.GetValues(typeof(RankLibrary)))
-                        {
-                            <option value="@rank">@rank</option>
-                        }
-                    }
-                </select>
-                <span asp-validation-for="Rank" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+<div class="page-title text-center">
+    <span class="menu-toggle">
+        <span class="icon-box-toggle">
+            <span>
+                <i class="fal fa-horizontal-rule icon-line-top"></i>
+                <i class="fal fa-horizontal-rule icon-line-center"></i>
+                <i class="fal fa-horizontal-rule icon-line-bottom"></i>
+            </span>
+        </span>
+    </span>
+    <div class="title-wrap">
+        <h1 class="title">Create Library Card</h1>
     </div>
 </div>
+<div class="page-content-inner">
+    <form asp-action="Create" enctype="multipart/form-data" class="form-layout">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+       
+        <div class="form-outer">
+            <div class="form-header">
+                <div class="form-header-inner">
+                    <div class="left">
+                        <h3>Create Library Card</h3>
+                    </div>
+                    <div class="right">
+                        <div class="buttons">
+                            <a asp-action="Index" class="button v-button is-dark-outline">
+                                <div class="icon">
+                                    <i class="far fa-long-arrow-alt-left"></i>
+                                </div>
+                                <span>Cancel</span>
+                            </a>
+                            <button type="submit" value="Create" class="button v-button is-primary">Create</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-body">
+                <div class="form-fieldset">
+                    <div class="fieldset-heading">
+                        <h4>Personal Info</h4>
+                        <p>This helps us to know you</p>
+                    </div>
+                    <div class="columns is-multiline">
+                        <div class="column is-6">
+                            <div class="field">
+                                <label>MSSV</label>
+                                <div class="control has-icon">
+                                    <input type="text" class="input" asp-for="MSSV">
+                                    <div class="form-icon" data-v-aad2da70="">
+                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--feather" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" data-icon="feather:user" data-v-aad2da70=""><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></g></svg>
+                                    </div>
+                                </div>
+                                <span asp-validation-for="MSSV" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="column is-6">
+                            <div class="field">
+                                <label>Class</label>
+                                <div class="control has-icon">
+                                    <input class="input" asp-for="Class">
+                                    <div class="form-icon" data-v-aad2da70="">
+                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--feather" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" data-icon="feather:smartphone" data-v-aad2da70=""><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><path d="M12 18h.01"></path></g></svg>
+                                    </div>
+                                </div>
+                                <span asp-validation-for="Class" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="column is-6">
+                            <div class="field">
+                                <label>Phone Number</label>
+                                <div class="control has-icon">
+                                    <input class="input" asp-for="PhoneNumber">
+                                    <div class="form-icon" data-v-aad2da70="">
+                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--feather" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" data-icon="feather:mail" data-v-aad2da70=""><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><path d="M22 6l-10 7L2 6"></path></g></svg>
+                                    </div>
+                                </div>
+                                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="column is-6">
+                            <div class="field">
+                                <label>Rank</label>
+                                <div class="control has-icon">
+                                    <select asp-for="Rank" class="input">
+                                        @{
+                                            foreach (var rank in (RankLibrary[])Enum.GetValues(typeof(RankLibrary)))
+                                            {
+                                                <option value="@rank">@rank</option>
+                                            }
+                                        }
+                                    </select>
+                                    <div class="form-icon" data-v-aad2da70="">
+                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--feather" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" data-icon="feather:mail" data-v-aad2da70=""><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><path d="M22 6l-10 7L2 6"></path></g></svg>
+                                    </div>
+                                </div>
+                                <span asp-validation-for="Rank" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="column is-12">
+                            <div class="field">
+                                <label>Choose Image</label>
+                                <div class="control has-icon">
+                                    <input type="file" class="choose-file" asp-for="Image">
+                                    <span><Label for="choose-file"></Label></span>
+                                </div>
+                                <span asp-validation-for="Image" class="text-danger"></span>
+                            </div>
+                        </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
 </div>
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+
+
+@*<h1>Create</h1>
+
+    <h4>LibraryCard</h4>
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="Create" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="MSSV" class="control-label"></label>
+                    <input asp-for="MSSV" class="form-control" />
+                    <span asp-validation-for="MSSV" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Class" class="control-label"></label>
+                    <input asp-for="Class" class="form-control" />
+                    <span asp-validation-for="Class" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="PhoneNumber" class="control-label"></label>
+                    <input asp-for="PhoneNumber" class="form-control" />
+                    <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Image" class="control-label"></label>
+                    <input type="file" asp-for="Image" class="form-control" />
+                    <span asp-validation-for="Image" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Rank" class="control-label"></label>
+                    <select asp-for="Rank" class="form-control">
+                        @{
+                            foreach (var rank in (RankLibrary[]) Enum.GetValues(typeof(RankLibrary)))
+                            {
+                                <option value="@rank">@rank</option>
+                            }
+                        }
+                    </select>
+                    <span asp-validation-for="Rank" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div>
+        <a asp-action="Index">Back to List</a>
+    </div>*@
+
+@*@section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }*@

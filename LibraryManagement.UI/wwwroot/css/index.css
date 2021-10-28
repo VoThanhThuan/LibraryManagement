@@ -1108,8 +1108,20 @@ h3 {
             -ms-flex-align: center;
             align-items: center;
         }
+            .card-grid .columns .column .card-item-body-left .c-avatar {
+                position: relative;
+                display: inline-block;
+                vertical-align: bottom;
+            }
 
+                .card-grid .columns .column .card-item-body-left .c-avatar.is-big {
+                    max-width: 8rem;
+                    min-width: 8rem;
+                    max-height: 8rem;
+                    min-height: 8rem;
+                }
             .card-grid .columns .column .card-item-body-left .meta {
+                margin-left: 1.2rem;
                 line-height: 1.5;
             }
 
