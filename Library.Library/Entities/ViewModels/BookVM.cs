@@ -4,48 +4,12 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Library.Library.Entities.Requests;
-using Library.Library.Entities.ViewModels;
 using Library.Library.Enums;
 
-namespace Library.Library.Entities
+namespace Library.Library.Entities.ViewModels
 {
-    public class Book
+    public class BookVM
     {
-        public BookRequest ToRequest()
-        {
-            return new()
-            {
-                Id = Id,
-                Name = Name,
-                PublishingCompany = PublishingCompany,
-                PublicationDate = PublicationDate,
-                Author = Author,
-                Amount = Amount,
-                PageNumber = PageNumber,
-                DateCanBorrow = DateCanBorrow,
-                Rank = Rank,
-                IdLibraryCode = IdLibraryCode
-            };
-        }
-
-        public BookVM ToViewModel()
-        {
-            return new()
-            {
-                Id = Id,
-                Name = Name,
-                PublishingCompany = PublishingCompany,
-                PublicationDate = PublicationDate,
-                Author = Author,
-                Amount = Amount,
-                PageNumber = PageNumber,
-                DateCanBorrow = DateCanBorrow,
-                Rank = Rank,
-                IdLibraryCode = IdLibraryCode
-            };
-        }
-
         [Display(Name = "Mã Sách")]
         [Required]
         public string Id { get; set; } = ""; //max 8
@@ -83,9 +47,5 @@ namespace Library.Library.Entities
         [Display(Name = "Mã Thư Viện")]
         [Required]
         public string IdLibraryCode { get; set; } = "";
-        public virtual LibraryCode LibraryCode { get; set; }
-        public virtual List<BookInBorrow> BookInBorrows { get; set; }
-        public virtual List<BookInGenre> BookInGenres { get; set; }
-
     }
 }

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Library.Library.Data;
 using Library.Library.Entities;
 using Library.Library.Entities.Requests;
+using Library.Library.Entities.ViewModels;
 using LibraryManagement.UI.Models.Storage;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -39,19 +40,45 @@ namespace LibraryManagement.UI.Services
             var book = await _context.Books
                 .Include(b => b.LibraryCode)
                 .FirstOrDefaultAsync(m => m.Id == id);
+            if (book is null) return null;
             var host = _config.GetSection("BaseAddress").Value;
             book.Thumbnail = $"{host}/{book.Thumbnail}";
             return book;
         }
 
+        public async Task<List<BookVM>> SearchBook(string content)
+        {
+            var books = await _context.Books
+                .Where(x => x.Id.ToLower().Contains(content.ToLower()) || x.Name.ToLower().Contains(content.ToLower()))
+                .Take(10)
+                .Include(b => b.LibraryCode).Select(x => x.ToViewModel()).ToListAsync();
+
+            var host = _config.GetSection("BaseAddress").Value;
+            foreach (var book in books)
+                book.Thumbnail = $"{host}/{book.Thumbnail}";
+            return books;
+        }
+
         public async Task<Book> PutBook(BookRequest request)
         {
-            var book = request.ToBook();
+            var book = await _context.Books.FirstOrDefaultAsync(x => x.Id == request.Id);
+            if (book is null) return null;
 
             if (request.Thumbnail is not null)
             {
+                await _storageService.DeleteFileAsync(book.Thumbnail);
                 book.Thumbnail = await _storageService.SaveFileAsync(request.Thumbnail, "books");
             }
+
+            book.Name = request.Name;
+            book.PublishingCompany = request.PublishingCompany;
+            book.PublicationDate = request.PublicationDate;
+            book.Author = request.Author;
+            book.Amount = request.Amount;
+            book.PageNumber = request.PageNumber;
+            book.DateCanBorrow = request.DateCanBorrow;
+            book.Rank = request.Rank;
+            book.IdLibraryCode = request.IdLibraryCode;
 
             _context.Books.Update(book);
             await _context.SaveChangesAsync();
