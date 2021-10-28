@@ -127,14 +127,15 @@ namespace LibraryManagement.UI
         private void MakeMyFolder()
         {
             var root = Path.Combine(WebHostEnvironment.WebRootPath);
-            if (!Directory.Exists($"{root}/books"))
-            {
-                Directory.CreateDirectory($"{root}/books");
-            }
 
-            if (!Directory.Exists($"{root}/avatar"))
+            var listFolder = new[] { "books", "avatar", "libraryCard" };
+
+            foreach (var folder in listFolder)
             {
-                Directory.CreateDirectory($"{root}/avatar");
+                if (!Directory.Exists($"{root}/{folder}"))
+                {
+                    Directory.CreateDirectory($"{root}/{folder}");
+                }
             }
         }
 

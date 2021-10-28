@@ -68,7 +68,7 @@ namespace Library.Library.Entities
         public string Avatar { get; set; } = "";
 
         [Display(Name = "Ngày sinh")]
-        public DateTime? Dob { get; set; }
+        public DateTime? Dob { get; set; } = DateTime.Today;
         public bool sex { get; set; } = true;
         public string Address { get; set; } = "";
 

@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Library.Library.Migrations
 {
     [DbContext(typeof(LibraryDbContext))]
-    [Migration("20211007013908_db1")]
+    [Migration("20211028125148_db1")]
     partial class db1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -18,7 +18,7 @@ namespace Library.Library.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.10")
+                .HasAnnotation("ProductVersion", "5.0.11")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("Library.Library.Entities.Book", b =>
@@ -63,8 +63,7 @@ namespace Library.Library.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IdLibraryCode")
-                        .IsUnique();
+                    b.HasIndex("IdLibraryCode");
 
                     b.ToTable("Books");
                 });
@@ -139,8 +138,8 @@ namespace Library.Library.Migrations
                     b.Property<string>("Note")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("UserName")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("UserName")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -181,7 +180,13 @@ namespace Library.Library.Migrations
                     b.Property<int>("Exp")
                         .HasColumnType("int");
 
-                    b.Property<bool>("IsClock")
+                    b.Property<int>("ExpLevelUp")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Image")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsLock")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
                         .HasDefaultValue(false);
@@ -420,8 +425,8 @@ namespace Library.Library.Migrations
             modelBuilder.Entity("Library.Library.Entities.Book", b =>
                 {
                     b.HasOne("Library.Library.Entities.LibraryCode", "LibraryCode")
-                        .WithOne("Book")
-                        .HasForeignKey("Library.Library.Entities.Book", "IdLibraryCode")
+                        .WithMany("Book")
+                        .HasForeignKey("IdLibraryCode")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

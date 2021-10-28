@@ -100,9 +100,11 @@ namespace Library.Library.Migrations
                     Class = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
                     PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Karma = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
-                    IsClock = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
+                    IsLock = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
                     Rank = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
-                    Exp = table.Column<int>(type: "int", nullable: false)
+                    Exp = table.Column<int>(type: "int", nullable: false),
+                    ExpLevelUp = table.Column<int>(type: "int", nullable: false),
+                    Image = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -176,7 +178,7 @@ namespace Library.Library.Migrations
                     DateBorrow = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETDATE()"),
                     Note = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IdUser = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UserName = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UserName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IdCard = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
@@ -284,8 +286,7 @@ namespace Library.Library.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Books_IdLibraryCode",
                 table: "Books",
-                column: "IdLibraryCode",
-                unique: true);
+                column: "IdLibraryCode");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Borrows_IdCard",

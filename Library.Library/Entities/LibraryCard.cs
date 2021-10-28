@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Library.Library.Enums;
 
 namespace Library.Library.Entities
 {
@@ -13,9 +14,11 @@ namespace Library.Library.Entities
         public string Class { get; set; } = "";
         public string PhoneNumber { get; set; } = "";
         public int Karma { get; set; } = 0;
-        public bool IsClock { get; set; } = false;
-        public int Rank { get; set; } = 0;
+        public bool IsLock { get; set; } = false;
+        public RankLibrary Rank { get; set; } = RankLibrary.Beginner;
         public int Exp { get; set; } = 0; //experience
+        public int ExpLevelUp { get; set; } = 30; //Kinh nghiệm cần để lên cấp
+        public string Image { get; set; } = ""; //hình thẻ
 
         /*Khóa ngoại*/
         public virtual List<Borrow> Borrows { get; set; }

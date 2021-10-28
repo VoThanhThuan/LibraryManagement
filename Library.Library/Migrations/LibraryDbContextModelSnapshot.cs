@@ -178,7 +178,13 @@ namespace Library.Library.Migrations
                     b.Property<int>("Exp")
                         .HasColumnType("int");
 
-                    b.Property<bool>("IsClock")
+                    b.Property<int>("ExpLevelUp")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Image")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsLock")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
                         .HasDefaultValue(false);

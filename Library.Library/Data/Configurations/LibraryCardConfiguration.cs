@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Library.Library.Entities;
+using Library.Library.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -17,8 +18,8 @@ namespace Library.Library.Data.Configurations
             builder.Property(x => x.MSSV).HasMaxLength(10);
             builder.Property(x => x.Class).HasMaxLength(255);
             builder.Property(x => x.Karma).HasDefaultValue(0);
-            builder.Property(x => x.Rank).HasDefaultValue(0);
-            builder.Property(x => x.IsClock).HasDefaultValue(false);
+            builder.Property(x => x.Rank).HasDefaultValue(RankLibrary.Beginner);
+            builder.Property(x => x.IsLock).HasDefaultValue(false);
         }
     }
 }

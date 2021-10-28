@@ -75,9 +75,9 @@ namespace Library.Library.Entities
         [Required]
         public int DateCanBorrow { get; set; } = 0;
 
-        [Display(Name = "Hạng")]
-        [Required]
-        public RankLibrary Rank { get; set; }
+        [Display(Name = "Hạng")] 
+        [Required] 
+        public RankLibrary Rank { get; set; } = RankLibrary.Beginner;
 
         //Khóa ngoại
         [Display(Name = "Mã Thư Viện")]

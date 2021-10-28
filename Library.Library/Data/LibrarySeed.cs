@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Library.Library.Entities;
+using Library.Library.Enums;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -51,7 +52,8 @@ namespace Library.Library.Data
                     PhoneNumber = "0123456789",
                     UserName = "admin",
                     NormalizedUserName = "ADMIN",
-                    SecurityStamp = Guid.NewGuid().ToString()
+                    SecurityStamp = Guid.NewGuid().ToString(),
+                    Dob = DateTime.Today
                 };
                 user0.PasswordHash = _passwordHasher.HashPassword(user0, "admin");
                 context.Users.Add(user0);
@@ -66,7 +68,9 @@ namespace Library.Library.Data
                     PhoneNumber = "0123456789",
                     UserName = "admin",
                     NormalizedUserName = "ADMIN",
-                    SecurityStamp = Guid.NewGuid().ToString()
+                    SecurityStamp = Guid.NewGuid().ToString(),
+                    Dob = DateTime.Today
+
                 };
                 user1.PasswordHash = _passwordHasher.HashPassword(user1, "admin");
                 context.Users.Add(user1);
@@ -81,7 +85,9 @@ namespace Library.Library.Data
                     PhoneNumber = "0123456789",
                     UserName = "Librarian",
                     NormalizedUserName = "LIBRARIAN",
-                    SecurityStamp = Guid.NewGuid().ToString()
+                    SecurityStamp = Guid.NewGuid().ToString(),
+                    Dob = DateTime.Today
+
                 };
                 user2.PasswordHash = _passwordHasher.HashPassword(user2, "admin");
                 context.Users.Add(user2);
@@ -96,7 +102,9 @@ namespace Library.Library.Data
                     PhoneNumber = "0123456789",
                     UserName = "Librarian",
                     NormalizedUserName = "LIBRARIAN",
-                    SecurityStamp = Guid.NewGuid().ToString()
+                    SecurityStamp = Guid.NewGuid().ToString(),
+                    Dob = DateTime.Today
+
                 };
                 user3.PasswordHash = _passwordHasher.HashPassword(user3, "admin");
                 context.Users.Add(user3);
@@ -194,10 +202,10 @@ namespace Library.Library.Data
                     Id = new Guid(),
                     Class = "DH19PM",
                     Exp = 1,
-                    IsClock = false,
+                    IsLock = false,
                     MSSV = "DPM1851XX",
                     PhoneNumber = "0123456789",
-                    Rank = 0
+                    Rank = RankLibrary.Beginner
                 });
             }
 

@@ -1,32 +1,40 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Library.Library.Data;
 using Library.Library.Entities;
-using Microsoft.AspNetCore.Authorization;
+using LibraryManagement.UI.Models.Storage;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 
 namespace LibraryManagement.UI.Controllers
 {
-    [Authorize]
     public class LibraryCardsController : Controller
     {
         private readonly LibraryDbContext _context;
+        private readonly IStorageService _storage;
+        private readonly IConfiguration _config; //lấy config từ appsetting.config
 
-        public LibraryCardsController(LibraryDbContext context)
+        public LibraryCardsController(LibraryDbContext context, IStorageService storage, IConfiguration config)
         {
             _context = context;
+            _storage = storage;
+            _config = config;
         }
 
         // GET: LibraryCards
         public async Task<IActionResult> Index()
         {
-            return View(await _context.LibraryCards.ToListAsync());
+            var cards = await _context.LibraryCards.ToListAsync();
+            var host = _config.GetSection("BaseAddress").Value;
+            foreach (var book in cards)
+                book.Image = $"{host}/{book.Image}";
+
+            return View(cards);
         }
 
         // GET: LibraryCards/Details/5
@@ -44,6 +52,10 @@ namespace LibraryManagement.UI.Controllers
                 return NotFound();
             }
 
+            var host = _config.GetSection("BaseAddress").Value;
+
+            libraryCard.Image = $"{host}/{libraryCard.Image}";
+
             return View(libraryCard);
         }
 
@@ -58,16 +70,14 @@ namespace LibraryManagement.UI.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,MSSV,Class,PhoneNumber,Karma,IsClock,Rank,Exp")] LibraryCard libraryCard)
+        public async Task<IActionResult> Create([Bind("Id,MSSV,Class,PhoneNumber,Karma,IsLock,Rank,Exp,ExpLevelUp")] LibraryCard libraryCard, IFormFile Image)
         {
-            if (ModelState.IsValid)
-            {
-                libraryCard.Id = Guid.NewGuid();
-                _context.Add(libraryCard);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(libraryCard);
+            if (!ModelState.IsValid) return View(libraryCard);
+            libraryCard.Id = Guid.NewGuid();
+            libraryCard.Image = await _storage.SaveFileAsync(Image, "libraryCard");
+            _context.Add(libraryCard);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: LibraryCards/Edit/5
@@ -91,34 +101,32 @@ namespace LibraryManagement.UI.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,MSSV,Class,PhoneNumber,Karma,IsClock,Rank,Exp")] LibraryCard libraryCard)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id,MSSV,Class,PhoneNumber,Karma,IsLock,Rank,Exp,ExpLevelUp")] LibraryCard libraryCard, IFormFile Image)
         {
             if (id != libraryCard.Id)
             {
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid) return View(libraryCard);
+            try
             {
-                try
-                {
-                    _context.Update(libraryCard);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!LibraryCardExists(libraryCard.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
+                libraryCard.Image = await _storage.SaveFileAsync(Image, "libraryCard");
+                _context.Update(libraryCard);
+                await _context.SaveChangesAsync();
             }
-            return View(libraryCard);
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!LibraryCardExists(libraryCard.Id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: LibraryCards/Delete/5

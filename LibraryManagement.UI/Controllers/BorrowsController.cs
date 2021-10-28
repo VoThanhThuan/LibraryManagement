@@ -59,7 +59,7 @@ namespace LibraryManagement.UI.Controllers
             var books = await _book.GetBooks();
             ViewData["Id-User"] = User.FindFirstValue(ClaimTypes.NameIdentifier);
             ViewData["Name-User"] = (User.FindFirstValue(ClaimTypes.Name));
-            ViewData["IdCard"] = new SelectList(_context.LibraryCards, "Id", "Id");
+            ViewData["IdCard"] = new SelectList(_context.LibraryCards, "Id", "MSSV");
             var borrow = new Borrow();
             return View((borrow, books));
         }
