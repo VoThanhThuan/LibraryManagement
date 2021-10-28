@@ -189,7 +189,7 @@ namespace LibraryManagement.UI.Services
             }
 
             var result = await DeleteFile(user.Avatar);
-            if (result != 200)
+            if (result == 500)
                 return StatusCodes.Status500InternalServerError;
 
             _context.Users.Remove(user);
