@@ -5,7 +5,161 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Details</h1>
+<div class="page-title text-center">
+    <span class="menu-toggle">
+        <span class="icon-box-toggle">
+            <span>
+                <i class="fal fa-horizontal-rule icon-line-top"></i>
+                <i class="fal fa-horizontal-rule icon-line-center"></i>
+                <i class="fal fa-horizontal-rule icon-line-bottom"></i>
+            </span>
+        </span>
+    </span>
+    <div class="title-wrap">
+        <h1 class="title">Details Library Card</h1>
+    </div>
+</div>
+
+<div class="page-content-inner">
+    <form class="form-layout">
+        <div class="form-outer">
+            <div class="form-header">
+                <div class="form-header-inner">
+                    <div class="left">
+                        <h3>Details Library Card</h3>
+                    </div>
+                    <div class="right">
+                        <div class="buttons">
+                            <a asp-action="Index" class="button v-button is-dark-outline">
+                                <div class="icon">
+                                    <i class="far fa-long-arrow-alt-left"></i>
+                                </div>
+                                <span>Cancel</span>
+                            </a>
+                            <a asp-action="Edit" asp-route-id="@Model.Id" class="button v-button is-primary">Edit</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-body">
+                <div class="form-fieldset">
+                    <div class="fieldset-heading">
+                        <h4>Personal Info</h4>
+                        <p>This helps us to know you</p>
+                    </div>
+                    <div class="columns is-multiline">
+                        <div class="column is-6">
+                            <div class="field">
+                                <label>MSSV</label>
+                                <div class="control has-icon">
+                                    <input type="text" class="input" asp-for="MSSV" readonly>
+                                    <div class="form-icon" data-v-aad2da70="">
+                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--feather" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" data-icon="feather:user" data-v-aad2da70=""><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></g></svg>
+                                    </div>
+                                </div>
+                                <span asp-validation-for="MSSV" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="column is-6">
+                            <div class="field">
+                                <label>Lớp</label>
+                                <div class="control has-icon">
+                                    <input class="input" asp-for="Class" readonly>
+                                    <div class="form-icon" data-v-aad2da70="">
+                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--feather" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" data-icon="feather:smartphone" data-v-aad2da70=""><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><path d="M12 18h.01"></path></g></svg>
+                                    </div>
+                                </div>
+                                <span asp-validation-for="Class" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="column is-6">
+                            <div class="field">
+                                <label>Số Điện Thoại</label>
+                                <div class="control has-icon">
+                                    <input class="input" asp-for="PhoneNumber" readonly>
+                                    <div class="form-icon" data-v-aad2da70="">
+                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--feather" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" data-icon="feather:mail" data-v-aad2da70=""><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><path d="M22 6l-10 7L2 6"></path></g></svg>
+                                    </div>
+                                </div>
+                                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="column is-6">
+                            <div class="field">
+                                <label>Số Lần trả trễ</label>
+                                <div class="control has-icon">
+                                    <input class="input" asp-for="Karma" readonly>
+                                    <div class="form-icon" data-v-aad2da70="">
+                                        <i class="fal fa-map-marker-alt"></i>
+                                    </div>
+                                </div>
+                                <span asp-validation-for="Karma" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="column is-6">
+                            <div class="field">
+                                <label>Rank</label>
+                                <div class="control has-icon">
+                                    <input class="input" asp-for="Rank" readonly>
+                                    <div class="form-icon" data-v-aad2da70="">
+                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--feather" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" data-icon="feather:calendar" data-v-aad2da70=""><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><path d="M16 2v4"></path><path d="M8 2v4"></path><path d="M3 10h18"></path></g></svg>
+                                    </div>
+                                </div>
+                                <span asp-validation-for="Rank" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="column is-6">
+                            <div class="field">
+                                <label>Exp</label>
+                                <div class="control has-icon">
+                                    <input class="input" asp-for="Exp" readonly>
+                                    <div class="form-icon" data-v-aad2da70="">
+                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--feather" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" data-icon="feather:calendar" data-v-aad2da70=""><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><path d="M16 2v4"></path><path d="M8 2v4"></path><path d="M3 10h18"></path></g></svg>
+                                    </div>
+                                </div>
+                                <span asp-validation-for="Exp" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="column is-6">
+                            <div class="field">
+                                <label>Exp Level Up</label>
+                                <div class="control has-icon">
+                                    <input class="input" asp-for="ExpLevelUp" readonly>
+                                    <div class="form-icon" data-v-aad2da70="">
+                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--feather" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" data-icon="feather:calendar" data-v-aad2da70=""><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><path d="M16 2v4"></path><path d="M8 2v4"></path><path d="M3 10h18"></path></g></svg>
+                                    </div>
+                                </div>
+                                <span asp-validation-for="ExpLevelUp" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="column is-6">
+                            <div class="field">
+                                <label>Tình trạng thẻ</label>
+                                <div class="control">
+                                    <div class="switch-block input">
+                                        <label for="switch-block-1" class="form-switch">
+                                            <input type="checkbox" id="switch-block-1" class="is-switch" asp-for="IsLock" disabled>
+                                            <i></i>
+                                        </label>
+                                        <div class="text">
+                                            <span class="text-librarian">Not Locked</span>
+                                            <span>&nbsp; | &nbsp;</span>
+                                            <span class="text-admin">Locked</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+@*@<h1>Details</h1>
 
 <div>
     <h4>LibraryCard</h4>
@@ -70,4 +224,4 @@
 <div>
     <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
     <a asp-action="Index">Back to List</a>
-</div>
+</div>*@
