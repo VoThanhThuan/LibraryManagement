@@ -1027,3 +1027,268 @@ h3 {
                                 font-size: 18px;
                             }
 /*# sourceMappingURL=account.css.map */
+
+/*Library Card-------------------------------------------------------------------------------*/
+.is-blocked {
+    background: #e62864 !important;
+}
+    .is-blocked:hover {
+        background: #e62864 !important;
+
+    }
+    .is-blocked[value]::-webkit-progress-value {
+        background: #e62864 !important;
+        
+    }
+.block:hover {
+    border-color: #e62864 !important;
+  
+}
+.block:hover span{
+    color: #e62864 !important;
+} 
+
+.card-grid .is-multiline {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+}
+
+.card-grid .columns {
+    margin-left: -0.5rem !important;
+    margin-right: -0.5rem !important;
+    margin-top: -0.5rem !important;
+}
+
+    .card-grid .columns .column {
+        padding: 0.5rem !important;
+    }
+
+        .card-grid .columns .column.is-6 {
+            -webkit-box-flex: 0;
+            -ms-flex: none;
+            flex: none;
+            width: 50%;
+        }
+
+        .card-grid .columns .column .card-item {
+            -webkit-box-flex: 1;
+            -ms-flex: 1;
+            flex: 1;
+            display: inline-block;
+            width: 100%;
+            border-radius: .6rem;
+            border: .1rem solid #404045;
+            background: #313135;
+            -webkit-transition: all 0.3s;
+            transition: all 0.3s;
+        }
+
+        .card-grid .columns .column .card-item-body {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            align-items: center;
+            -webkit-box-pack: justify;
+            -ms-flex-pack: justify;
+            justify-content: space-between;
+            padding: 3.2rem;
+            border-bottom: .1rem solid #404045;
+        }
+
+        .card-grid .columns .column .card-item-body-left {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            align-items: center;
+        }
+
+            .card-grid .columns .column .card-item-body-left .meta {
+                line-height: 1.5;
+            }
+
+                .card-grid .columns .column .card-item-body-left .meta span {
+                    display: block;
+                }
+
+                    .card-grid .columns .column .card-item-body-left .meta span:first-child {
+                        font-size: 1.35rem;
+                        font-weight: 600;
+                        font-family: "Montserrat", sans-serif;
+                    }
+
+                    .card-grid .columns .column .card-item-body-left .meta span:nth-child(2) {
+                        font-family: "Roboto", sans-serif;
+                        font-size: 1.2rem;
+                        color: #a2a5b9;
+                        font-weight: 400;
+                    }
+
+        .card-grid .columns .column .card-item-body-right .social-actions {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            align-items: center;
+            -webkit-box-pack: end;
+            -ms-flex-pack: end;
+            justify-content: flex-end;
+        }
+
+            .card-grid .columns .column .card-item-body-right .social-actions .social-action {
+                display: -webkit-box;
+                display: -ms-flexbox;
+                display: flex;
+                -webkit-box-align: center;
+                -ms-flex-align: center;
+                align-items: center;
+                -webkit-box-pack: center;
+                -ms-flex-pack: center;
+                justify-content: center;
+                height: 3.8rem;
+                width: 3.8rem;
+                border-radius: 50%;
+                margin: 0 .4rem;
+                -webkit-box-shadow: -.1rem .3rem .3rem 0 #0000000f;
+                box-shadow: -.1rem .3rem .3rem 0 #0000000f;
+                -webkit-transition: all 0.3s;
+                transition: all 0.3s;
+                background: #27272a;
+                border: .1rem solid #404045;
+            }
+
+                .card-grid .columns .column .card-item-body-right .social-actions .social-action:hover  {
+                    border-color: #10cb8a;
+                    color: #10cb8a;
+                }
+
+                .card-grid .columns .column .card-item-body-right .social-actions .social-action:nth-child(4) {
+                    border: none;
+                    -webkit-box-shadow: none;
+                    box-shadow: none;
+                    background: #05d69e;
+                    color: #ffffff;
+                    width: 3.8rem;
+                    height: 3.8rem;
+                    margin-left: 3rem;
+                }
+
+                    .card-grid .columns .column .card-item-body-right .social-actions .social-action:nth-child(4) {
+                        background: #05d69e;
+                        color: #ffffff !important;
+                        
+                    }
+                        .card-grid .columns .column .card-item-body-right .social-actions .social-action:nth-child(4) i{
+                         
+                            color: #ffffff !important;
+                        }
+
+                .card-grid .columns .column .card-item-body-right .social-actions .social-action i {
+                    font-size: 1.5rem;
+                }
+
+        .card-grid .columns .column .card-item-footer {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            align-items: center;
+            -webkit-box-pack: justify;
+            -ms-flex-pack: justify;
+            justify-content: space-between;
+            padding: 2rem;
+        }
+
+            .card-grid .columns .column .card-item-footer .left {
+                -webkit-box-flex: 2;
+                -ms-flex-positive: 2;
+                flex-grow: 2;
+                max-width: 50%;
+            }
+
+                .card-grid .columns .column .card-item-footer .left .exp {
+                    display: -webkit-box;
+                    display: -ms-flexbox;
+                    display: flex;
+                    -webkit-box-align: center;
+                    -ms-flex-align: center;
+                    align-items: center;
+                    -webkit-box-pack: justify;
+                    -ms-flex-pack: justify;
+                    justify-content: space-between;
+                    font-size: 1.3rem;
+                    margin-bottom: .8rem;
+                }
+
+                .card-grid .columns .column .card-item-footer .left .progress-bar .progress {
+                    margin-bottom: 0;
+                    border: none;
+                    border-radius: 99rem;
+                    display: block;
+                    overflow: hidden;
+                    padding: 0;
+                    width: 100%;
+                }
+
+                    .card-grid .columns .column .card-item-footer .left .progress-bar .progress[value]::-webkit-progress-value {
+                        border-radius: 99rem;
+                        background: #10cb8a;
+                    }
+
+                .card-grid .columns .column .card-item-footer .left .progress-bar .is-tiny {
+                    height: .4rem !important;
+                    background-color: #222225 !important;
+                }
+
+            .card-grid .columns .column .card-item-footer .right .buttons {
+                -webkit-box-align: center;
+                -ms-flex-align: center;
+                align-items: center;
+                display: -webkit-box;
+                display: -ms-flexbox;
+                display: flex;
+                -ms-flex-wrap: wrap;
+                flex-wrap: wrap;
+                -webkit-box-pack: start;
+                -ms-flex-pack: start;
+                justify-content: flex-start;
+            }
+
+                .card-grid .columns .column .card-item-footer .right .buttons .button {
+                    padding: .8rem 2.2rem;
+                    height: 3.8rem;
+                    line-height: 1.1;
+                    font-size: 1.3rem;
+                    -webkit-transition: all 0.3s;
+                    transition: all 0.3s;
+                    font-weight: 400;
+                }
+
+                .card-grid .columns .column .card-item-footer .right .buttons .i-button {
+                    display: -webkit-box;
+                    display: -ms-flexbox;
+                    display: flex;
+                    -webkit-box-align: center;
+                    -ms-flex-align: center;
+                    align-items: center;
+                    text-align: center;
+                    white-space: nowrap;
+                    background: #3b3b40;
+                    border-radius: 5rem;
+                    border: 1px solid #3f3f44;
+                    margin: 0 .5rem;
+                }
+
+                    .card-grid .columns .column .card-item-footer .right .buttons .b-success:hover {
+                        border-color: #05d69e;
+                        color: #05d69e;
+                    }
+/*# sourceMappingURL=card.css.map */
