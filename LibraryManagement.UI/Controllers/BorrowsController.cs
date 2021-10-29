@@ -13,6 +13,7 @@ using LibraryManagement.UI.Services;
 
 namespace LibraryManagement.UI.Controllers
 {
+    [Route("[controller]/[action]")]
     public class BorrowsController : Controller
     {
         private readonly LibraryDbContext _context;
@@ -54,12 +55,30 @@ namespace LibraryManagement.UI.Controllers
         }
 
         // GET: Borrows/Create
-        public async Task<IActionResult> Create()
+        // GET: Borrows/Create/xxx-xxx-xxx
+        [HttpGet("{idCard}")]
+        public async Task<IActionResult> Create(Guid? idCard = null)
         {
             ViewData["Id-User"] = User.FindFirstValue(ClaimTypes.NameIdentifier);
             ViewData["Name-User"] = (User.FindFirstValue(ClaimTypes.Name));
-            ViewData["IdCard"] = new SelectList(_context.LibraryCards, "Id", "MSSV");
+            ViewData["cardSelect"] = Guid.Empty;
             var borrow = new Borrow();
+
+            if (idCard is not null)
+            {
+                var cardSelect = await _context.LibraryCards.FirstOrDefaultAsync(x => x.Id == idCard);
+                if (cardSelect is not null)
+                {
+                    ViewData["IdCard"] = new SelectList(_context.LibraryCards, "Id", "MSSV", cardSelect.Id);
+                    borrow.IdCard = cardSelect.Id;
+                }
+
+            }
+            else
+            {
+                ViewData["IdCard"] = new SelectList(_context.LibraryCards, "Id", "MSSV");
+            }
+
 
             var books = await _book.GetBooks();
 
@@ -86,6 +105,7 @@ namespace LibraryManagement.UI.Controllers
                 isSuccess = result.isSuccess;
 
             }
+
             ViewData["IdCard"] = new SelectList(_context.LibraryCards, "Id", "Id", borrow.IdCard);
             var books = await _book.GetBooks();
             if (isSuccess)
