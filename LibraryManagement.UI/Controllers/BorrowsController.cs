@@ -56,11 +56,13 @@ namespace LibraryManagement.UI.Controllers
         // GET: Borrows/Create
         public async Task<IActionResult> Create()
         {
-            var books = await _book.GetBooks();
             ViewData["Id-User"] = User.FindFirstValue(ClaimTypes.NameIdentifier);
             ViewData["Name-User"] = (User.FindFirstValue(ClaimTypes.Name));
             ViewData["IdCard"] = new SelectList(_context.LibraryCards, "Id", "MSSV");
             var borrow = new Borrow();
+
+            var books = await _book.GetBooks();
+
             return View((borrow, books));
         }
 
@@ -71,21 +73,29 @@ namespace LibraryManagement.UI.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,DateBorrow,Note,IdUser,UserName,IdCard")] Borrow borrow, List<string> idBooks)
         {
-            var books = await _book.GetBooks();
             ViewData["Id-User"] = User.FindFirstValue(ClaimTypes.NameIdentifier);
             ViewData["Name-User"] = (User.FindFirstValue(ClaimTypes.Name));
             ViewData["IdCard"] = new SelectList(_context.LibraryCards, "Id", "MSSV");
+
+            var isSuccess = false;
 
             if (ModelState.IsValid)
             {
                 var result = await _borrow.PostBorrow(borrow, idBooks);
 
-                if (!result.isSuccess) return View((borrow, books));
+                isSuccess = result.isSuccess;
 
-                return RedirectToAction(nameof(Index));
             }
             ViewData["IdCard"] = new SelectList(_context.LibraryCards, "Id", "Id", borrow.IdCard);
-            return View((borrow, books));
+            var books = await _book.GetBooks();
+            if (isSuccess)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+            else
+            {
+                return View((borrow, books));
+            }
         }
 
         // GET: Borrows/Edit/5
