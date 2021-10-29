@@ -50,7 +50,7 @@ namespace LibraryManagement.UI.Services
             var books = await _context.Books
                 .Where(x => x.Id.ToLower().Contains(content.ToLower()) || x.Name.ToLower().Contains(content.ToLower()))
                 .Take(10)
-                .Include(b => b.LibraryCode).Select(x => x.ToViewModel()).ToListAsync();
+                .Select(x => x.ToViewModel()).ToListAsync();
 
             var host = _config.GetSection("BaseAddress").Value;
             foreach (var book in books)
