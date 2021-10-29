@@ -66,13 +66,13 @@ namespace Library.Library.Data
                     Email = "thuan@thuan.com",
                     NormalizedEmail = "THUAN@THUAN.COM",
                     PhoneNumber = "0123456789",
-                    UserName = "admin",
-                    NormalizedUserName = "ADMIN",
+                    UserName = "thuan",
+                    NormalizedUserName = "THUAN",
                     SecurityStamp = Guid.NewGuid().ToString(),
                     Dob = DateTime.Today
 
                 };
-                user1.PasswordHash = _passwordHasher.HashPassword(user1, "admin");
+                user1.PasswordHash = _passwordHasher.HashPassword(user1, "thuan");
                 context.Users.Add(user1);
 
                 var ida = Guid.NewGuid();
@@ -83,13 +83,13 @@ namespace Library.Library.Data
                     Email = "anvy@thuan.com",
                     NormalizedEmail = "ANVY@THUAN.COM",
                     PhoneNumber = "0123456789",
-                    UserName = "Librarian",
-                    NormalizedUserName = "LIBRARIAN",
+                    UserName = "anvy",
+                    NormalizedUserName = "ANVY",
                     SecurityStamp = Guid.NewGuid().ToString(),
                     Dob = DateTime.Today
 
                 };
-                user2.PasswordHash = _passwordHasher.HashPassword(user2, "admin");
+                user2.PasswordHash = _passwordHasher.HashPassword(user2, "anvy");
                 context.Users.Add(user2);
 
                 var ids = Guid.NewGuid();
@@ -100,13 +100,13 @@ namespace Library.Library.Data
                     Email = "nos@thuan.com",
                     NormalizedEmail = "NOS@THUAN.COM",
                     PhoneNumber = "0123456789",
-                    UserName = "Librarian",
-                    NormalizedUserName = "LIBRARIAN",
+                    UserName = "son",
+                    NormalizedUserName = "SON",
                     SecurityStamp = Guid.NewGuid().ToString(),
                     Dob = DateTime.Today
 
                 };
-                user3.PasswordHash = _passwordHasher.HashPassword(user3, "admin");
+                user3.PasswordHash = _passwordHasher.HashPassword(user3, "son");
                 context.Users.Add(user3);
                 await context.SaveChangesAsync();
 
@@ -129,7 +129,7 @@ namespace Library.Library.Data
                 });
                 context.Add(new IdentityUserRole<Guid>
                 {
-                    RoleId = rl,
+                    RoleId = rl,        
                     UserId = ids,
                 });
                 await context.SaveChangesAsync();

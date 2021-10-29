@@ -19,9 +19,9 @@ namespace Library.Library.Entities
         public int Karma { get; set; } = 0;
         public bool IsLock { get; set; } = false;
         public RankLibrary Rank { get; set; } = RankLibrary.Beginner;
+        public StatusCard StatusCard { get; set; } = StatusCard.CanBorrow;
         public int Exp { get; set; } = 0; //experience
         public int ExpLevelUp { get; set; } = 30; //Kinh nghiệm cần để lên cấp
-        [Required]
         public string Image { get; set; } = ""; //hình thẻ
 
         /*Khóa ngoại*/

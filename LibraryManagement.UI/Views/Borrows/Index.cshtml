@@ -1,60 +1,120 @@
-﻿@model IEnumerable<Library.Library.Entities.Requests.BorrowVM>
+﻿@using Library.Library.Entities
+@model  List<(LibraryCard card, List<BookInBorrow> bibs)>
 
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<style>
+    .collapsible {
+        background-color: #777;
+        color: white;
+        cursor: pointer;
+        padding: 18px;
+        width: 100%;
+        border: none;
+        text-align: left;
+        outline: none;
+        font-size: 15px;
+    }
+
+    .active, .collapsible:hover {
+        background-color: #555;
+    }
+
+    .content-collapse {
+        padding: 0 18px;
+        display: none;
+        overflow: hidden;
+        background-color: #f1f1f1;
+    }
+</style>
+
 <h1>Index</h1>
 
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.DateBorrow)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Note)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IdUser)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UserName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.LibraryCard)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.DateBorrow)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Note)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdUser)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UserName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LibraryCard.Id)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
+
+@foreach (var item in Model)
+{
+    <button type="button" class="collapsible">
+        <span>@item.card.Class > @item.card.MSSV > @item.card.Rank </span>
+    </button>
+    <div class="content-collapse">
+
+        <div class="page-content-inner">
+            <div>
+                <div class="flex-table">
+                    <div class="flex-table-header">
+                        <span class="is-grow-2">Ảnh bìa</span>
+                        <span>Số lượng mượn</span>
+                        <span>Tình trạng</span>
+                        <span>Thời gian mượn</span>
+                        <span>Thời gian trả</span>
+                    </div>
+
+                    @foreach (var bib in item.bibs)
+                    {
+                        <div class="flex-list-inner">
+                            <div>
+                                <div class="flex-table-item">
+                                    <div class="flex-table-cell is-media is-grow2">
+                                        <div class="is-avatar is-medium">
+                                            <img class="medium" src="@bib.Book.Thumbnail" alt="">
+                                        </div>
+                                        <div>
+                                            <span class="item-name">@bib.Book.Name</span>
+                                            <span class="item-meta">
+                                                <span>Tác giả: @bib.Book.Author</span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="flex-table-cell">
+                                        <span class="light-text">@bib.AmountBorrowed</span>
+                                    </div>
+
+                                    <div class="flex-table-cell">
+                                        <span class="light-text">@bib.Book.StatusBook</span>
+                                    </div>
+                                    <div class="flex-table-cell">
+                                        <span class="light-text">@bib.TimeBorrowed</span>
+                                    </div>
+                                    <div class="flex-table-cell">
+                                        <span class="light-text">@bib.TimeReturn</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
 }
-    </tbody>
-</table>
+
+
+
+@section Scripts{
+    <script>
+        var coll = document.getElementsByClassName("collapsible");
+        var i;
+
+        for (i = 0; i < coll.length; i++) {
+            coll[i].addEventListener("click", function() {
+                this.classList.toggle("active");
+                var content = this.nextElementSibling;
+                if (content.style.display === "block") {
+                    content.style.display = "none";
+                } else {
+                    content.style.display = "block";
+                }
+            });
+        }
+    </script>
+}

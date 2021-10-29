@@ -33,12 +33,23 @@
                 <label asp-for="UserName" class="control-label"></label>
                 <input asp-for="UserName" class="form-control" />
                 <span asp-validation-for="UserName" class="text-danger"></span>
+            </div>          
+            <div class="form-group">
+                <label asp-for="AmountBorrow" class="control-label"></label>
+                <input asp-for="AmountBorrow" class="form-control" />
+                <span asp-validation-for="AmountBorrow" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AmountReturned" class="control-label"></label>
+                <input asp-for="AmountReturned" class="form-control" />
+                <span asp-validation-for="AmountReturned" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="IdCard" class="control-label"></label>
                 <select asp-for="IdCard" class="form-control" asp-items="ViewBag.IdCard"></select>
                 <span asp-validation-for="IdCard" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>

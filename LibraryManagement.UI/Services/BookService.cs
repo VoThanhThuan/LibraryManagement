@@ -25,21 +25,20 @@ namespace LibraryManagement.UI.Services
             _config = config;
         }
 
-        public async Task<List<Book>> GetBooks()
+        public async Task<List<BookVM>> GetBooks()
         {
-            var books = _context.Books.Include(b => b.LibraryCode);
+            var books = await _context.Books.Select(x => x.ToViewModel()).ToListAsync();
 
             var host = _config.GetSection("BaseAddress").Value;
             foreach (var book in books)
                 book.Thumbnail = $"{host}/{book.Thumbnail}";
-            return await books.ToListAsync();
+            return books;
         }
 
-        public async Task<Book> GetBook(string id)
+        public async Task<BookVM> GetBook(string id)
         {
-            var book = await _context.Books
-                .Include(b => b.LibraryCode)
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var book = (await _context.Books
+                .FirstOrDefaultAsync(m => m.Id == id)).ToViewModel();
             if (book is null) return null;
             var host = _config.GetSection("BaseAddress").Value;
             book.Thumbnail = $"{host}/{book.Thumbnail}";
@@ -80,7 +79,7 @@ namespace LibraryManagement.UI.Services
             book.Rank = request.Rank;
             book.IdLibraryCode = request.IdLibraryCode;
 
-            _context.Books.Update(book);
+            //_context.Books.Update(book);
             await _context.SaveChangesAsync();
 
             return book;

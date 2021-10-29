@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Library.Library.Migrations
 {
     [DbContext(typeof(LibraryDbContext))]
-    [Migration("20211028125148_db1")]
+    [Migration("20211029074003_db1")]
     partial class db1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -56,6 +56,9 @@ namespace Library.Library.Migrations
                         .HasColumnType("nvarchar(255)");
 
                     b.Property<int>("Rank")
+                        .HasColumnType("int");
+
+                    b.Property<int>("StatusBook")
                         .HasColumnType("int");
 
                     b.Property<string>("Thumbnail")
@@ -124,6 +127,12 @@ namespace Library.Library.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<int>("AmountBorrow")
+                        .HasColumnType("int");
+
+                    b.Property<int>("AmountReturned")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("DateBorrow")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
@@ -137,6 +146,9 @@ namespace Library.Library.Migrations
 
                     b.Property<string>("Note")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("StatusBorrow")
+                        .HasColumnType("int");
 
                     b.Property<string>("UserName")
                         .HasColumnType("nvarchar(max)");
@@ -174,6 +186,7 @@ namespace Library.Library.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Class")
+                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
@@ -197,6 +210,7 @@ namespace Library.Library.Migrations
                         .HasDefaultValue(0);
 
                     b.Property<string>("MSSV")
+                        .IsRequired()
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
 
@@ -207,6 +221,9 @@ namespace Library.Library.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasDefaultValue(0);
+
+                    b.Property<int>("StatusCard")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 

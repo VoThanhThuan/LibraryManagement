@@ -30,8 +30,8 @@ namespace LibraryManagement.UI.Controllers
         public async Task<IActionResult> Index()
         {
             //var libraryDbContext = _context.Borrows.Include(b => b.LibraryCard);
-            var libraryDbContext = await _borrow.GetBorrows();
-            return View(libraryDbContext);
+            var ListCardAndBorrow = await _borrow.GetBorrows();
+            return View(ListCardAndBorrow);
         }
 
         // GET: Borrows/Details/5
@@ -72,6 +72,9 @@ namespace LibraryManagement.UI.Controllers
         public async Task<IActionResult> Create([Bind("Id,DateBorrow,Note,IdUser,UserName,IdCard")] Borrow borrow, List<string> idBooks)
         {
             var books = await _book.GetBooks();
+            ViewData["Id-User"] = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            ViewData["Name-User"] = (User.FindFirstValue(ClaimTypes.Name));
+            ViewData["IdCard"] = new SelectList(_context.LibraryCards, "Id", "MSSV");
 
             if (ModelState.IsValid)
             {

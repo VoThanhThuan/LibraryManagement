@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Library.Library.Entities.Requests;
+using Library.Library.Enums;
 
 namespace Library.Library.Entities
 {
@@ -18,8 +20,9 @@ namespace Library.Library.Entities
                 DateBorrow = DateBorrow,
                 Note = Note,
                 IdUser = IdUser,
-                UserName = UserName
-
+                UserName = UserName,
+                AmountBorrow = AmountBorrow,
+                AmountReturned = AmountReturned
             };
         }
 
@@ -30,6 +33,11 @@ namespace Library.Library.Entities
         //Dữ liệu bindcode không cần khóa
         public Guid IdUser { get; set; }
         public string UserName { get; set; }
+
+        [Display(Name = "Số lượng mượn")] public int AmountBorrow { get; set; } = 0;
+
+        [Display(Name = "Số lượng đã trả")] public int AmountReturned { get; set; } = 0;
+        [Display(Name = "Số lượng đã trả")] public StatusBorrow StatusBorrow { get; set; } = StatusBorrow.Borrowed;
 
         //Khóa ngoại
 

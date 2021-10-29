@@ -43,6 +43,10 @@ namespace Library.Library.Entities.ViewModels
         [Required]
         public RankLibrary Rank { get; set; }
 
+        [Display(Name = "Tình trạng sách")]
+        [Required]
+        public StatusBook StatusBook { get; set; } = StatusBook.CanBorrow;
+
         //Khóa ngoại
         [Display(Name = "Mã Thư Viện")]
         [Required]

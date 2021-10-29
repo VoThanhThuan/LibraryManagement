@@ -1,5 +1,6 @@
 ﻿@using Library.Library.Entities
-@model (Borrow borrow, List<Book> books)
+@using Library.Library.Entities.ViewModels
+@model (Borrow borrow, List<BookVM> books)
 
 @{
     ViewData["Title"] = "Create";
@@ -100,12 +101,12 @@
                 </div>userCurrent
                 <div class="form-group">
                     <label asp-for="borrow.IdUser" class="control-label"></label>
-                    <input asp-for="borrow.IdUser" name="IdUser" class="form-control" value="@ViewData["Id-User"]" disabled="disabled" />
+                    <input asp-for="borrow.IdUser" name="IdUser" class="form-control" value="@ViewData["Id-User"]" />
                     <span asp-validation-for="borrow.IdUser" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="borrow.UserName" class="control-label"></label>
-                    <input asp-for="borrow.UserName" name="UserName" class="form-control" value="@ViewData["Name-User"]" disabled="disabled"/>
+                    <input asp-for="borrow.UserName" name="UserName" class="form-control" value="@ViewData["Name-User"]"/>
                     <span asp-validation-for="borrow.UserName" class="text-danger"></span>
                 </div>
                 <div class="form-group">

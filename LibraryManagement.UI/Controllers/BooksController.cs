@@ -31,6 +31,7 @@ namespace LibraryManagement.UI.Controllers
         public async Task<IActionResult> Index()
         {
             var books = await _book.GetBooks();
+
             return View(books);
         }
 

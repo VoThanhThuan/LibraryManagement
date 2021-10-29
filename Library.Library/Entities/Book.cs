@@ -42,7 +42,9 @@ namespace Library.Library.Entities
                 PageNumber = PageNumber,
                 DateCanBorrow = DateCanBorrow,
                 Rank = Rank,
-                IdLibraryCode = IdLibraryCode
+                StatusBook = StatusBook,
+                IdLibraryCode = IdLibraryCode,
+                Thumbnail = Thumbnail
             };
         }
 
@@ -78,6 +80,10 @@ namespace Library.Library.Entities
         [Display(Name = "Hạng")] 
         [Required] 
         public RankLibrary Rank { get; set; } = RankLibrary.Beginner;
+
+        [Display(Name = "Tình trạng sách")]
+        [Required]
+        public StatusBook StatusBook { get; set; } = StatusBook.CanBorrow;
 
         //Khóa ngoại
         [Display(Name = "Mã Thư Viện")]
