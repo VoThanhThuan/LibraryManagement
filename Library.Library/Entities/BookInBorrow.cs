@@ -3,11 +3,29 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Library.Library.Entities.ViewModels;
 
 namespace Library.Library.Entities
 {
     public class BookInBorrow
     {
+        public BookInBorrowVM ToViewModel()
+        {
+            return new()
+            {
+                TimeBorrowed = TimeBorrowed,
+                TimeReturn = TimeReturn,
+                TimeRealReturn = TimeRealReturn,
+                AmountBorrowed = AmountBorrowed,
+                BorrowStatus = BorrowStatus,
+                ReturnStatus = ReturnStatus,
+                IdBook = IdBook,
+                IdBorrow = IdBorrow,
+                Book = Book,
+                Borrow = Borrow
+            };
+        }
+
         public DateTime TimeBorrowed { get; set; }
         public DateTime TimeReturn { get; set; }
         public DateTime TimeRealReturn { get; set; }

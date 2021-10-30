@@ -9,11 +9,13 @@ using Microsoft.EntityFrameworkCore;
 using Library.Library.Data;
 using Library.Library.Entities;
 using Library.Library.Entities.Requests;
+using Library.Library.Entities.ViewModels;
 using LibraryManagement.UI.Services;
+using Microsoft.Extensions.Configuration;
 
 namespace LibraryManagement.UI.Controllers
 {
-    [Route("[controller]/[action]")]
+    [Route("[controller]")]
     public class BorrowsController : Controller
     {
         private readonly LibraryDbContext _context;
@@ -35,10 +37,11 @@ namespace LibraryManagement.UI.Controllers
             return View(ListCardAndBorrow);
         }
 
+        [HttpGet("Details")]
         // GET: Borrows/Details/5
-        public async Task<IActionResult> Details(Guid? id)
+        public async Task<IActionResult> Details(Guid id)
         {
-            if (id == null)
+            if (id == Guid.Empty)
             {
                 return NotFound();
             }
@@ -56,7 +59,7 @@ namespace LibraryManagement.UI.Controllers
 
         // GET: Borrows/Create
         // GET: Borrows/Create/xxx-xxx-xxx
-        [HttpGet("{idCard}")]
+        [HttpGet("Create/{idCard}")]
         public async Task<IActionResult> Create(Guid? idCard = null)
         {
             ViewData["Id-User"] = User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -118,6 +121,64 @@ namespace LibraryManagement.UI.Controllers
             }
         }
 
+        [HttpGet("ReturnBook")]
+        public async Task<IActionResult> ReturnBook(Guid idCard , Guid idBorrow)
+        {
+            var cardAndBook = new ReturnBookVM();
+
+            var card = _context.LibraryCards.Find(idCard);
+
+            if (card is null)
+                return RedirectToAction(nameof(Index));
+
+            ViewBag.LibraryCard = card;
+            if (idCard != Guid.Empty)
+            {
+                cardAndBook = await _borrow.GetBorrowWithCard(idCard);
+                if(cardAndBook is null)
+                    return RedirectToAction(nameof(Index));
+
+                cardAndBook.IdCard = idCard;
+
+                return View(cardAndBook);
+            }else if (idBorrow != Guid.Empty)
+            {
+                cardAndBook = await _borrow.GetBorrow(idBorrow);
+                return View(cardAndBook);
+            }
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpPost("ReturnBook")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ReturnBook(ReturnBookRequest request)
+        {
+            var cardAndBook = new ReturnBookVM();
+            ViewData["IdCard"] = new SelectList(_context.LibraryCards, "Id", "Id", request.IdCard);
+
+            if (request.IdCard != Guid.Empty)
+            {
+                var resultGet = await _borrow.GetBorrowWithCard(request.IdCard);
+
+                resultGet.IdCard = request.IdCard;
+                cardAndBook = resultGet;
+            }
+            else if (request.IdBorrow != Guid.Empty)
+            {
+                cardAndBook = await _borrow.GetBorrow(request.IdBorrow);
+            }
+
+            var result = await _borrow.ReturnBook(request);
+            if (result == false)
+            {
+                return View(cardAndBook);
+            }
+
+            return Redirect($"/Borrow/ReturnBook?idCard={request.IdCard}");
+        }
+
+        [HttpGet("Edit")]
         // GET: Borrows/Edit/5
         public async Task<IActionResult> Edit(Guid? id)
         {
@@ -171,6 +232,7 @@ namespace LibraryManagement.UI.Controllers
             return View(borrow);
         }
 
+        [HttpGet("Delete")]
         // GET: Borrows/Delete/5
         public async Task<IActionResult> Delete(Guid? id)
         {
