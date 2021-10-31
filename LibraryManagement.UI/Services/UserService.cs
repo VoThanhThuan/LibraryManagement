@@ -45,23 +45,15 @@ namespace LibraryManagement.UI.Services
         }
         public async Task<List<UserVM>> GetUsers()
         {
-            var users = await _context.Users.Select(x => x).ToListAsync();
-            var uservm = new List<UserVM>();
-            var host = _config.GetSection("BaseAddress").Value;
-            foreach (var user in users)
-            {
-                user.Avatar = $"{host}/{user.Avatar}";
-                uservm.Add(await user.ToViewModel(_userManager));
-            }
-            return uservm;
+            var users = await _context.Users.Select(x => x.ToViewModel()).ToListAsync();
+
+            return users;
         }
 
         public async Task<UserVM> GetUser(Guid id)
         {
             var user = await _context.Users.FindAsync(id);
-            var role = _context.AppUserRole.FirstOrDefault(x => x.UserId == user.Id);
-            var host = _config.GetSection("BaseAddress").Value;
-            user.Avatar = $"{host}/{user.Avatar}";
+            //var role = _context.AppUserRole.FirstOrDefault(x => x.UserId == user.Id);
             return await user.ToViewModel(_userManager);
         }
 

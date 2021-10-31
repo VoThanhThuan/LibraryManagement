@@ -28,10 +28,6 @@ namespace LibraryManagement.UI.Services
         public async Task<List<BookVM>> GetBooks()
         {
             var books = await _context.Books.Select(x => x.ToViewModel()).ToListAsync();
-
-            var host = _config.GetSection("BaseAddress").Value;
-            foreach (var book in books)
-                book.Thumbnail = $"{host}/{book.Thumbnail}";
             return books;
         }
 
@@ -39,10 +35,7 @@ namespace LibraryManagement.UI.Services
         {
             var book = (await _context.Books
                 .FirstOrDefaultAsync(m => m.Id == id)).ToViewModel();
-            if (book is null) return null;
-            var host = _config.GetSection("BaseAddress").Value;
-            book.Thumbnail = $"{host}/{book.Thumbnail}";
-            return book;
+            return book ?? null;
         }
 
         public async Task<List<BookVM>> SearchBook(string content)
@@ -52,9 +45,6 @@ namespace LibraryManagement.UI.Services
                 .Take(10)
                 .Select(x => x.ToViewModel()).ToListAsync();
 
-            var host = _config.GetSection("BaseAddress").Value;
-            foreach (var book in books)
-                book.Thumbnail = $"{host}/{book.Thumbnail}";
             return books;
         }
 

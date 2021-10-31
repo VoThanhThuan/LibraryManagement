@@ -87,7 +87,7 @@ namespace LibraryManagement.UI.Models.Storage
         {
             if (file is null) return "";
             var originalFileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim().Value;
-            var fileName = $@"{path}/{Guid.NewGuid()}{Path.GetExtension(originalFileName)}";
+            var fileName = $@"/{path}/{Guid.NewGuid()}{Path.GetExtension(originalFileName)}";
             var pathFile = security == false ? Path.Combine(_userContentFolder, fileName) : Path.Combine(_securityContentFolder, fileName);
             await SaveFileAsync(file.OpenReadStream(), pathFile);
             return fileName;

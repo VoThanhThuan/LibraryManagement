@@ -30,9 +30,6 @@ namespace LibraryManagement.UI.Controllers
         public async Task<IActionResult> Index()
         {
             var cards = await _context.LibraryCards.ToListAsync();
-            var host = _config.GetSection("BaseAddress").Value;
-            foreach (var book in cards)
-                book.Image = $"{host}/{book.Image}";
 
             return View(cards);
         }
@@ -51,10 +48,6 @@ namespace LibraryManagement.UI.Controllers
             {
                 return NotFound();
             }
-
-            var host = _config.GetSection("BaseAddress").Value;
-
-            libraryCard.Image = $"{host}/{libraryCard.Image}";
 
             return View(libraryCard);
         }
