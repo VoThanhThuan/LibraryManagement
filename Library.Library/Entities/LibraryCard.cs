@@ -14,6 +14,8 @@ namespace Library.Library.Entities
         [Required]
         public string MSSV { get; set; } = "";
         [Required]
+        public string Name { get; set; } = "";
+        [Required]
         public string Class { get; set; } = "";
         public string PhoneNumber { get; set; } = "";
         public int Karma { get; set; } = 0;

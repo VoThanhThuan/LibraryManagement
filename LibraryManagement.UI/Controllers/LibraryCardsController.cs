@@ -63,7 +63,7 @@ namespace LibraryManagement.UI.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,MSSV,Class,PhoneNumber,Karma,IsLock,Rank,Exp,ExpLevelUp,StatusCard")] LibraryCard libraryCard, IFormFile Image)
+        public async Task<IActionResult> Create([Bind("Id,MSSV,Name,Class,PhoneNumber,Karma,IsLock,Rank,Exp,ExpLevelUp,StatusCard")] LibraryCard libraryCard, IFormFile Image)
         {
             if (!ModelState.IsValid) return View(libraryCard);
             libraryCard.Id = Guid.NewGuid();
@@ -94,7 +94,7 @@ namespace LibraryManagement.UI.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,MSSV,Class,PhoneNumber,Karma,IsLock,Rank,Exp,ExpLevelUp,StatusCard")] LibraryCard libraryCard, IFormFile Image)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id,MSSV,Name,Class,PhoneNumber,Karma,IsLock,Rank,Exp,ExpLevelUp,StatusCard")] LibraryCard libraryCard, IFormFile Image)
         {
             if (id != libraryCard.Id)
             {
@@ -107,6 +107,7 @@ namespace LibraryManagement.UI.Controllers
             var libCard = await _context.LibraryCards.FindAsync(id);
 
             libCard.MSSV = libraryCard.MSSV;
+            libCard.Name = libraryCard.Name;
             libCard.Class = libraryCard.Class;
             libCard.PhoneNumber = libraryCard.PhoneNumber;
             libCard.Karma = libraryCard.Karma;

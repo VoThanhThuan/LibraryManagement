@@ -1,6 +1,5 @@
 ﻿@using Library.Library.Entities
-@using Library.Library.Entities.ViewModels
-@model (Borrow borrow, List<BookVM> books)
+@model Borrow
 
 @{
     ViewData["Title"] = "Create";
@@ -19,7 +18,10 @@
                                     <div class="avatar">
                                         <img src="./src/img/2.png" alt="">
                                     </div>
-                                    <h3>Welcome, Sơn Đẹp Trai.</h3>
+                                    @{
+                                        var libCard = (LibraryCard)ViewBag.LibraryCard;
+                                        <h3>Welcome, @libCard.Name</h3>
+                                    }
                                 </div>
 
                             </div>
@@ -41,7 +43,7 @@
                                         <button class="search-button">
                                             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--feather" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" data-icon="feather:search"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><path d="M21 21l-4.35-4.35"></path></g></svg>
                                         </button>
-                                       
+
                                     </div>
                                 </div>
                             </div>
@@ -57,47 +59,13 @@
                                 @*<span>Số ngày mượn</span>*@
                                 <span class="call-end">actions</span>
                             </div>
-                            @foreach (var item in Model.books)
-                            {
-                                <div class="flex-list-inner" id="book-search">
-                                    <div class="_flex">
-                                        <div class="flex-table-cell" hidden>
-                                            <span class="light-text">@item.Id</span>
-                                        </div>
-                                        <div class="flex-table-item">
-                                            <div class="flex-table-cell is-media is-grow2">
-                                                <div class="is-avatar is-medium">
-                                                    <img class="medium" src="@item.Thumbnail" alt="">
-                                                </div>
-                                                <div>
-                                                    <span class="item-name">@item.Name</span>
-                                                    <span class="item-meta text-name">
-                                                        <span>Tác giả: @item.Author</span>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                            @*<div class="flex-table-cell">
-                                                <span class="light-text">@item.PublishingCompany</span>
-                                            </div>*@
+                            <div class="flex-list-inner" id="book-search">
+                                <!--JS add element-->
+                            </div>
 
-                                            <div class="flex-table-cell">
-                                                <span class="light-text">@item.Amount</span>
-                                            </div>
-                                            @*<div class="flex-table-cell">
-                                                <span class="light-text">@item.IdLibraryCode</span>
-                                            </div>*@
-                                            @*<div class="flex-table-cell">
-                                                <span class="light-text">@item.DateCanBorrow Ngày</span>
-                                            </div>*@
-                                            <div class="flex-table-cell call-end">
-                                                <div class="icon-action">
-                                                    <button class="add-book-borrow" value="@item.Id" data-thumnail="@item.Thumbnail" data-bookname="@item.Name" data-author="@item.Author">Add<i class="fal fa-wrench"></i></button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            }
+                            @*@foreach (var item in Model.books)
+                                {
+                                }*@
                         </div>
                     </div>
                 </div>
@@ -107,9 +75,9 @@
                     <div class="list-book">
                         <div class="head">
                             <h3>Danh Sách Đã Chọn</h3>
-                            
+
                             <button class="button v-button is-fullwidth is-w30" type="submit">Lưu</button>
-                            
+
                         </div>
                         <div class="selected-list-book">
                             <div class="inner-list">
@@ -124,35 +92,35 @@
                     </div>
                     <div asp-validation-summary="ModelOnly" class="text-danger" hidden></div>
                     <div class="form-group" hidden>
-                        <label asp-for="borrow.Note" class="control-label"></label>
-                        <input asp-for="borrow.Note" name="Note" class="form-control" />
-                        <span asp-validation-for="borrow.Note" class="text-danger"></span>
+                        <label asp-for="Note" class="control-label"></label>
+                        <input asp-for="Note" name="Note" class="form-control" />
+                        <span asp-validation-for="Note" class="text-danger"></span>
                     </div>
                     <div class="form-group" hidden>
-                        <label asp-for="borrow.IdUser" class="control-label"></label>
-                        <input asp-for="borrow.IdUser" name="IdUser" class="form-control" value="@ViewData["Id-User"]" />
-                        <span asp-validation-for="borrow.IdUser" class="text-danger"></span>
+                        <label asp-for="IdUser" class="control-label"></label>
+                        <input asp-for="IdUser" name="IdUser" class="form-control" value="@ViewData["Id-User"]" />
+                        <span asp-validation-for="IdUser" class="text-danger"></span>
                     </div>
                     <div class="form-group" hidden>
-                        <label asp-for="borrow.UserName" class="control-label"></label>
-                        <input asp-for="borrow.UserName" name="UserName" class="form-control" value="@ViewData["Name-User"]" />
-                        <span asp-validation-for="borrow.UserName" class="text-danger"></span>
+                        <label asp-for="UserName" class="control-label"></label>
+                        <input asp-for="UserName" name="UserName" class="form-control" value="@ViewData["Name-User"]" />
+                        <span asp-validation-for="UserName" class="text-danger"></span>
                     </div>
-                    <div class="form-group" hidden>
+                    @*<div class="form-group" hidden>
                         <label asp-for="borrow.IdCard" class="control-label"></label>
                         <select asp-for="borrow.IdCard" name="IdCard" class="form-control" asp-items="ViewBag.IdCard"></select>
-                    </div>
-                    @*<div class="form-group">
-                        <input type="submit" value="Create" class="btn btn-primary" />
                     </div>*@
+                    @*<div class="form-group">
+                            <input type="submit" value="Create" class="btn btn-primary" />
+                        </div>*@
                 </form>
-               
+
             </div>
         </div>
     </div>
 </div>
 
-    @*<div class="page-content-inner">
+@*<div class="page-content-inner">
         <div>
             <div class="list-flex-toolbar">
                 <div class="search">
@@ -176,7 +144,7 @@
 
                 </div>
             </div>
-           
+
         </div>
         <div class="row">
             <div class="col-md-4">
@@ -212,86 +180,135 @@
     <div>
         <a asp-action="Index">Back to List</a>
     </div>*@
-   
+
 
 @section Scripts {
-        
-        <script>
-         
-            $$('.add-book-borrow').forEach(function (button) {
-                button.addEventListener('click',
-                    function () {
-                        
-                        //add element to html dom
-                        $('#book-choose').innerHTML += `
-                                <input name="idBooks" value="${button.value}" hidden>
-                                <div class="flex-table">
-                                    <div class="flex-table-item">
-                                        <div class="flex-table-cell is-grow-lg">
-                                            <div class="cover-image">
-                                                <img src="${button.dataset.thumnail}" alt="">
-                                            </div>
-                                            <div class="info">
-                                                <span class="item-name">${button.dataset.bookname}</span>
-                                                <span class="item-meta">
-                                                    <span>${button.dataset.author}</span>
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <div class="flex-table-cell cell-end">
-                                            <a class="action-delete">Xóa</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                `;
-                    });
-                
-            });
 
+    <script>
 
-            //use fetch api to get data from server https://localhost:5001/Books/Search/content, delay 1s for each text append
-
-
-            const url = window.location.origin;
-            var is_search = true;
-            console.log(url);
-            $('#search').addEventListener('keyup',
+        $$('.add-book-borrow').forEach(function (button) {
+            button.addEventListener('click',
                 function () {
-                    const content = this.value;
-                    if (content.length < 1) {
-                        //clear html dom
-                        $('#book-search').innerHTML = '';
-                        return;
-                    }
-                    setTimeout(function () {
-                        fetch(`${url}/Books/Search?content=${content}`)
-                            .then(function (response) {
-                                return response.json();
-                            })
-                            .then(function (data) {
-                                console.log(data);
-                                //clear html dom
-                                $('#book-search').innerHTML = '';
-                                //append data to html dom
-                                data.forEach(function (book) {
-                                    $('#book-search').innerHTML += `
-                                                    <button class="add-book-borrow-search" value="${book.id}">${book.name}</button>
-                                                 `;
-                                    $$('.add-book-borrow-search').forEach(function (button) {
-                                        button.addEventListener('click',
-                                            function () {
-                                                //add element to html dom
-                                                $('#book-choose').innerHTML += `
-                                                            <input type="text" name="idBooks" value="${button.value}">
-                                                        `;
-                                            });
-                                    });
 
-                                });
-                            });
-                    }, 1000);
-
+                    //add element to html dom
+                    $('#book-choose').innerHTML += `
+                                        <input name="idBooks" value="${button.value}" hidden>
+                                        <div class="flex-table">
+                                            <div class="flex-table-item">
+                                                <div class="flex-table-cell is-grow-lg">
+                                                    <div class="cover-image">
+                                                        <img src="${button.dataset.thumnail}" alt="">
+                                                    </div>
+                                                    <div class="info">
+                                                        <span class="item-name">${button.dataset.bookname}</span>
+                                                        <span class="item-meta">
+                                                            <span>${button.dataset.author}</span>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div class="flex-table-cell cell-end">
+                                                    <a class="action-delete">Xóa</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        `;
                 });
 
-        </script>
-    }
+        });
+
+
+        //use fetch api to get data from server https://localhost:5001/Books/Search/content, delay 1s for each text append
+
+
+        const url = window.location.origin;
+        var is_search = true;
+        console.log(url);
+        $('#search').addEventListener('keyup',
+            function () {
+                const content = this.value;
+                if (content.length < 1) {
+                    //clear html dom
+                    $('#book-search').innerHTML = '';
+                    return;
+                }
+                setTimeout(function () {
+                    fetch(`${url}/Books/Search?content=${content}`)
+                        .then(function (response) {
+                            return response.json();
+                        })
+                        .then(function (data) {
+                            console.log(data);
+                            //clear html dom
+                            $('#book-search').innerHTML = '';
+                            //append data to html dom
+                            //                                <button class="add-book-borrow-search" value="${book.id}">${book.name}</button>
+
+                            data.forEach(function (book) {
+                                $('#book-search').innerHTML += `
+                                        <div class="_flex">
+                                            <div class="flex-table-cell" hidden>
+                                                <span class="light-text">${book.id}</span>
+                                            </div>
+                                            <div class="flex-table-item">
+                                                <div class="flex-table-cell is-media is-grow2">
+                                                    <div class="is-avatar is-medium">
+                                                        <img class="medium" src="${book.thumbnail}" alt="">
+                                                    </div>
+                                                    <div>
+                                                        <span class="item-name">${book.name}</span>
+                                                        <span class="item-meta text-name">
+                                                            <span>Tác giả: ${book.author}</span>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div class="flex-table-cell">
+                                                    <span class="light-text"> ${book.amount}</span>
+                                                </div>
+                                                <div class="flex-table-cell">
+                                                    <span class="light-text">${book.idlibrarycode}</span>
+                                                </div>
+                                                <div class="flex-table-cell call-end">
+                                                    <div class="icon-action">
+                                                        <button class="add-book-borrow-search" value="${book.id}" data-thumnail="${book.thumbnail}" data-bookname="${book.name}" data-author="${book.author}">Add<i class="fal fa-wrench"></i></button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                                             `;
+                                $$('.add-book-borrow-search').forEach(function (button) {
+                                    button.addEventListener('click',
+                                        function () {
+                                            //add element to html dom
+                                            $('#book-choose').innerHTML += `
+                                    <input name="idBooks" value="${button.value}" hidden>
+                                        <div class="flex-table">
+                                            <div class="flex-table-item">
+                                                <div class="flex-table-cell is-grow-lg">
+                                                    <div class="cover-image">
+                                                        <img src="${button.dataset.thumnail}" alt="">
+                                                    </div>
+                                                    <div class="info">
+                                                        <span class="item-name">${button.dataset.bookname}</span>
+                                                        <span class="item-meta">
+                                                            <span>${button.dataset.author}</span>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div class="flex-table-cell cell-end">
+                                                    <a class="action-delete">Xóa</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                                                    `;
+                                        });
+                                });
+
+                            });
+                        });
+                },
+                    1000);
+
+            });
+
+    </script>
+}

@@ -60,44 +60,47 @@ namespace LibraryManagement.UI.Controllers
         // GET: Borrows/Create
         // GET: Borrows/Create/xxx-xxx-xxx
         [HttpGet("Create/{idCard}")]
-        public async Task<IActionResult> Create(Guid? idCard = null)
+        public async Task<IActionResult> Create(Guid idCard)
         {
             ViewData["Id-User"] = User.FindFirstValue(ClaimTypes.NameIdentifier);
             ViewData["Name-User"] = (User.FindFirstValue(ClaimTypes.Name));
-            ViewData["cardSelect"] = Guid.Empty;
+
+            var libCard = await _context.LibraryCards.FindAsync(idCard);
+            ViewBag.LibraryCard = libCard;
+
+
             var borrow = new Borrow();
 
-            if (idCard is not null)
-            {
-                var cardSelect = await _context.LibraryCards.FirstOrDefaultAsync(x => x.Id == idCard);
-                if (cardSelect is not null)
-                {
-                    ViewData["IdCard"] = new SelectList(_context.LibraryCards, "Id", "MSSV", cardSelect.Id);
-                    borrow.IdCard = cardSelect.Id;
-                }
+            //if (idCard is not null)
+            //{
 
-            }
-            else
-            {
-                ViewData["IdCard"] = new SelectList(_context.LibraryCards, "Id", "MSSV");
-            }
+            //    if (cardSelect is not null)
+            //    {
+            //        ViewData["IdCard"] = new SelectList(_context.LibraryCards, "Id", "MSSV", cardSelect.Id);
+            //        borrow.IdCard = cardSelect.Id;
+            //    }
+
+            //}
+            //else
+            //{
+            //    ViewData["IdCard"] = new SelectList(_context.LibraryCards, "Id", "MSSV");
+            //}
 
 
             var books = await _book.GetBooks();
 
-            return View((borrow, books));
+            return View(borrow);
         }
 
         // POST: Borrows/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
+        [HttpPost("Create/{idCard}")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,DateBorrow,Note,IdUser,UserName,IdCard")] Borrow borrow, List<string> idBooks)
+        public async Task<IActionResult> Create([Bind("Id,DateBorrow,Note,IdUser,UserName,IdCard")] Borrow borrow, List<string> idBooks, Guid idCard)
         {
             ViewData["Id-User"] = User.FindFirstValue(ClaimTypes.NameIdentifier);
             ViewData["Name-User"] = (User.FindFirstValue(ClaimTypes.Name));
-            ViewData["IdCard"] = new SelectList(_context.LibraryCards, "Id", "MSSV");
 
             var isSuccess = false;
 
@@ -108,8 +111,9 @@ namespace LibraryManagement.UI.Controllers
                 isSuccess = result.isSuccess;
 
             }
-
-            ViewData["IdCard"] = new SelectList(_context.LibraryCards, "Id", "Id", borrow.IdCard);
+            var libCard = await _context.LibraryCards.FindAsync(idCard);
+            ViewBag.LibraryCard = libCard;
+            //ViewData["IdCard"] = new SelectList(_context.LibraryCards, "Id", "Id", borrow.IdCard);
             var books = await _book.GetBooks();
             if (isSuccess)
             {
@@ -117,7 +121,7 @@ namespace LibraryManagement.UI.Controllers
             }
             else
             {
-                return View((borrow, books));
+                return View(borrow);
             }
         }
 
@@ -175,7 +179,7 @@ namespace LibraryManagement.UI.Controllers
                 return View(cardAndBook);
             }
 
-            return Redirect($"/Borrow/ReturnBook?idCard={request.IdCard}");
+            return Redirect($"/Borrow/ReturnBooks?idCard={request.IdCard}");
         }
 
         [HttpGet("Edit")]

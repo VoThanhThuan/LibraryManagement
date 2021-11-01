@@ -204,6 +204,7 @@ namespace Library.Library.Data
                     Exp = 1,
                     IsLock = false,
                     MSSV = "DPM1851XX",
+                    Name = "Tài Khoản Test",
                     PhoneNumber = "0123456789",
                     Rank = RankLibrary.Beginner
                 });

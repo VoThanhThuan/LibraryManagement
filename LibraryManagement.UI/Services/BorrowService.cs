@@ -131,7 +131,6 @@ namespace LibraryManagement.UI.Services
             }
 
 
-            var bibs = new List<BookInBorrow>();
             foreach (var idBook in idBooks)
             {
                 var book = await _context.Books.FindAsync(idBook);
@@ -145,21 +144,23 @@ namespace LibraryManagement.UI.Services
                 if (bib is not null)
                 {
                     bib.AmountBorrowed += 1;
+                    await _context.SaveChangesAsync();
                 }
                 else
                 {
-                    bibs.Add(new BookInBorrow()
+                    var newbib = new BookInBorrow()
                     {
                         AmountBorrowed = 1,
                         IdBook = idBook,
                         IdBorrow = idBorrow,
                         TimeBorrowed = DateTime.Now,
                         TimeReturn = DateTime.Now.AddDays(book.DateCanBorrow)
-                    });
+                    };
+                    await _context.BookInBorrows.AddAsync(newbib);
+                    await _context.SaveChangesAsync();
+
                 }
             }
-            await _context.BookInBorrows.AddRangeAsync(bibs);
-            await _context.SaveChangesAsync();
             return (true, null);
         }
 
