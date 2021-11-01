@@ -29,7 +29,7 @@ namespace LibraryManagement.UI.Models.Storage
 
         private async Task SaveFileAsync(Stream mediaBinaryStream, string fileName, bool security = false)
         {
-            var filePath = security == false ? Path.Combine(_userContentFolder, fileName) : Path.Combine(_securityContentFolder, fileName);
+            var filePath = security == false ? $"{_userContentFolder}{fileName}" : $"{_securityContentFolder}{fileName}";
             await using var output = new FileStream(filePath, FileMode.Create, FileAccess.Write);
             await mediaBinaryStream.CopyToAsync(output);
             await output.DisposeAsync();
@@ -37,39 +37,39 @@ namespace LibraryManagement.UI.Models.Storage
 
         public DirectoryInfo CreateDirectory(string path, bool security = false)
         {
-            var newPath = security == false ? Path.Combine(_userContentFolder, path) : Path.Combine(_securityContentFolder, path);
+            var newPath = security == false ? $"{_userContentFolder}{path}" : $"{_securityContentFolder}{path}";
             return Directory.CreateDirectory(newPath);
         }
 
         public void CreateFile(string fileName, bool security = false)
         {
-            var newPath = security == false ? Path.Combine(_userContentFolder, fileName) : Path.Combine(_securityContentFolder, fileName);
+            var newPath = security == false ? $"{_userContentFolder}{fileName}" : $"{_securityContentFolder}{fileName}";
             File.Create(newPath);
         }
 
 
         public bool FolderExists(string path, bool security = false)
         {
-            var newPath = security == false ? Path.Combine(_userContentFolder, path) : Path.Combine(_securityContentFolder, path);
+            var newPath = security == false ? $"{_userContentFolder}{path}" : $"{_securityContentFolder}{path}";
             return Directory.Exists(newPath);
         }
 
 
         public bool FileExists(string fileName, bool security = false)
         {
-            var newPath = security == false ? Path.Combine(_userContentFolder, $".{fileName}") : Path.Combine(_securityContentFolder, $".{fileName}");
+            var newPath = security == false ? $"{_userContentFolder}{fileName}" : $"{_securityContentFolder}{fileName}";
             return File.Exists(newPath);
         }
         public void Move(string sourceDirName, string destDirName, bool security = false)
         {
-            sourceDirName = security == false ? Path.Combine(_userContentFolder, sourceDirName) : Path.Combine(_securityContentFolder, sourceDirName);
-            destDirName = security == false ? Path.Combine(_userContentFolder, destDirName) : Path.Combine(_securityContentFolder, destDirName);
+            sourceDirName = security == false ? $"{_userContentFolder}{sourceDirName}" : $"{_securityContentFolder}{sourceDirName}";
+            destDirName = security == false ? $"{_userContentFolder}{destDirName}" : $"{_securityContentFolder}{destDirName}";
             Directory.Move(sourceDirName, destDirName);
         }
 
         public async Task<int> DeleteFileAsync(string fileName, bool security = false)
         {
-            var filePath = security == false ? Path.Combine(_userContentFolder, $".{fileName}") : Path.Combine(_securityContentFolder, $".{fileName}");
+            var filePath = security == false ? $"{_userContentFolder}{fileName}" : $"{_securityContentFolder}{fileName}";
             if (!File.Exists(filePath)) return StatusCodes.Status404NotFound;
             try
             {
@@ -88,14 +88,15 @@ namespace LibraryManagement.UI.Models.Storage
             if (file is null) return "";
             var originalFileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim().Value;
             var fileName = $@"/{path}/{Guid.NewGuid()}{Path.GetExtension(originalFileName)}";
-            var pathFile = security == false ? Path.Combine(_userContentFolder, $".{fileName}") : Path.Combine(_securityContentFolder, $".{fileName}");
+
+            var pathFile = security == false ? $"{_userContentFolder}{fileName}" : $"{_securityContentFolder}{fileName}";
             await SaveFileAsync(file.OpenReadStream(), pathFile);
             return fileName;
         }
 
         public async Task<int> DeleteFolderAsync(string folder, bool security = false)
         {
-            var folderPath = security == false ? Path.Combine(_userContentFolder, folder) : Path.Combine(_securityContentFolder, folder);
+            var folderPath = security == false ? $"{_userContentFolder}{folder}" : $"{_securityContentFolder}{folder}";
 
             if (!Directory.Exists(folderPath)) return StatusCodes.Status404NotFound;
 
