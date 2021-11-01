@@ -101,24 +101,30 @@ namespace LibraryManagement.UI.Controllers
                 return NotFound();
             }
 
+
             if (!ModelState.IsValid) return View(libraryCard);
-            try
+
+            var libCard = await _context.LibraryCards.FindAsync(id);
+
+            libCard.MSSV = libraryCard.MSSV;
+            libCard.Class = libraryCard.Class;
+            libCard.PhoneNumber = libraryCard.PhoneNumber;
+            libCard.Karma = libraryCard.Karma;
+            libCard.IsLock = libraryCard.IsLock;
+            libCard.Rank = libraryCard.Rank;
+            libCard.Exp = libraryCard.Exp;
+            libCard.ExpLevelUp = libraryCard.ExpLevelUp;
+            libCard.StatusCard = libraryCard.StatusCard;
+
+            if (Image is not null)
             {
-                libraryCard.Image = await _storage.SaveFileAsync(Image, "libraryCard");
-                _context.Update(libraryCard);
-                await _context.SaveChangesAsync();
+                await _storage.DeleteFileAsync(libCard.Image);
+                libCard.Image = await _storage.SaveFileAsync(Image, "libraryCard");
             }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!LibraryCardExists(libraryCard.Id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+
+            _context.LibraryCards.Update(libCard);
+            await _context.SaveChangesAsync();
+
             return RedirectToAction(nameof(Index));
         }
 
