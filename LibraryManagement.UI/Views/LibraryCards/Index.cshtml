@@ -90,13 +90,17 @@
                                 </div>
                                 <div class="right">
                                     <div class="buttons">
-                                        <a href="Borrows/Create/@item.Id" class="button i-button b-success">
-                                            <span>Mượn Sách</span>
-                                        </a>
+
                                         @if (item.StatusCard == StatusCard.Borrowed)
                                         {
                                             <a href="Borrows/ReturnBook?idCard=@item.Id" class="button i-button b-success">
                                                 <span>Trả Sách</span>
+                                            </a>
+                                        }
+                                        else
+                                        {
+                                            <a href="Borrows/Create/@item.Id" class="button i-button b-success">
+                                                <span>Mượn Sách</span>
                                             </a>
                                         }
 

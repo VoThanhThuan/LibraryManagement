@@ -171,7 +171,7 @@ namespace LibraryManagement.UI.Services
                 return false;
 
 
-            var bib = await _context.BookInBorrows.FirstOrDefaultAsync(x => x.IdBook == request.IdBook);
+            var bib = await _context.BookInBorrows.FirstOrDefaultAsync(x => x.IdBook == request.IdBook && x.IdBorrow == request.IdBorrow);
             if(bib is null) return false;
 
             var card = await _context.LibraryCards.FindAsync(request.IdCard);
