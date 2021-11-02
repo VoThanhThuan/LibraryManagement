@@ -115,6 +115,7 @@ namespace LibraryManagement.UI.Services
             {
                 var borrow = await _context.Borrows.FirstOrDefaultAsync(x => x.IdCard == libcrad.Id);
                 idBorrow = borrow.Id;
+                borrow.StatusBorrow = StatusBorrow.Borrowed;
             }
             else
             {
@@ -126,9 +127,8 @@ namespace LibraryManagement.UI.Services
                 _context.Borrows.Add(request);
 
                 libcrad.StatusCard = StatusCard.Borrowed;
-
-                await _context.SaveChangesAsync();
             }
+            await _context.SaveChangesAsync();
 
 
             foreach (var idBook in idBooks)
