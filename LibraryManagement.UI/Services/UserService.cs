@@ -45,9 +45,20 @@ namespace LibraryManagement.UI.Services
         }
         public async Task<List<UserVM>> GetUsers()
         {
-            var users = await _context.Users.Select(x => x.ToViewModel()).ToListAsync();
+            var users = await _context.Users.ToListAsync();
+            var userVM = new List<UserVM>();
+            foreach (var user in users)
+            {
+                userVM.Add(await user.ToViewModel(_userManager));
+            }
+            //foreach (var user in users)
+            //{
+            //    var ar = await _context.AppUserRole.FirstOrDefaultAsync(x => x.UserId == user.Id);
+            //    var r = await _context.Roles.FirstOrDefaultAsync(x => x.Id == ar.RoleId);
+            //    user.RoleName = r.Name;
+            //}
 
-            return users;
+            return userVM;
         }
 
         public async Task<UserVM> GetUser(Guid id)
