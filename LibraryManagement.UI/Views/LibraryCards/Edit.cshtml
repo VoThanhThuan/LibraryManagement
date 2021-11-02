@@ -65,6 +65,18 @@
                         </div>
                         <div class="column is-6">
                             <div class="field">
+                                <label>Name</label>
+                                <div class="control has-icon">
+                                    <input type="text" class="input" asp-for="Name">
+                                    <div class="form-icon" data-v-aad2da70="">
+                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--feather" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" data-icon="feather:user" data-v-aad2da70=""><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></g></svg>
+                                    </div>
+                                </div>
+                                <span asp-validation-for="Name" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="column is-6">
+                            <div class="field">
                                 <label>Lớp</label>
                                 <div class="control has-icon">
                                     <input class="input" asp-for="Class">
