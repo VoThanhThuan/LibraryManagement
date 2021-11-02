@@ -179,7 +179,7 @@ namespace LibraryManagement.UI.Controllers
                 return View(cardAndBook);
             }
 
-            return Redirect($"/Borrow/ReturnBooks?idCard={request.IdCard}");
+            return Redirect($"/Borrows/ReturnBook?idCard={request.IdCard}");
         }
 
         [HttpGet("Edit")]
