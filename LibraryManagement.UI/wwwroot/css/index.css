@@ -1711,7 +1711,7 @@ h3 {
                             justify-content: flex-end;
                         }
 
-                            .borrow-wrapper .columns .column .list-book .flex-table-item .flex-table-cell.cell-end .action-delete {
+                            .borrow-wrapper  .action-btn {
                                 position: relative;
                                 display: inline-block;
                                 font-weight: 500;
@@ -1722,7 +1722,7 @@ h3 {
                                 font-size: 1.33rem;
                             }
 
-                                .borrow-wrapper .columns .column .list-book .flex-table-item .flex-table-cell.cell-end .action-delete::after {
+                                .borrow-wrapper .action-btn::after {
                                     content: "";
                                     position: absolute;
                                     bottom: -.4rem;
@@ -1732,6 +1732,6 @@ h3 {
                                     border-bottom: .2rem dotted;
                                 }
 
-                                .borrow-wrapper .columns .column .list-book .flex-table-item .flex-table-cell.cell-end .action-delete:hover {
+                                .borrow-wrapper  .action-btn:hover {
                                     opacity: 0.6;
                                 }
