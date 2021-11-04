@@ -52,26 +52,47 @@ namespace LibraryManagement.UI
                 //Console.WriteLine(">>> Đang chạy trên máy tính của [Nguyễn Ngọc Sơn]");
             }
 
+            services.Configure<IdentityOptions>(opts =>
+            {
+                //opts.SignIn.RequireConfirmedEmail = true;
+
+                opts.Lockout.AllowedForNewUsers = true;
+                opts.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(10);
+                opts.Lockout.MaxFailedAccessAttempts = 3;
+            });
+
             services.AddIdentity<User, Role>()
                 .AddEntityFrameworkStores<LibraryDbContext>()
                 .AddDefaultTokenProviders();
 
-            services.AddAuthentication(options =>
-                {
-                    options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-                    options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-                    options.DefaultSignOutScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-                })
-                .AddCookie(options =>
-                {
-                    options.LoginPath = new PathString("/Login");
-                    options.AccessDeniedPath = new PathString("/Login");
-                    //options.SlidingExpiration = true;
-                });
+            //services.AddAuthentication(options =>
+            //    {
+            //        options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+            //        options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+            //        options.DefaultSignOutScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+            //    })
+            //    .AddCookie(options =>
+            //    {
+            //        options.LoginPath = new PathString("/Login");
+            //        options.AccessDeniedPath = new PathString("/Login");
+            //        //options.SlidingExpiration = true;
+            //    });
             services.ConfigureApplicationCookie(options =>
             {
                 options.LoginPath = "/Login";
+                options.Cookie.Name = ".AspNetCore.Identity.Application";
 
+            });
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("AllowRole", builder =>
+                {
+                    builder.RequireAuthenticatedUser();
+
+                    builder.RequireClaim("manage", "post");
+
+                });
             });
 
             services.AddSession(options => { options.IdleTimeout = TimeSpan.FromHours(1); });
@@ -86,6 +107,7 @@ namespace LibraryManagement.UI
             services.AddTransient<RoleService>();
             services.AddTransient<BookService>();
             services.AddTransient<BorrowService>();
+            services.AddTransient<GenreService>();
 
             services.AddControllersWithViews();
 

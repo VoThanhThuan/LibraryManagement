@@ -72,5 +72,7 @@ namespace Library.Library.Entities.Requests
         [Required]
         public string IdLibraryCode { get; set; } = "";
 
+        public List<int> idGenres { get; set; }
+
     }
 }

@@ -14,6 +14,8 @@ namespace Library.Library.Entities.Requests
         [Required(ErrorMessage = "Mật Khẩu Không Được Bỏ Trống")]
         public string Password { get; set; }
         public bool RememberMe { get; set; }
+        public string ReturnUrl { get; set; }
+
 
     }
 }

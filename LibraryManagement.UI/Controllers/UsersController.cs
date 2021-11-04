@@ -14,7 +14,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Configuration;
 
 namespace LibraryManagement.UI.Controllers
-{ 
+{
     [Authorize]
     public class UsersController : Controller
     {

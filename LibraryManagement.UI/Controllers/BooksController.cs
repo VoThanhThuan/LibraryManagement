@@ -15,16 +15,18 @@ using Microsoft.Extensions.Configuration;
 
 namespace LibraryManagement.UI.Controllers
 {
-    [Authorize]
+    [Authorize("AllowRole")]
     public class BooksController : Controller
     {
         private readonly LibraryDbContext _context;
         private readonly BookService _book;
+        private readonly GenreService _genre;
 
-        public BooksController(LibraryDbContext context, BookService book)
+        public BooksController(LibraryDbContext context, BookService book, GenreService genre)
         {
             _context = context;
             _book = book;
+            _genre = genre;
         }
 
         // GET: Books
@@ -64,6 +66,7 @@ namespace LibraryManagement.UI.Controllers
         // GET: Books/Create
         public IActionResult Create()
         {
+            ViewData["Genre"] = new SelectList(_context.Genres, "Id", "Name");
             ViewData["IdLibraryCode"] = new SelectList(_context.LibraryCodes, "Id", "Id");
             return View();
         }
@@ -73,13 +76,14 @@ namespace LibraryManagement.UI.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(BookRequest request)
+        public async Task<IActionResult> Create(BookRequest request, List<int> idGenres)
         {
             if (!ModelState.IsValid) return RedirectToAction(nameof(Index));
 
             var book = await _book.PostBook(request);
-                
-            ViewData["IdLibraryCode"] = new SelectList(_context.LibraryCodes, "Id", "Id", book.IdLibraryCode);
+            await _genre.PostBookInGenre(book.Id, idGenres);
+            ViewData["Genre"] = new SelectList(_context.Genres, "Id", "Name");
+            ViewData["IdLibraryCode"] = new SelectList(_context.LibraryCodes, "Id", "Id");
             return View(book.ToRequest());
         }
 
@@ -96,8 +100,13 @@ namespace LibraryManagement.UI.Controllers
             {
                 return NotFound();
             }
+
+            var bookRequest = book.ToRequest();
+            bookRequest.idGenres = await _genre.GetIdBookInGenre(book.Id);
+
+            ViewData["Genre"] = new SelectList(_context.Genres, "Id", "Name");
             ViewData["IdLibraryCode"] = new SelectList(_context.LibraryCodes, "Id", "Id", book.IdLibraryCode);
-            return View(book);
+            return View(bookRequest);
         }
 
         // POST: Books/Edit/5
@@ -115,9 +124,14 @@ namespace LibraryManagement.UI.Controllers
             if (!ModelState.IsValid) return RedirectToAction(nameof(Index));
 
             var book = await _book.PutBook(request);
+            await _genre.PostBookInGenre(book.Id, request.idGenres);
 
+            var bookRequest = book.ToRequest();
+            bookRequest.idGenres = await _genre.GetIdBookInGenre(book.Id);
+
+            ViewData["Genre"] = new SelectList(_context.Genres, "Id", "Name");
             ViewData["IdLibraryCode"] = new SelectList(_context.LibraryCodes, "Id", "Id", book.IdLibraryCode);
-            return View(book);
+            return View(bookRequest);
         }
 
         // GET: Books/Delete/5

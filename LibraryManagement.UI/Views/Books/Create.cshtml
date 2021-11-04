@@ -163,11 +163,22 @@
                         </div>
                         <div class="column is-6">
                             <div class="field">
+                                <label>Thể Loại</label>
+                                <div class="control has-icon">
+                                    <select id="selectgenre" name="idGenres" multiple class="input" asp-items="ViewBag.Genre"></select>
+                                    <div class="form-icon" data-v-aad2da70="">
+                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--feather" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" data-icon="feather:mail" data-v-aad2da70=""><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><path d="M22 6l-10 7L2 6"></path></g></svg>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="column is-6">
+                            <div class="field">
                                 <label>Hạng Mượn</label>
                                 <div class="control has-icon">
                                     <select asp-for="Rank" class="input">
                                         @{
-                                            foreach (var rank in (RankLibrary[]) Enum.GetValues(typeof(RankLibrary)))
+                                            foreach (var rank in (RankLibrary[])Enum.GetValues(typeof(RankLibrary)))
                                             {
                                                 <option value="@rank">@rank</option>
                                             }
@@ -272,3 +283,9 @@
     @section Scripts {
         @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
     }*@
+
+@section Scripts
+{
+    <partial name="_vanillaSelectBox" />
+}
+

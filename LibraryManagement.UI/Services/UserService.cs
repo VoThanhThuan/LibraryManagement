@@ -221,7 +221,8 @@ namespace LibraryManagement.UI.Services
             var user = await _userManager.FindByNameAsync(request.Username);
             if (user == null) return null;
 
-            var result = await _signInManager.PasswordSignInAsync(user, request.Password, request.RememberMe, true);
+            var result = await _signInManager.PasswordSignInAsync(user.UserName, request.Password, request.RememberMe, true);
+
             //var checkpass = _passwordHasher.VerifyHashedPassword(user, user.PasswordHash, request.Password);
             //if (checkpass != PasswordVerificationResult.Success)
             //{
@@ -232,27 +233,28 @@ namespace LibraryManagement.UI.Services
             //if (!result.Succeeded)
             //    return null;
 
-            var roles = await _userManager.GetRolesAsync(user); //lấy quyền người dùng
-            var claims = new[]
-            {
-                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                new Claim(ClaimTypes.Email, string.IsNullOrEmpty(user.Email) ? "" : user.Email),
-                new Claim(ClaimTypes.GivenName, user.Nickname),
-                new Claim(ClaimTypes.Role, string.Join(";", roles)),
-                new Claim(ClaimTypes.Name, user.UserName)
-            };
-            //<>Mã hóa SymmetricS
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Tokens:Key"]));
-            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-            //<> Tạo Token
-            var token = new JwtSecurityToken(_config["Tokens:Issuer"],
-                _config["Tokens:Issuer"],
-                claims,
-                expires: DateTime.Now.AddHours(1),
-                signingCredentials: creds);
-            //</>
+            //var roles = await _userManager.GetRolesAsync(user); //lấy quyền người dùng
+            //var claims = new[]
+            //{
+            //    new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+            //    new Claim(ClaimTypes.Email, string.IsNullOrEmpty(user.Email) ? "" : user.Email),
+            //    new Claim(ClaimTypes.GivenName, user.Nickname),
+            //    new Claim(ClaimTypes.Role, string.Join(";", roles)),
+            //    new Claim(ClaimTypes.Name, user.UserName)
+            //};
+            ////<>Mã hóa SymmetricS
+            //var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Tokens:Key"]));
+            //var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+            ////<> Tạo Token
+            //var token = new JwtSecurityToken(_config["Tokens:Issuer"],
+            //    _config["Tokens:Issuer"],
+            //    claims,
+            //    expires: DateTime.Now.AddHours(1),
+            //    signingCredentials: creds);
+            ////</>
 
-            return new JwtSecurityTokenHandler().WriteToken(token);
+            //return new JwtSecurityTokenHandler().WriteToken(token);
+            return "Ok";
         }
 
         public string DecryptString(string cipherText)
