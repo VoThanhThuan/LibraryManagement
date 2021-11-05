@@ -59,8 +59,11 @@ namespace LibraryManagement.UI.Services
 
         public async Task<List<BookVM>> GetBorrowingBooks()
         {
-            var books = await _context.Books.Where(x => x.StatusBook == StatusBook.Borrowed).Select(x => x.ToViewModel()).ToListAsync();
-
+            var books = await (from br in _context.Borrows
+                where br.StatusBorrow == StatusBorrow.Borrowed
+                join bib in _context.BookInBorrows on br.Id equals bib.IdBorrow
+                join b in _context.Books on bib.IdBook equals b.Id
+                select b.ToViewModel()).ToListAsync();
             return books;
         }
 

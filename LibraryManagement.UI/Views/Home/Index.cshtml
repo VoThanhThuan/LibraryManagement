@@ -10,7 +10,7 @@
     <p> Số sách đang được mượn: @Model.TotalBookBorrowing </p>
     <p> Số sách đã được trả: @Model.TotalBookReturn </p>
     <p> Số sách bị thiếu: @{
-                               var total = (Model.TotalBookBorrowed + Model.TotalBookBorrowing) - Model.TotalBookReturn;
+                               var total = Model.TotalBookBorrowed - (Model.TotalBookBorrowing + Model.TotalBookReturn);
                                  if (total > 0)
                                  {
                                      <span>@total</span>
