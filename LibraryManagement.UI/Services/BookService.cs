@@ -6,6 +6,7 @@ using Library.Library.Data;
 using Library.Library.Entities;
 using Library.Library.Entities.Requests;
 using Library.Library.Entities.ViewModels;
+using Library.Library.Enums;
 using LibraryManagement.UI.Models.Storage;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -47,6 +48,48 @@ namespace LibraryManagement.UI.Services
 
             return books;
         }
+
+        public async Task<List<BookVM>> GetBorrowedBooks()
+        {
+            var books = await (from bib in _context.BookInBorrows
+                join b in _context.Books on bib.IdBook equals b.Id
+                select b.ToViewModel()).ToListAsync();
+            return books;
+        }
+
+        public async Task<List<BookVM>> GetBorrowingBooks()
+        {
+            var books = await _context.Books.Where(x => x.StatusBook == StatusBook.Borrowed).Select(x => x.ToViewModel()).ToListAsync();
+
+            return books;
+        }
+
+        public async Task<List<BookVM>> GetReturnBooks()
+        {
+            var books = await (from br in _context.Borrows where br.StatusBorrow == StatusBorrow.Finish 
+                join bib in _context.BookInBorrows on br.Id equals bib.IdBorrow
+                join b in _context.Books on bib.IdBook equals b.Id
+                select b.ToViewModel()).ToListAsync();
+            return books;
+        }
+
+        public async Task<List<BookVM>> GetReturnNotEnoughBooks()
+        {
+            var books = await (from br in _context.Borrows
+                where br.StatusBorrow == StatusBorrow.NotEnough
+                join bib in _context.BookInBorrows on br.Id equals bib.IdBorrow
+                join b in _context.Books on bib.IdBook equals b.Id
+                select b.ToViewModel()).ToListAsync();
+            return books;
+        }
+
+        public async Task<List<BookVM>> GetTopBooks()
+        {
+            var books = await _context.Books.OrderByDescending(x => x.TotalBorrow).Select(x => x.ToViewModel()).ToListAsync();
+
+            return books;
+        }
+
 
         public async Task<Book> PutBook(BookRequest request)
         {

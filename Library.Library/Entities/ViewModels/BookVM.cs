@@ -46,6 +46,9 @@ namespace Library.Library.Entities.ViewModels
         [Display(Name = "Tình trạng sách")]
         [Required]
         public StatusBook StatusBook { get; set; } = StatusBook.CanBorrow;
+        [Display(Name = "Sô Lần Mượn")]
+        [Required]
+        public int TotalBorrow { get; set; } = 0;
 
         //Khóa ngoại
         [Display(Name = "Mã Thư Viện")]

@@ -135,6 +135,7 @@ namespace LibraryManagement.UI.Services
             {
                 var book = await _context.Books.FindAsync(idBook);
                 if (book is null) continue;
+                book.TotalBorrow += 1;
                 var bib = await _context.BookInBorrows.FirstOrDefaultAsync(x => x.IdBook == idBook && x.IdBorrow == idBorrow);
                 book.Amount--;
                 if (book.Amount < 0)
@@ -158,7 +159,6 @@ namespace LibraryManagement.UI.Services
                     };
                     await _context.BookInBorrows.AddAsync(newbib);
                     await _context.SaveChangesAsync();
-
                 }
             }
             return (true, null);
