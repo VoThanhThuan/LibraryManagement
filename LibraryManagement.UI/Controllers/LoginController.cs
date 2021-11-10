@@ -1,38 +1,21 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
-using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
-using Library.Library.Entities;
+﻿using Library.Library.Entities;
 using Library.Library.Entities.Requests;
 using LibraryManagement.UI.Constants;
 using LibraryManagement.UI.Services;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using Microsoft.IdentityModel.Logging;
-using Microsoft.IdentityModel.Tokens;
+using System.Threading.Tasks;
 
 namespace LibraryManagement.UI.Controllers
 {
     public class LoginController : Controller
     {
-
-
-        private readonly UserService _user;
-        private readonly IConfiguration _configuration;
         private UserManager<User> _userManager;
         private SignInManager<User> _signInManager;
-        public LoginController(UserService user, IConfiguration configuration, UserManager<User> userManager, SignInManager<User> signInManager)
+        public LoginController(UserManager<User> userManager, SignInManager<User> signInManager)
         {
-            _user = user;
-            _configuration = configuration;
             _userManager = userManager;
             _signInManager = signInManager;
         }
@@ -49,10 +32,6 @@ namespace LibraryManagement.UI.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            //var a = await HttpContext.AuthenticateAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            //await HttpContext.AuthenticateAsync();
-            
-            //await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return View();
         }
         [AllowAnonymous]
