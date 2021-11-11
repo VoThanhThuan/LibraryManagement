@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
-using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
-using Library.Library.Data;
+﻿using Library.Library.Data;
 using Library.Library.Entities;
 using Library.Library.Entities.Requests;
 using Library.Library.Entities.ViewModels;
@@ -15,11 +8,14 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace LibraryManagement.UI.Services
-{
-    public class UserService
-    {
+namespace LibraryManagement.UI.Services {
+    public class UserService {
         private readonly LibraryDbContext _context;
         private readonly IStorageService _storageService;
         private readonly IPasswordHasher<User> _passwordHasher = new PasswordHasher<User>();
@@ -29,13 +25,12 @@ namespace LibraryManagement.UI.Services
         private readonly IConfiguration _config; //lấy config từ appsetting.config
 
         public UserService(LibraryDbContext context,
-           
+
             SignInManager<User> signInManager,
             UserManager<User> userManager,
             RoleManager<Role> roleManager,
             IStorageService storageService,
-            IConfiguration config)
-        {
+            IConfiguration config) {
             _context = context;
             _signInManager = signInManager;
             _userManager = userManager;
@@ -43,12 +38,10 @@ namespace LibraryManagement.UI.Services
             _storageService = storageService;
             _config = config;
         }
-        public async Task<List<UserVM>> GetUsers()
-        {
+        public async Task<List<UserVM>> GetUsers() {
             var users = await _context.Users.ToListAsync();
             var userVM = new List<UserVM>();
-            foreach (var user in users)
-            {
+            foreach (var user in users) {
                 userVM.Add(await user.ToViewModel(_userManager));
             }
             //foreach (var user in users)
@@ -61,15 +54,31 @@ namespace LibraryManagement.UI.Services
             return userVM;
         }
 
-        public async Task<UserVM> GetUser(Guid id)
-        {
+        public async Task<List<UserVM>> SearchUser(string content, int take = 10) {
+            if (take > 40)
+                take = 40;
+            content = content.ToLower();
+            var users = await _context.Users
+                .Where(x => x.Nickname.ToLower().Contains(content)
+                                        || x.Email.ToLower().Contains(content)
+                                        || x.PhoneNumber.Contains(content))
+                .Take(10).Select(x => x).ToListAsync();
+
+            var usersvm = new List<UserVM>();
+            foreach (var user in users) {
+                usersvm.Add(await user.ToViewModel(_userManager));
+            }
+
+            return usersvm;
+        }
+
+        public async Task<UserVM> GetUser(Guid id) {
             var user = await _context.Users.FindAsync(id);
             //var role = _context.AppUserRole.FirstOrDefault(x => x.UserId == user.Id);
             return await user.ToViewModel(_userManager);
         }
 
-        public async Task<bool> PutUser(Guid id, UserRequest request)
-        {
+        public async Task<bool> PutUser(Guid id, UserRequest request) {
             var text = new TextService();
             var user = await _userManager.FindByIdAsync(request.Id.ToString());
             if (user == null)
@@ -84,8 +93,7 @@ namespace LibraryManagement.UI.Services
 
             if (!string.IsNullOrEmpty(text.RemoveSpaces(request.Password)))
                 user.PasswordHash = _passwordHasher.HashPassword(user, request.Password);
-            if (request.Avatar != null)
-            {
+            if (request.Avatar != null) {
                 await DeleteFile(user.Avatar);
                 user.Avatar = await SaveFile(request.Avatar);
             }
@@ -94,16 +102,12 @@ namespace LibraryManagement.UI.Services
 
             //Role assign
             var checkRole = _context.AppUserRole.FirstOrDefault(x => x.UserId == user.Id);
-            if (checkRole.RoleId == request.IdRole)
-            {
+            if (checkRole.RoleId == request.IdRole) {
                 var roles = await _context.Roles.Select(x => x).ToListAsync();
                 var userRole = await _context.AppUserRole.FindAsync(id, request.IdRole);
-                if (userRole == null)
-                {
-                    foreach (var role in roles)
-                    {
-                        if (await _userManager.IsInRoleAsync(user, role.Name) == true)
-                        {
+                if (userRole == null) {
+                    foreach (var role in roles) {
+                        if (await _userManager.IsInRoleAsync(user, role.Name) == true) {
                             await _userManager.RemoveFromRoleAsync(user, role.Name);
                         }
                     }
@@ -115,13 +119,10 @@ namespace LibraryManagement.UI.Services
 
             }
 
-            try
-            {
+            try {
                 await _userManager.UpdateAsync(user);
                 await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
+            } catch (DbUpdateConcurrencyException) {
                 if (!UserExists(id))
                     return false;
                 throw;
@@ -130,8 +131,7 @@ namespace LibraryManagement.UI.Services
             return true;
         }
 
-        public async Task<(int apiResult, string mess, UserVM user)> PostUser(UserRequest request)
-        {
+        public async Task<(int apiResult, string mess, UserVM user)> PostUser(UserRequest request) {
             var checkUser = await _context.Users.FirstOrDefaultAsync(x => x.UserName == request.Username);
             if (checkUser != null)
                 return (StatusCodes.Status409Conflict, "Username đã tồn tại", null);
@@ -140,15 +140,13 @@ namespace LibraryManagement.UI.Services
             user.Avatar = await SaveFile(request.Avatar);
             user.PasswordHash = _passwordHasher.HashPassword(user, request.Password);
             var result = await _userManager.CreateAsync(user);
-            if (!result.Succeeded)
-            {
+            if (!result.Succeeded) {
                 return (StatusCodes.Status409Conflict, "Tạo tài khoản thất bại", null);
             }
 
             //Role assign
             var role = await _context.Roles.FindAsync(request.IdRole);
-            if (request.IdRole == Guid.Empty || role == null)
-            {
+            if (request.IdRole == Guid.Empty || role == null) {
                 role = await _roleManager.FindByNameAsync("Librarian");
             }
 
@@ -157,8 +155,7 @@ namespace LibraryManagement.UI.Services
             return (StatusCodes.Status200OK, "Ok", user.ToViewModel());
         }
 
-        public async Task<(int apiResult, string mess, UserVM user)> Register(UserRequest request)
-        {
+        public async Task<(int apiResult, string mess, UserVM user)> Register(UserRequest request) {
             var checkUser = await _context.Users.FirstOrDefaultAsync(x => x.UserName == request.Username);
             if (checkUser != null)
                 return (StatusCodes.Status409Conflict, "Username đã tồn tại", null);
@@ -167,8 +164,7 @@ namespace LibraryManagement.UI.Services
             user.Avatar = await SaveFile(request.Avatar);
             user.PasswordHash = _passwordHasher.HashPassword(user, request.Password);
             var result = await _userManager.CreateAsync(user);
-            if (!result.Succeeded)
-            {
+            if (!result.Succeeded) {
                 return (StatusCodes.Status409Conflict, "Tạo tài khoản thất bại", null);
             }
 
@@ -183,11 +179,9 @@ namespace LibraryManagement.UI.Services
             return (StatusCodes.Status200OK, "Ok", user.ToViewModel());
         }
 
-        public async Task<int> DeleteUser(Guid id)
-        {
+        public async Task<int> DeleteUser(Guid id) {
             var user = await _context.Users.FindAsync(id);
-            if (user == null)
-            {
+            if (user == null) {
                 return StatusCodes.Status404NotFound;
             }
 
@@ -202,22 +196,18 @@ namespace LibraryManagement.UI.Services
             return StatusCodes.Status200OK;
         }
 
-        private bool UserExists(Guid id)
-        {
+        private bool UserExists(Guid id) {
             return _context.Users.Any(e => e.Id == id);
         }
 
-        private async Task<string> SaveFile(IFormFile file)
-        {
+        private async Task<string> SaveFile(IFormFile file) {
             return await _storageService.SaveFileAsync(file, @"avatar");
         }
-        private async Task<int> DeleteFile(string fileName)
-        {
+        private async Task<int> DeleteFile(string fileName) {
             return await _storageService.DeleteFileAsync(fileName);
         }
 
-        public async Task<string> Authenticate(LoginRequest request)
-        {
+        public async Task<string> Authenticate(LoginRequest request) {
             var user = await _userManager.FindByNameAsync(request.Username);
             if (user == null) return null;
 
@@ -257,8 +247,7 @@ namespace LibraryManagement.UI.Services
             return "Ok";
         }
 
-        public string DecryptString(string cipherText)
-        {
+        public string DecryptString(string cipherText) {
             //<>Mã hóa SymmetricS
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Tokens:Key"]));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);

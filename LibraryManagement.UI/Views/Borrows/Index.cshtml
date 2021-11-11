@@ -1,5 +1,5 @@
 ﻿@using Library.Library.Entities
-@model  List<(LibraryCard card, List<BookInBorrow> bibs)>
+@model List<(LibraryCard card, List<BookInBorrow> bibs)>
 
 @{
     ViewData["Title"] = "Index";
@@ -19,9 +19,9 @@
         font-size: 15px;
     }
 
-    .active, .collapsible:hover {
-        background-color: #555;
-    }
+        .active, .collapsible:hover {
+            background-color: #555;
+        }
 
     .content-collapse {
         padding: 0 18px;
@@ -37,10 +37,14 @@
     <a asp-action="Create">Create New</a>
 </p>
 
-@foreach (var item in Model)
-{
+@foreach (var item in Model) {
     <button type="button" class="collapsible">
-        <span>@item.card.Class > @item.card.MSSV > @item.card.Rank </span>
+        <span>
+            @item.card.Class > @item.card.MSSV > @item.card.Name > 
+            <a href="Borrows/ReturnBook?idCard=@item.card.Id" class="button i-button b-success">
+                <span>Trả Sách</span>
+            </a>
+        </span>
     </button>
     <div class="content-collapse">
 
@@ -55,8 +59,7 @@
                         <span>Thời gian trả</span>
                     </div>
 
-                    @foreach (var bib in item.bibs)
-                    {
+                    @foreach (var bib in item.bibs) {
                         <div class="flex-list-inner">
                             <div>
                                 <div class="flex-table-item">
@@ -101,20 +104,20 @@
 
 
 @section Scripts{
-    <script>
-        var coll = document.getElementsByClassName("collapsible");
-        var i;
+<script>
+    var coll = document.getElementsByClassName("collapsible");
+    var i;
 
-        for (i = 0; i < coll.length; i++) {
-            coll[i].addEventListener("click", function() {
-                this.classList.toggle("active");
-                var content = this.nextElementSibling;
-                if (content.style.display === "block") {
-                    content.style.display = "none";
-                } else {
-                    content.style.display = "block";
-                }
-            });
-        }
-    </script>
+    for (i = 0; i < coll.length; i++) {
+        coll[i].addEventListener("click", function() {
+            this.classList.toggle("active");
+            var content = this.nextElementSibling;
+            if (content.style.display === "block") {
+                content.style.display = "none";
+            } else {
+                content.style.display = "block";
+            }
+        });
+    }
+</script>
 }

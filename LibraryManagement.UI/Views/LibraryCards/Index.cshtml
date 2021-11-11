@@ -26,7 +26,9 @@
     <div class="list-flex-toolbar">
         <div class="search">
             <div class="control">
-                <input class="input" type="text" placeholder="Search...">
+                <form action="/libraryCards/Search" method="get">
+                    <input class="input" type="text" placeholder="Search..." name="content" value="@ViewData["Content Search"]">
+                </form>
                 <div class="form-icon" data-v-aad2da70=""><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--feather" width="1.1em" height="1.1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" data-icon="feather:search" data-v-aad2da70=""><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><path d="M21 21l-4.35-4.35"></path></g></svg></div>
             </div>
         </div>
@@ -43,12 +45,10 @@
 
     <div class="card-grid">
         <div class="columns is-multiline">
-            @foreach (var item in Model)
-            {
+            @foreach (var item in Model) {
                 <div class="column is-6">
                     <div class="card-item">
-                        @if (item.IsLock == false)
-                        {
+                        @if (item.IsLock == false) {
                             <div class="card-item-body">
                                 <div class="card-item-body-left">
                                     <div class="c-avatar is-big">
@@ -91,14 +91,11 @@
                                 <div class="right">
                                     <div class="buttons">
 
-                                        @if (item.StatusCard == StatusCard.Borrowed)
-                                        {
+                                        @if (item.StatusCard == StatusCard.Borrowed) {
                                             <a href="Borrows/ReturnBook?idCard=@item.Id" class="button i-button b-success">
                                                 <span>Trả Sách</span>
                                             </a>
-                                        }
-                                        else
-                                        {
+                                        } else {
                                             <a href="Borrows/Create/@item.Id" class="button i-button b-success">
                                                 <span>Mượn Sách</span>
                                             </a>
@@ -107,9 +104,7 @@
                                     </div>
                                 </div>
                             </div>
-                        }
-                        else
-                        {
+                        } else {
                             <div class="card-item-body">
                                 <div class="card-item-body-left">
                                     <div class="c-avatar is-big">
@@ -172,77 +167,77 @@
 @*<h1>Index</h1>
 
     <p>
-        <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Create New</a>
     </p>
     <table class="table">
-        <thead>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.MSSV)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Class)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.PhoneNumber)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Karma)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.IsLock)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Rank)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Exp)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ExpLevelUp)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Image)
-                </th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
+    <thead>
+    <tr>
+    <th>
+    @Html.DisplayNameFor(model => model.MSSV)
+    </th>
+    <th>
+    @Html.DisplayNameFor(model => model.Class)
+    </th>
+    <th>
+    @Html.DisplayNameFor(model => model.PhoneNumber)
+    </th>
+    <th>
+    @Html.DisplayNameFor(model => model.Karma)
+    </th>
+    <th>
+    @Html.DisplayNameFor(model => model.IsLock)
+    </th>
+    <th>
+    @Html.DisplayNameFor(model => model.Rank)
+    </th>
+    <th>
+    @Html.DisplayNameFor(model => model.Exp)
+    </th>
+    <th>
+    @Html.DisplayNameFor(model => model.ExpLevelUp)
+    </th>
+    <th>
+    @Html.DisplayNameFor(model => model.Image)
+    </th>
+    <th></th>
+    </tr>
+    </thead>
+    <tbody>
     @foreach (var item in Model) {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.MSSV)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Class)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.PhoneNumber)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Karma)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.IsLock)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Rank)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Exp)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ExpLevelUp)
-                </td>
-                <td>
-                    <img src="@item.Image" src="@item.MSSV"/>
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                </td>
-            </tr>
+    <tr>
+    <td>
+    @Html.DisplayFor(modelItem => item.MSSV)
+    </td>
+    <td>
+    @Html.DisplayFor(modelItem => item.Class)
+    </td>
+    <td>
+    @Html.DisplayFor(modelItem => item.PhoneNumber)
+    </td>
+    <td>
+    @Html.DisplayFor(modelItem => item.Karma)
+    </td>
+    <td>
+    @Html.DisplayFor(modelItem => item.IsLock)
+    </td>
+    <td>
+    @Html.DisplayFor(modelItem => item.Rank)
+    </td>
+    <td>
+    @Html.DisplayFor(modelItem => item.Exp)
+    </td>
+    <td>
+    @Html.DisplayFor(modelItem => item.ExpLevelUp)
+    </td>
+    <td>
+    <img src="@item.Image" src="@item.MSSV"/>
+    </td>
+    <td>
+    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+    </td>
+    </tr>
     }
-        </tbody>
+    </tbody>
     </table>*@
