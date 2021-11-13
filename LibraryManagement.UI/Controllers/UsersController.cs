@@ -62,8 +62,8 @@ namespace LibraryManagement.UI.Controllers {
                 var result = await _user.PostUser(user);
                 if (result.apiResult == 200)
                     return RedirectToAction(nameof(Index));
-                else
-                    return Conflict();
+                ModelState.AddModelError("mess", result.mess);
+                return View(user);
             }
             ViewData["Roles"] = await _role.GetRoles();
             return View(user);

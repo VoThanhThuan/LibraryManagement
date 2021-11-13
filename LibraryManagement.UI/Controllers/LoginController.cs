@@ -1,4 +1,5 @@
-﻿using Library.Library.Entities;
+﻿using System.Text.Json;
+using Library.Library.Entities;
 using Library.Library.Entities.Requests;
 using LibraryManagement.UI.Constants;
 using LibraryManagement.UI.Services;
@@ -7,6 +8,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System.Threading.Tasks;
+using Library.Library.Entities.ViewModels;
+using Microsoft.AspNetCore.Http;
 
 namespace LibraryManagement.UI.Controllers
 {
@@ -55,7 +58,9 @@ namespace LibraryManagement.UI.Controllers
                 ModelState.AddModelError("", "Tài khoản hoặc mật khẩu sai");
                 return View(request);
             }
-
+            var json = JsonSerializer.Serialize(user.ToViewModel());
+            //HttpContext.Session.SetString("User", json);
+            HttpContext.Response.Cookies.Append("User", json);
             //if (string.IsNullOrEmpty(token))
             //{
             //    ModelState.AddModelError("", "Tài khoản hoặc mật khẩu sai");

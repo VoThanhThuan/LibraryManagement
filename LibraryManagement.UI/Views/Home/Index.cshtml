@@ -1,25 +1,39 @@
 ﻿
+@using System.Text.Json
+@using Library.Library.Entities.ViewModels
 @model Library.Library.Entities.ViewModels.StatisticalVM
 
 @{
     ViewData["Title"] = "Home Page";
 }
 
+@{
+    var json = Context.Request.Cookies["User"];
+    var user = new UserVM();
+    if (!string.IsNullOrEmpty(json))
+    {
+        user = JsonSerializer.Deserialize<UserVM>(json);
+    }
+}
+
 <div class="text-center">
+    <p>@user.Nickname</p>
     <p> Số sách đã được mượn: @Model.TotalBookBorrowed </p>
     <p> Số sách đang được mượn: @Model.TotalBookBorrowing </p>
     <p> Số sách đã được trả: @Model.TotalBookReturn </p>
-    <p> Số sách bị thiếu: @{
-                               var total = Model.TotalBookBorrowed - (Model.TotalBookBorrowing + Model.TotalBookReturn);
-                                 if (total > 0)
-                                 {
-                                     <span>@total</span>
-                                 }
-                                 else
-                                 {
-                                     <span>0</span>
-                                 }
-                           }</p>
+    <p> Số sách bị thiếu:
+        @{
+            var total = Model.TotalBookBorrowed - (Model.TotalBookBorrowing + Model.TotalBookReturn);
+            if (total > 0)
+            {
+                <span>@total</span>
+            }
+            else
+            {
+                <span>0</span>
+            }
+        }
+    </p>
     <p> Số sách đã được mượn: </p>
     @foreach (var book in Model.TopBooks)
     {
