@@ -7,28 +7,28 @@
 }
 
 <div class="page-content-inner">
+
     <div class="borrow-wrapper">
         <div class="columns">
             <div class="column is-8">
                 <div class="columns is-multiline">
                     <div class="column is-12">
-                        <div class="block-header">
-                            <div class="left">
-                                <div>
-
-                                    @{
-                                        var libCard = (LibraryCard)ViewBag.LibraryCard;
-                                        <div class="avatar">
-                                            <img src="@libCard.Image" alt="">
-                                        </div>
-                                        <h3>Welcome, @libCard.Name</h3>
-                                    }
-                                </div>
-
+                        <div class="header-borrow">
+                            <div class="header-image">
+                                <img src="/avatar/reading-book.svg" alt="">
                             </div>
-                            <div class="center"></div>
-                            <div class="right">
-                                <a href="/librarycards" class="button v-button is-fullwidth">
+                            <div class="header-info">
+                                @{
+                                    var libCard = (LibraryCard)ViewBag.LibraryCard;
+                                    <h3>Hello, @libCard.Name</h3>
+                                    <p>MSSV: @libCard.MSSV</p>
+                                }
+
+
+                                <a class="button v-button is-outline" href="/librarycards">
+                                    <span class="icon">
+                                        <i class="fas fa-arrow-left"></i>
+                                    </span>
                                     <span>Quay Lại</span>
                                 </a>
                             </div>
@@ -40,81 +40,93 @@
                             <div class="field">
                                 <div>
                                     <div class="search">
-                                        <input type="text" id="search" class="input" placeholder="Search...">
+                                        <input  id="search" type="text" class="input" placeholder="Search...">
                                         <button class="search-button">
                                             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--feather" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" data-icon="feather:search"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><path d="M21 21l-4.35-4.35"></path></g></svg>
                                         </button>
-
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="column is-12">
-                        <div class="flex-table">
-                            <div class="flex-table-header">
-                                <span class="is-grow-2">Ảnh bìa</span>
-                                @*<span>Nhà xuất bản</span>*@
-                                <span>Số lượng</span>
-                                @*<span>Mã thư viện</span>*@
-                                @*<span>Số ngày mượn</span>*@
-                                <span class="call-end">actions</span>
-                            </div>
-                            <div class="flex-list-inner" id="book-search">
-                                <!--JS add element-->
-                            </div>
+                        <div class="list-book">
+                            <div class="flex-table">
+                                <div class="flex-table-header">
+                                    <span class="flex-grow-4">Ảnh bìa</span>
+                                    <span>Số lượng</span>
+                                    <span class="call-end">actions</span>
+                                </div>
+                                <div class="flex-list-inner" id="book-search">
+                                    <!--JS add element-->
+                                </div>
 
-                            @*@foreach (var item in Model.books)
-                                {
-                                }*@
+
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="column is-4">
-                <form asp-action="Create">
-                    <div class="list-book">
-                        <div class="head">
-                            <h3>Danh Sách Đã Chọn</h3>
-
-                            <button class="button v-button is-fullwidth is-w30" type="submit">Lưu</button>
-
-                        </div>
-                        <div class="selected-list-book">
-                            <div class="inner-list">
-                                <div>
-                                    <div id="book-choose">
-
-                                    </div>
-
-                                </div>
+                <div class="sticky-panel fixed-child">
+                    <div class="cart-widget side-section">
+                        <div class="widget-toolbar">
+                            <div class="left">
+                                <h3 class="is-bigger">My Order</h3>
+                            </div>
+                            <div class="right">
+                                <span class="tag is-curved">0 items</span>
                             </div>
                         </div>
-                    </div>
-                    <div asp-validation-summary="ModelOnly" class="text-danger" hidden></div>
-                    <div class="form-group" hidden>
-                        <label asp-for="Note" class="control-label"></label>
-                        <input asp-for="Note" name="Note" class="form-control" />
-                        <span asp-validation-for="Note" class="text-danger"></span>
-                    </div>
-                    <div class="form-group" hidden>
-                        <label asp-for="IdUser" class="control-label"></label>
-                        <input asp-for="IdUser" name="IdUser" class="form-control" value="@ViewData["Id-User"]" />
-                        <span asp-validation-for="IdUser" class="text-danger"></span>
-                    </div>
-                    <div class="form-group" hidden>
-                        <label asp-for="UserName" class="control-label"></label>
-                        <input asp-for="UserName" name="UserName" class="form-control" value="@ViewData["Name-User"]" />
-                        <span asp-validation-for="UserName" class="text-danger"></span>
-                    </div>
-                  
-                </form>
+                        <div class="section-placeholder">
+                            <div class="placeholder-content">
+                                <img class="dark-image" src="/avatar/cart-placeholder.svg" alt="">
+                                <h3 class="dark-inverted">No Items</h3>
+                                <p>Your cart is currently empty. Start adding products.</p>
+                            </div>
+                        </div>
+                        <form asp-action="Create">
+                            
+                                <div class="cart-items has-slimscroll hidden" id="book-choose">
+                                    <!--JS render-->
+                                </div>
 
+                                <div class="card-button">
+                                    <div class="total">
+                                        <span class="label">Số Lượng </span>
+                                        <span class="quantity-book-choose">0</span>
+                                    </div>
+                                    <button class="button v-button btn-save" type="submit">
+                                        <span>Lưu</span>
+                                    </button>
+                                </div>
+                            
+                                <div asp-validation-summary="ModelOnly" class="text-danger" hidden></div>
+                                <div class="form-group" hidden>
+                                    <label asp-for="Note" class="control-label"></label>
+                                    <input asp-for="Note" name="Note" class="form-control" />
+                                    <span asp-validation-for="Note" class="text-danger"></span>
+                                </div>
+                                <div class="form-group" hidden>
+                                    <label asp-for="IdUser" class="control-label"></label>
+                                    <input asp-for="IdUser" name="IdUser" class="form-control" value="@ViewData["Id-User"]" />
+                                    <span asp-validation-for="IdUser" class="text-danger"></span>
+                                </div>
+                                <div class="form-group" hidden>
+                                    <label asp-for="UserName" class="control-label"></label>
+                                    <input asp-for="UserName" name="UserName" class="form-control" value="@ViewData["Name-User"]" />
+                                    <span asp-validation-for="UserName" class="text-danger"></span>
+                                </div>  
+                        </form>
+
+                        
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+    <!--  -->
 </div>
-
 
 @section Scripts {
 
@@ -156,6 +168,7 @@
 
         const url = window.location.origin;
         var is_search = true;
+        let quantity = 0;
         console.log(url);
         $('#search').addEventListener('keyup',
             function () {
@@ -171,71 +184,73 @@
                             return response.json();
                         })
                         .then(function (data) {
-                           
-                            
+                            console.log(data)
+
                             //clear html dom
                             $('#book-search').innerHTML = '';
                             //append data to html dom
-                            //                                <button class="add-book-borrow-search" value="${book.id}">${book.name}</button>
+                            //
 
                             data.forEach(function (book) {
-                                
+                             
                                 $('#book-search').innerHTML += `
-                                        <div class="_flex">
-                                            <div class="flex-table-cell" hidden>
-                                                <span class="light-text">${book.id}</span>
-                                            </div>
-                                            <div class="flex-table-item">
-                                                <div class="flex-table-cell is-media is-grow2">
-                                                    <div class="is-avatar is-medium">
-                                                        <img class="medium" src="${book.thumbnail}" alt="">
-                                                    </div>
-                                                    <div>
-                                                        <span class="item-name">${book.name}</span>
-                                                        <span class="item-meta text-name">
-                                                            <span>Tác giả: ${book.author}</span>
-                                                        </span>
-                                                    </div>
+                                            
+                                                <div class="flex-table-cell" hidden>
+                                                    <span class="light-text">${book.id}</span>
                                                 </div>
-                                                <div class="flex-table-cell">
-                                                    <span class="light-text"> ${book.amount}</span>
-                                                </div>
-                                                <div class="" hidden>
-                                                    <span class="light-text">${book.idlibrarycode}</span>
-                                                </div>
-                                                <div class="flex-table-cell call-end">
-                                                    <div class="action-btn">
-                                                        <button class="add-book-borrow-search" value="${book.id}" data-thumnail="${book.thumbnail}" data-bookname="${book.name}" data-author="${book.author}">Thêm</a>
+                                                <div class="flex-table-item">
+                                                    <div class="flex-table-cell is-media is-grow-lg">
+                                                        <div class="is-avatar is-medium">
+                                                            <img class="medium" src="${book.thumbnail}" alt="">
+                                                        </div>
+                                                        <div>
+                                                            <span class="item-name">${book.name}</span>
+                                                            <span class="item-meta text-name">
+                                                                <span>Tác giả: ${book.author}</span>
+                                                            </span>
                                                         </div>
                                                     </div>
-                                                </div>
-                                            </div>
-                                                             `;
+                                                    <div class="flex-table-cell">
+                                                        <span class="light-text"> ${book.amount}</span>
+                                                    </div>
+                                                    <div class="" hidden>
+                                                        <span class="light-text">${book.idlibrarycode}</span>
+                                                    </div>
+                                                    <div class="flex-table-cell cell-end">
+                                                        <div>
+                                                            <button class="add-book-borrow-search" value="${book.id}" data-quantity="${book.amount}" data-thumnail="${book.thumbnail}" data-bookname="${book.name}" data-author="${book.author}">
+                                                                Mượn
+                                                            </button>
+                                                         </div>
+                                                        </div>
+                                                    </div>
+                                                
+                                                                 `;
                                 $$('.add-book-borrow-search').forEach(function (button) {
                                     button.addEventListener('click',
                                         function () {
+                                            $('.section-placeholder').classList.add('hidden')
+                                            $('.cart-items').classList.remove('hidden')
                                             //add element to html dom
-                                            $('#book-choose').innerHTML += `
-                                    <input name="idBooks" value="${button.value}" hidden>
-                                        <div class="flex-table">
-                                            <div class="flex-table-item">
-                                                <div class="flex-table-cell is-grow-lg">
-                                                    <div class="cover-image">
+                                            $('#book-choose').innerHTML += `    
+                                                <div class="cart-item">
+                                                    <input name="idBooks" value="${button.value}" hidden>
+                                                    <div class="cover-book">
                                                         <img src="${button.dataset.thumnail}" alt="">
                                                     </div>
-                                                    <div class="info">
-                                                        <span class="item-name">${button.dataset.bookname}</span>
-                                                        <span class="item-meta">
-                                                            <span>${button.dataset.author}</span>
-                                                        </span>
+                                                    <div class="meta">
+                                                        <span class="book-name">${button.dataset.bookname}</span>
+                                                        <span class="author">${button.dataset.author}</span>
                                                     </div>
+                                                    <a class="remove-item"  id="action-btn">
+                                                        <i class="fal fa-trash-alt"></i>
+                                                    </a>
                                                 </div>
-                                                <div class="flex-table-cell cell-end">
-                                                    <a class="action-btn" id="action-delete">Xóa</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                                                    `;
+                                             `;
+                                            //const checkQuantity = button.dataset.quantity
+                                            //console.log(checkQuantity)
+                                            //$('.quantity-book-choose').innerHTML = ++quantity;
+                                            
                                         });
                                 });
 
