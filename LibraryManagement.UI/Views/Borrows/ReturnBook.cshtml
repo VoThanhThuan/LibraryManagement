@@ -6,11 +6,58 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<style>
+    .cl-white {
+        color: #a2a5b9;
+        cursor: pointer;
+    }
+    .input-number {
+        height: 2.8rem;
+        width: 100%;
+        padding: .5rem;
+        -webkit-transition: all .3s;
+        transition: all .3s;
+        color: #a9a9b2;
+        border: none;
+        border-radius: .3rem;
+        background-color: #27272a;
+       
+    }
+    .btn-return {
+        margin-top: 1rem;
+        width: 100%;
+        cursor: pointer;
+        padding: 1rem;
+        border-radius: 5rem;
+        border: .1rem solid #3f3f44;
+        background: #3b3b40;
+        white-space: nowrap;
+        color: #a2a5b9;
+        border: .1rem solid;
+    }
+        .btn-return:hover {
+            border-color: #05d69e;
+            color: #05d69e;
+        }
+</style>
 
-<h1>Return book</h1>
+<div class="page-title text-center">
+    <span class="menu-toggle">
+        <span class="icon-box-toggle">
+            <span>
+                <i class="fal fa-horizontal-rule icon-line-top"></i>
+                <i class="fal fa-horizontal-rule icon-line-center"></i>
+                <i class="fal fa-horizontal-rule icon-line-bottom"></i>
+            </span>
+        </span>
+    </span>
+    <div class="title-wrap">
+        <h1 class="title">Trả Sách</h1>
+    </div>
+</div>
 
 <div class="page-content-inner">
-         <!-- //////////////// -->
+        
 
     <div class="card-grid">
         <div class="columns is-multiline">
@@ -38,6 +85,21 @@
                                 <progress class="progress is-tiny" max="100" value="@Model.LibraryCard.Exp"></progress>
                             </div>
                         </div>
+                        <div class="right">
+                            <div class="buttons">
+                                <div >
+                                    <form>
+                                        <input asp-for="@Model.IdBorrow" name="IdBorrow" value="@Model.IdBorrow" hidden />
+                                        <input asp-for="@Model.IdCard" name="IdCard" value="@Model.IdCard" hidden />
+                                        @*<select asp-for="@Model.LibraryCard.Id" name="IdCard" class="form-control" asp-items="ViewBag.IdCard"></select>*@
+                                        <button type="submit" class="button i-button b-success cl-white">
+                                            Trả toàn bộ Sách
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -52,60 +114,78 @@
     <div class="page-content-inner">
         <div>
             <div class="flex-table">
-                <div class="flex-table-header">
-                    <span class="is-grow-2">Ảnh bìa</span>
-                    <span>Số lượng mượn</span>
-                    <span>Tình trạng</span>
-                    <span>Thời gian mượn</span>
-                    <span>Thời gian trả</span>
-                </div>
-                <form>
-                    <input asp-for="@Model.IdBorrow" name="IdBorrow" value="@Model.IdBorrow" hidden />
-                    <input asp-for="@Model.IdCard" name="IdCard" value="@Model.IdCard" hidden />
-                    @*<select asp-for="@Model.LibraryCard.Id" name="IdCard" class="form-control" asp-items="ViewBag.IdCard"></select>*@
-                    <button type="submit">Trả toàn bộ Sách (chưa hoạt động)</button>
-                </form>
-                    @foreach (var bib in Model.BookInBorrows)
-                    {
-                        <div class="flex-list-inner">
-                            <div>
-                                <div class="flex-table-item">
-                                    <div class="flex-table-cell is-media is-grow2">
-                                        <div class="is-avatar is-medium">
-                                            <img class="medium" src="@bib.Book.Thumbnail" alt="">
-                                        </div>
-                                        <div>
-                                            <span class="item-name">@bib.Book.Name</span>
-                                            <span class="item-meta"><span>Tác giả: @bib.Book.Author</span>
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <div class="flex-table-cell">
-                                        <span class="light-text">@bib.Book.StatusBook</span>
-                                    </div>
-                                    <div class="flex-table-cell">
-                                        <span class="light-text">@bib.TimeBorrowed</span>
-                                    </div>
-                                    <div class="flex-table-cell">
-                                        <span class="light-text">@bib.AmountBorrowed</span>
-                                    </div>
-                                    <div class="flex-table-cell">
-                                        <form asp-action="ReturnBook" method="post" class="form-layout">
-                                            <input asp-for="@bib." type="number" name="AmountReturn" class="light-text" min="0" max="@bib.AmountBorrowed" />
+                
+                <div class="is-12">
+                    <div class="t-5-book">Danh sách mượn</div>
+                    <div class="data-table-wrapper">
+                        <div class="data-table-container">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th style="width: 14.1964%;">Thumbnails</th>
+                                        <th style="width: 24.5536%;">
+                                            <a href="#" class="data-sorter">Book Name</a>
+                                        </th>
+                                        <th style="width: 23.3929%;">
+                                            <a href="#" class="data-sorter">Author</a>
+                                        </th>
+                                        <th style="width: 16.6071%;">
+                                            <a href="#" class="data-sorter">Thời gian mượn</a>
+                                        </th>
+                                        <th style="width: 10.62%">
+                                            <a href="#" class="data-sorter">Số lượng</a>
+                                        </th>
+                                        <th style="width: 10.62%; text-align:right">
+                                            <a href="#" class="data-sorter">Actions</a>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var bib in Model.BookInBorrows)
+                                    {
+                                        <tr>
+                                            <td>
+                                                <div class="thumbnail">
+                                                    <img src="@bib.Book.Thumbnail" alt="">
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <span>@bib.Book.Name</span>
+                                            </td>
+                                            <td>
+                                                <span>@bib.Book.Author</span>
+                                            </td>
+                                            <td>
+                                                <span>@bib.TimeBorrowed</span>
+                                            </td>
+                                            <td>
+                                                <span>@bib.AmountBorrowed</span>
+                                            </td>
+                                            <td style="text-align:right">
+                                               
+                                                <form asp-action="ReturnBook" method="post" class="form-layout">
+                                                    <input asp-for="@bib." type="number" name="AmountReturn" class="input-number" min="0" max="@bib.AmountBorrowed" />
 
-                                            <input asp-for="@bib.AmountBorrowed" type="number" name="AmountReturn" class="light-text" min="0" max="@bib.AmountBorrowed" hidden/>
-                                            <input asp-for="@bib.IdBook" name="IdBook" class="light-text" value="@bib.IdBook" hidden />
-                                            <input asp-for="@bib.IdBorrow" name="IdBook" class="light-text" value="@bib.IdBook" hidden />
-                                            <input asp-for="@Model.IdCard" name="IdCard" value="@Model.IdCard" hidden />
-                                            <input asp-for="@Model.IdBorrow" name="IdBorrow" value="@Model.IdBorrow" hidden />
-                                            
-                                            <button type="submit">Trả</button>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
+                                                    <input asp-for="@bib.AmountBorrowed" type="number" name="AmountReturn" class="light-text" min="0" max="@bib.AmountBorrowed" hidden />
+                                                    <input asp-for="@bib.IdBook" name="IdBook" class="light-text" value="@bib.IdBook" hidden />
+                                                    <input asp-for="@bib.IdBorrow" name="IdBook" class="light-text" value="@bib.IdBook" hidden />
+                                                    <input asp-for="@Model.IdCard" name="IdCard" value="@Model.IdCard" hidden />
+                                                    <input asp-for="@Model.IdBorrow" name="IdBorrow" value="@Model.IdBorrow" hidden />
+
+                                                    <button type="submit" class="btn-return">Trả</button>
+                                                </form>
+                                                
+                                            </td>
+
+                                        </tr>
+                                    }
+
+                                </tbody>
+                            </table>
                         </div>
-                    }
+                    </div>
+                </div>
+             
 
 
             </div>

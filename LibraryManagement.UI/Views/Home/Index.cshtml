@@ -30,22 +30,28 @@
     </div>
 </div>
 
-<div class="text-center">
-    <p>@user.Nickname</p>
-<div>
     <div class="is-12">
         <div class="dashboard-header">
             <div class="avatar is-xl">
-                <img src="" alt="">
+                <img src="@user.Avatar" alt="">
             </div>
             <div class="user-meta">
-                <h3>Hi! Nguyeenx  son.</h3>
+                <h3>Hi! @user.Nickname.</h3>
                 <p>It's really nice to see you again</p>
             </div>
             <div class="sum-books">
-                <h3>3025</h3>
+                @{
+                    var sum = 0;
+                    foreach (var book in Model.TopBooks)
+                    {
+                        var bookA = book.Amount;
+                        sum += bookA;
+                    }
+                    
+                }
+                <h3>@sum</h3>
                 <p>Tống số sách trong thư viện</p>
-                <a href="">View List Book</a>
+                <a href="/books">View List Book</a>
             </div>
             <div class="cta">
                 <div class="inverted-text">
@@ -99,6 +105,7 @@
         </div>
     </div>
     <div class="is-12">
+        <div class="t-5-book">Top 5 sách được mượn nhiều nhất </div>
         <div class="data-table-wrapper">
             <div class="data-table-container">
                 <table>
@@ -112,7 +119,7 @@
                                 <a href="#" class="data-sorter">Author</a>
                             </th>
                             <th style="width: 16.6071%;">
-                                <a href="#" class="data-sorter">Page Number</a>
+                                <a href="#" class="data-sorter">Số lần mượn</a>
                             </th>
                             <th style="width: 21.25%;">
                                 <a href="#" class="data-sorter">publishing company</a>
@@ -135,11 +142,12 @@
                                     <span>@book.Author</span>
                                 </td>
                                 <td>
-                                    <span>@book.Amount</span>
+                                    <span>@book.TotalBorrow</span>
                                 </td>
                                 <td>
                                     <span>@book.PublishingCompany</span>
                                 </td>
+
                             </tr>
                         }
 
@@ -148,7 +156,7 @@
             </div>
         </div>
     </div>
-</div>
+
 
 @*<div class="text-center">
     <p> Số sách đã được mượn: @Model.TotalBookBorrowed </p>
