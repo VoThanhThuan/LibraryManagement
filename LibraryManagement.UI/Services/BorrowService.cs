@@ -128,6 +128,7 @@ namespace LibraryManagement.UI.Services
 
                 libcrad.StatusCard = StatusCard.Borrowed;
             }
+
             await _context.SaveChangesAsync();
 
 
@@ -145,7 +146,6 @@ namespace LibraryManagement.UI.Services
                 if (bib is not null)
                 {
                     bib.AmountBorrowed += 1;
-                    await _context.SaveChangesAsync();
                 }
                 else
                 {
@@ -158,10 +158,31 @@ namespace LibraryManagement.UI.Services
                         TimeReturn = DateTime.Now.AddDays(book.DateCanBorrow)
                     };
                     await _context.BookInBorrows.AddAsync(newbib);
-                    await _context.SaveChangesAsync();
                 }
+
+                libcrad.Exp++;
+                libcrad.Rank = UpRank(libcrad);
+                await _context.SaveChangesAsync();
+
             }
             return (true, null);
+        }
+
+        RankLibrary UpRank(LibraryCard libraryCard)
+        {
+
+            var expUp = new List<int> {10, 21, 32, 43, 54, 65};
+
+            var currentRank = (int) libraryCard.Rank;
+
+            var expNeedUp = expUp[currentRank];
+
+            if (libraryCard.Exp > expNeedUp && currentRank < 5)
+            {
+                libraryCard.Rank = (RankLibrary) (currentRank + 1);
+            }
+
+            return libraryCard.Rank;
         }
 
         public async Task<bool> ReturnBook(ReturnBookRequest request)

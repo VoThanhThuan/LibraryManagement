@@ -1,51 +1,44 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using Library.Library.Data;
-using Library.Library.Entities;
 using Library.Library.Entities.Requests;
 using LibraryManagement.UI.Services;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.Extensions.Configuration;
 
-namespace LibraryManagement.UI.Controllers
-{
+namespace LibraryManagement.UI.Controllers {
     [Authorize]
-    public class UsersController : Controller
-    {
+    public class UsersController : Controller {
         private readonly UserService _user;
         private readonly RoleService _role;
 
-        public UsersController(UserService user, RoleService role)
-        {
+        public UsersController(UserService user, RoleService role) {
             _user = user;
             _role = role;
         }
 
         // GET: Users
-        public async Task<IActionResult> Index()
-        {
+        public async Task<IActionResult> Index() {
             var user = await _user.GetUsers();
             return View(user);
         }
 
+        // GET: Users
+        public async Task<IActionResult> Search(string content, int take) {
+            var user = await _user.SearchUser(content, take);
+
+            ViewData["Content Search"] = content;
+            return View("Index", user);
+        }
+
         // GET: Users/Details/5
-        public async Task<IActionResult> Details(Guid id)
-        {
-            if (id == Guid.Empty)
-            {
+        public async Task<IActionResult> Details(Guid id) {
+            if (id == Guid.Empty) {
                 return NotFound();
             }
 
             var user = await _user.GetUser(id);
 
-            if (user == null)
-            {
+            if (user == null) {
                 return NotFound();
             }
 
@@ -53,8 +46,7 @@ namespace LibraryManagement.UI.Controllers
         }
 
         // GET: Users/Create
-        public async Task<IActionResult> Create()
-        {
+        public async Task<IActionResult> Create() {
             ViewData["Roles"] = await _role.GetRoles();
 
             return View();
@@ -65,25 +57,21 @@ namespace LibraryManagement.UI.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(UserRequest user)
-        {
-            if (ModelState.IsValid)
-            {
-                var result =  await _user.PostUser(user);
+        public async Task<IActionResult> Create(UserRequest user) {
+            if (ModelState.IsValid) {
+                var result = await _user.PostUser(user);
                 if (result.apiResult == 200)
                     return RedirectToAction(nameof(Index));
-                else
-                    return Conflict();
+                ModelState.AddModelError("mess", result.mess);
+                return View(user);
             }
             ViewData["Roles"] = await _role.GetRoles();
             return View(user);
         }
 
         // GET: Users/Edit/5
-        public async Task<IActionResult> Edit(Guid id)
-        {
-            if (id == Guid.Empty)
-            {
+        public async Task<IActionResult> Edit(Guid id) {
+            if (id == Guid.Empty) {
                 return NotFound();
             }
 
@@ -92,8 +80,7 @@ namespace LibraryManagement.UI.Controllers
             //var roles = await _role.GetRoles();
             ViewData["Roles"] = await _role.GetRoles();
 
-            if (user == null)
-            {
+            if (user == null) {
                 return NotFound();
             }
 
@@ -105,17 +92,14 @@ namespace LibraryManagement.UI.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, UserRequest user)
-        {
-            if (id != user.Id)
-            {
+        public async Task<IActionResult> Edit(Guid id, UserRequest user) {
+            if (id != user.Id) {
                 return NotFound();
             }
             ModelState.Remove("Password");
             ModelState.Remove("ConfirmPassword");
 
-            if (ModelState.IsValid)
-            {
+            if (ModelState.IsValid) {
                 var result = await _user.PutUser(id, user);
 
                 if (!result)
@@ -128,18 +112,16 @@ namespace LibraryManagement.UI.Controllers
 
         // POST: Users/Delete/5
         [HttpGet]
-        public async Task<IActionResult> Delete(Guid id)
-        {
+        public async Task<IActionResult> Delete(Guid id) {
             var user = await _user.GetUser(id);
             return View(user);
         }
         // POST: Users/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(Guid id)
-        {
+        public async Task<IActionResult> DeleteConfirmed(Guid id) {
             var result = await _user.DeleteUser(id);
-            if(result == 200)
+            if (result == 200)
                 return RedirectToAction(nameof(Index));
             return Conflict($"Lỗi xóa {result}");
         }

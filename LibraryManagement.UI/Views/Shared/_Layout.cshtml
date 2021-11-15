@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@using System.Text.Json
+@using Library.Library.Entities.ViewModels
+@using Microsoft.AspNetCore.Http
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -46,9 +49,17 @@
                     </li>
                 </ul>
                 <ul class="bottom-menu">
+                    @{
+                        var json = Context.Request.Cookies["User"];
+                        var user = new UserVM();
+                        if (!string.IsNullOrEmpty(json))
+                        {
+                            user = JsonSerializer.Deserialize<UserVM>(json);
+                        }
+                    }
                     <li>
                         <a class="is-dropdown">
-                            <img class="avatar" src="" alt="">
+                            <img class="avatar" src="@user.Avatar" alt="">
                             <!-- <div class="dot"></div> -->
                         </a>
                     </li>
@@ -56,11 +67,11 @@
                         <div class="dropdown-content">
                             <div class="dropdown-head">
                                 <div class="v-avatar is-large">
-                                    <img src="" alt="">
+                                    <img src="@user.Avatar" alt=" avatar của @user.Nickname">
                                 </div>
                                 <div class="meta">
-                                    <span class="dropdown-name">Nguyễn Ngọc Sơn</span>
-                                    <span class="dropdown-office">Quản lý</span>
+                                    <span class="dropdown-name">@user.Nickname</span>
+                                    <span class="dropdown-office">@user.RoleName</span>
                                 </div>
                             </div>
 
@@ -113,7 +124,7 @@
                                     <span class="icon">
                                         <i class="fal fa-sign-out"></i>
                                     </span>
-                                    <span>Đăng Xuất</span>
+                                    <a href="/login"><span>Đăng Xuất</span></a>
                                 </button>
                             </div>
 
@@ -137,3 +148,4 @@
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
+

@@ -15,12 +15,9 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
 
-namespace LibraryManagement.UI
-{
-    public class Startup
-    {
-        public Startup(IConfiguration configuration, IWebHostEnvironment webHostEnvironment)
-        {
+namespace LibraryManagement.UI {
+    public class Startup {
+        public Startup(IConfiguration configuration, IWebHostEnvironment webHostEnvironment) {
             Configuration = configuration;
             WebHostEnvironment = webHostEnvironment;
         }
@@ -29,31 +26,24 @@ namespace LibraryManagement.UI
         public IWebHostEnvironment WebHostEnvironment { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
-        {
+        public void ConfigureServices(IServiceCollection services) {
             Console.OutputEncoding = Encoding.UTF8;
 
             Console.WriteLine(">>> Đang kiểm tra xem đang chạy trên máy tính của ai...");
             var whatPC = Path.Combine($"{WebHostEnvironment.ContentRootPath}\\Properties\\WhatPC");
-            if (File.Exists($"{whatPC}\\thuan.dh19pm"))
-            {
-                services.AddDbContext<LibraryDbContext>(options =>
-                {
+            if (File.Exists($"{whatPC}\\thuan.dh19pm")) {
+                services.AddDbContext<LibraryDbContext>(options => {
                     options.UseSqlServer(Configuration.GetConnectionString("ConnectLibrary"));
                 });
                 //Console.WriteLine(">>> Đang chạy trên máy tính của [Võ Thành Thuận]");
-            }
-            else
-            {
-                services.AddDbContext<LibraryDbContext>(options =>
-                {
+            } else {
+                services.AddDbContext<LibraryDbContext>(options => {
                     options.UseSqlServer(Configuration.GetConnectionString("ConnectLibraryOfSon"));
                 });
                 //Console.WriteLine(">>> Đang chạy trên máy tính của [Nguyễn Ngọc Sơn]");
             }
 
-            services.Configure<IdentityOptions>(opts =>
-            {
+            services.Configure<IdentityOptions>(opts => {
                 //opts.SignIn.RequireConfirmedEmail = true;
 
                 opts.Lockout.AllowedForNewUsers = true;
@@ -77,17 +67,14 @@ namespace LibraryManagement.UI
             //        options.AccessDeniedPath = new PathString("/Login");
             //        //options.SlidingExpiration = true;
             //    });
-            services.ConfigureApplicationCookie(options =>
-            {
+            services.ConfigureApplicationCookie(options => {
                 options.LoginPath = "/Login";
                 options.Cookie.Name = ".AspNetCore.Identity.Application";
 
             });
 
-            services.AddAuthorization(options =>
-            {
-                options.AddPolicy("AllowRole", builder =>
-                {
+            services.AddAuthorization(options => {
+                options.AddPolicy("AllowRole", builder => {
                     builder.RequireAuthenticatedUser();
 
                     builder.RequireClaim("manage", "post");
@@ -95,7 +82,14 @@ namespace LibraryManagement.UI
                 });
             });
 
-            services.AddSession(options => { options.IdleTimeout = TimeSpan.FromHours(1); });
+            services.AddRazorPages();
+
+            services.AddDistributedMemoryCache();
+            services.AddSession(options => {
+                options.IdleTimeout = TimeSpan.FromHours(1);
+                options.Cookie.Name = "ThuanDepZai";
+                options.Cookie.IsEssential = true;
+            });
 
             MakeMyFolder();
 
@@ -108,20 +102,17 @@ namespace LibraryManagement.UI
             services.AddTransient<BookService>();
             services.AddTransient<BorrowService>();
             services.AddTransient<GenreService>();
+            services.AddTransient<LibraryCardService>();
 
             services.AddControllersWithViews();
 
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-        {
-            if (env.IsDevelopment())
-            {
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env) {
+            if (env.IsDevelopment()) {
                 app.UseDeveloperExceptionPage();
-            }
-            else
-            {
+            } else {
                 app.UseExceptionHandler("/Home/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
@@ -137,8 +128,7 @@ namespace LibraryManagement.UI
 
             app.UseSession();
 
-            app.UseEndpoints(endpoints =>
-            {
+            app.UseEndpoints(endpoints => {
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
@@ -146,16 +136,13 @@ namespace LibraryManagement.UI
         }
 
 
-        private void MakeMyFolder()
-        {
+        private void MakeMyFolder() {
             var root = Path.Combine(WebHostEnvironment.WebRootPath);
 
             var listFolder = new[] { "books", "avatar", "libraryCard" };
 
-            foreach (var folder in listFolder)
-            {
-                if (!Directory.Exists($"{root}/{folder}"))
-                {
+            foreach (var folder in listFolder) {
+                if (!Directory.Exists($"{root}/{folder}")) {
                     Directory.CreateDirectory($"{root}/{folder}");
                 }
             }

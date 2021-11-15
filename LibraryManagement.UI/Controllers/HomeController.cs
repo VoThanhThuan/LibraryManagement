@@ -10,32 +10,31 @@ using LibraryManagement.UI.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Configuration;
 
-namespace LibraryManagement.UI.Controllers
-{
+namespace LibraryManagement.UI.Controllers {
     [Authorize]
-    public class HomeController : Controller
-    {
+    public class HomeController : Controller {
 
         private readonly LibraryDbContext _context;
         private readonly BookService _book;
         private readonly GenreService _genre;
+        private readonly LibraryCardService _card;
 
-        public HomeController(LibraryDbContext context, BookService book, GenreService genre)
-        {
+        public HomeController(LibraryDbContext context, BookService book, GenreService genre, LibraryCardService card) {
             _context = context;
             _book = book;
             _genre = genre;
+            _card = card;
         }
 
-        public async Task<IActionResult> Index()
-        {
-            var statistical = new StatisticalVM();
-            statistical.TotalBookBorrowed = (await _book.GetBorrowedBooks()).Count;
-            statistical.TotalBookBorrowing = (await _book.GetBorrowingBooks()).Count;
-            statistical.TotalBookReturn = (await _book.GetReturnBooks()).Count;
-            statistical.TopBooks = await _book.GetTopBooks();
-            statistical.ReturnNotEnoughBooks = await _book.GetReturnNotEnoughBooks();
-            //statistical.TopLibraryCards;
+        public async Task<IActionResult> Index() {
+            var statistical = new StatisticalVM {
+                TotalBookBorrowed = (await _book.GetBorrowedBooks()).Count,
+                TotalBookBorrowing = (await _book.GetBorrowingBooks()).Count,
+                TotalBookReturn = (await _book.GetReturnBooks()).Count,
+                TopBooks = await _book.GetTopBooks(),
+                ReturnNotEnoughBooks = await _book.GetReturnNotEnoughBooks()       ,
+                TopLibraryCards = await _card.TopLibraryCards()
+            };
             //statistical.CradReturnLate;
 
 

@@ -15,7 +15,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace LibraryManagement.UI.Controllers
 {
-    [Authorize("AllowRole")]
+    [Authorize]
     public class BooksController : Controller
     {
         private readonly LibraryDbContext _context;

@@ -22,9 +22,11 @@
 </div>
 
 <div class="page-content-inner">
-
+    
     <!-- Form create -->
     <form asp-action="Create" method="post" enctype="multipart/form-data" class="form-layout">
+        <div asp-validation-summary="All" class="text-danger"></div>
+
         <div class="form-outer">
             <div class="form-header">
                 <div class="form-header-inner">
@@ -168,7 +170,7 @@
                                 <div class="control">
                                     <select class="input" aria-label="Default select example" name="IdRole">
                                         @{
-                                            var roles = (List<Role>)ViewBag.Roles;
+                                            var roles = (List<Role>) ViewBag.Roles;
                                             foreach (var role in roles)
                                             {
                                                 <option value="@role.Id">@role.Name</option>
