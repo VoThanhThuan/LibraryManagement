@@ -8,13 +8,14 @@ namespace Library.Library.Entities.ViewModels
 {
     public class StatisticalVM
     {
-        public int TotalBookBorrowed { get; set; } = 0;
-        public int TotalBookBorrowing { get; set; } = 0;
-        public int TotalBookReturn { get; set; } = 0;
+        public List<BookVM> BooksBorrowed { get; set; }
+        public List<BookVM> BooksBorrowing { get; set; }
+        public List<BookVM> BooksReturn { get; set; }
+        public List<BookVM> BooksMissing { get; set; }
         public List<BookVM> TopBooks { get; set; }
         public List<BookVM> ReturnNotEnoughBooks { get; set; }
         public List<LibraryCard> TopLibraryCards { get; set; }
-        public List<LibraryCard> CradReturnLate { get; set; }
-
+        public List<LibraryCard> CardReturnLate { get; set; }
+        public List<LibraryCard> CardsLock { get; set; }
     }
 }

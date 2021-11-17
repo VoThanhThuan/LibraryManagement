@@ -58,6 +58,7 @@
                                     <span class="call-end">actions</span>
                                 </div>
                                 <div class="flex-list-inner" id="book-search">
+
                                     <!--JS add element-->
                                 </div>
 
@@ -132,68 +133,24 @@
 
     <script>
 
-        //$$('.add-book-borrow').forEach(function (button) {
-        //    button.addEventListener('click',
-        //        function () {
-
-        //            //add element to html dom
-        //            $('#book-choose').innerHTML += `
-        //                                <input name="idBooks" value="${button.value}" hidden>
-        //                                <div class="flex-table">
-        //                                    <div class="flex-table-item">
-        //                                        <div class="flex-table-cell is-grow-lg">
-        //                                            <div class="cover-image">
-        //                                                <img src="${button.dataset.thumnail}" alt="">
-        //                                            </div>
-        //                                            <div class="info">
-        //                                                <span class="item-name">${button.dataset.bookname}</span>
-        //                                                <span class="item-meta">
-        //                                                    <span>${button.dataset.author}</span>
-        //                                                </span>
-        //                                            </div>
-        //                                        </div>
-        //                                        <div class="flex-table-cell cell-end">
-        //                                            <a class="action-btn">Xóa</a>
-        //                                        </div>
-        //                                    </div>
-        //                                </div>
-        //                                `;
-        //        });
-
-        //});
-
-
-        //use fetch api to get data from server https://localhost:5001/Books/Search/content, delay 1s for each text append
-
-
         const url = window.location.origin;
-        var is_search = true;
-        let quantity = 0;
-        console.log(url);
-        $('#search').addEventListener('keyup',
-            function () {
-                const content = this.value;
-                if (content.length < 1) {
+
+        function searchbook(content) {
+            fetch(`${url}/Books/SearchApi?content=${content}`)
+                .then(function (response) {
+                    return response.json();
+                })
+                .then(function (data) {
+                    console.log(data)
+
                     //clear html dom
                     $('#book-search').innerHTML = '';
-                    return;
-                }
-                setTimeout(function () {
-                    fetch(`${url}/Books/Search?content=${content}`)
-                        .then(function (response) {
-                            return response.json();
-                        })
-                        .then(function (data) {
-                            console.log(data)
+                    //append data to html dom
+                    //
 
-                            //clear html dom
-                            $('#book-search').innerHTML = '';
-                            //append data to html dom
-                            //
+                    data.forEach(function (book) {
 
-                            data.forEach(function (book) {
-                             
-                                $('#book-search').innerHTML += `
+                        $('#book-search').innerHTML += `
                                             
                                                 <div class="flex-table-cell" hidden>
                                                     <span class="light-text">${book.id}</span>
@@ -226,13 +183,13 @@
                                                     </div>
                                                 
                                                                  `;
-                                $$('.add-book-borrow-search').forEach(function (button) {
-                                    button.addEventListener('click',
-                                        function () {
-                                            $('.section-placeholder').classList.add('hidden')
-                                            $('.cart-items').classList.remove('hidden')
-                                            //add element to html dom
-                                            $('#book-choose').innerHTML += `    
+                        $$('.add-book-borrow-search').forEach(function (button) {
+                            button.addEventListener('click',
+                                function () {
+                                    $('.section-placeholder').classList.add('hidden')
+                                    $('.cart-items').classList.remove('hidden')
+                                    //add element to html dom
+                                    $('#book-choose').innerHTML += `    
                                                 <div class="cart-item">
                                                     <input name="idBooks" value="${button.value}" hidden>
                                                     <div class="cover-book">
@@ -247,16 +204,33 @@
                                                     </a>
                                                 </div>
                                              `;
-                                            //const checkQuantity = button.dataset.quantity
-                                            //console.log(checkQuantity)
-                                            //$('.quantity-book-choose').innerHTML = ++quantity;
-                                            
-                                        });
-                                });
+                                    //const checkQuantity = button.dataset.quantity
+                                    //console.log(checkQuantity)
+                                    //$('.quantity-book-choose').innerHTML = ++quantity;
 
-                            });
+                                });
                         });
-                },
+
+                    });
+                });
+        }
+
+        searchbook("!all");
+        //use fetch api to get data from server https://localhost:5001/Books/SearchApi/content, delay 1s for each text append
+
+        var is_search = true;
+        let quantity = 0;
+        console.log(url);
+        $('#search').addEventListener('keyup',
+            function () {
+                const content = this.value;
+                if (content.length < 1) {
+                    //clear html dom
+                    //$('#book-search').innerHTML = '';
+                    setTimeout(searchbook("!all"),
+                        1000);
+                }
+                setTimeout(searchbook(content),
                     1000);
 
             });

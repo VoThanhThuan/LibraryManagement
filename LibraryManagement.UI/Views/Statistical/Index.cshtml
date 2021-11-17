@@ -1,0 +1,57 @@
+﻿@using Library.Library.Entities.ViewModels
+@model StatisticalVM
+
+<p>Sách đã mượn</p>
+@foreach (var item in Model.BooksBorrowed)
+{
+    <span>@item.Name</span>
+}
+<br />
+<p>Sách đang mượn</p>
+@foreach (var item in Model.BooksBorrowing)
+{
+    <span>@item.Name</span>
+}
+<br />
+<p>Sách đã trả</p>
+@foreach (var item in Model.BooksReturn)
+{
+    <span>@item.Name</span>
+}
+<br />
+<p>Sách đã mất</p>
+@foreach (var item in Model.BooksMissing)
+{
+    <span>@item.Name</span>
+}
+<br />
+<p>Top sách được mượn</p>
+@foreach (var item in Model.TopBooks)
+{
+    <span>@item.Name</span>
+}
+<br />
+<p>Sách chưa được trả</p>
+@foreach (var item in Model.ReturnNotEnoughBooks)
+{
+    <span>@item.Name</span>
+}
+<br />
+<p>Top thẻ mượn</p>
+@foreach (var item in Model.TopLibraryCards)
+{
+    <span>@item.Name</span>
+}
+<br />
+<p>Thẻ mượn trả trễ</p>
+@foreach (var item in Model.CardReturnLate)
+{
+    <span>@item.Name</span>
+}
+<br />
+<p>Thẻ bị khóa</p>
+@foreach (var item in Model.CardsLock)
+{
+    <span>@item.Name</span>
+}
+<br />

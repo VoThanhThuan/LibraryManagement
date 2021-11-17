@@ -41,6 +41,11 @@ namespace LibraryManagement.UI.Services
 
         public async Task<List<BookVM>> SearchBook(string content)
         {
+            if (content == "!all")
+            {
+                return await _context.Books.Select(x => x.ToViewModel()).ToListAsync();
+            }
+
             var books = await _context.Books
                 .Where(x => x.Id.ToLower().Contains(content.ToLower()) || x.Name.ToLower().Contains(content.ToLower()))
                 .Take(10)

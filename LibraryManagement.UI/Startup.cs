@@ -103,6 +103,7 @@ namespace LibraryManagement.UI {
             services.AddTransient<BorrowService>();
             services.AddTransient<GenreService>();
             services.AddTransient<LibraryCardService>();
+            services.AddTransient<StatisticalService>();
 
             services.AddControllersWithViews();
 

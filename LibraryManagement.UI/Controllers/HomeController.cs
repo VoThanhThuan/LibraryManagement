@@ -27,7 +27,7 @@ namespace LibraryManagement.UI.Controllers {
         }
 
         public async Task<IActionResult> Index() {
-            var statistical = new StatisticalVM {
+            var statistical = new StatisticalShortVM {
                 TotalBookBorrowed = (await _book.GetBorrowedBooks()).Count,
                 TotalBookBorrowing = (await _book.GetBorrowingBooks()).Count,
                 TotalBookReturn = (await _book.GetReturnBooks()).Count,

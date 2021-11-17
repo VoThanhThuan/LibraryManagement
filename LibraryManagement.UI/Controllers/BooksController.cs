@@ -39,7 +39,15 @@ namespace LibraryManagement.UI.Controllers
 
         // GET: Books/Search/content
         [AllowAnonymous]
-        public async Task<IActionResult> Search(string content)
+        public async Task<IActionResult> Search(string content) {
+            if (string.IsNullOrEmpty(content)) return Redirect("Index");
+            var books = await _book.SearchBook(content);
+            return View("Index",books);
+        }
+
+        // GET: Books/Search/content
+        [AllowAnonymous]
+        public async Task<IActionResult> SearchApi(string content)
         {
             if (string.IsNullOrEmpty(content)) return NoContent();
             var books = await _book.SearchBook(content);
