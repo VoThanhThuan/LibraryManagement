@@ -157,32 +157,46 @@ namespace LibraryManagement.UI.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        [HttpPost("ReturnBook")]
+        [HttpPost("api/ReturnBook")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ReturnBook(ReturnBookRequest request)
         {
-            var cardAndBook = new ReturnBookVM();
-            ViewData["IdCard"] = new SelectList(_context.LibraryCards, "Id", "Id", request.IdCard);
+            if (request.AmountReturn <= 0) return BadRequest("Số lượng trả không được bé hơn 1");
+            //var cardAndBook = new ReturnBookVM();
+            //ViewData["IdCard"] = new SelectList(_context.LibraryCards, "Id", "Id", request.IdCard);
 
             if (request.IdCard != Guid.Empty)
             {
                 var resultGet = await _borrow.GetBorrowWithCard(request.IdCard);
 
                 resultGet.IdCard = request.IdCard;
-                cardAndBook = resultGet;
+                //cardAndBook = resultGet;
             }
-            else if (request.IdBorrow != Guid.Empty)
-            {
-                cardAndBook = await _borrow.GetBorrow(request.IdBorrow);
-            }
+            //else if (request.IdBorrow != Guid.Empty)
+            //{
+            //    cardAndBook = await _borrow.GetBorrow(request.IdBorrow);
+            //}
 
             var result = await _borrow.ReturnBook(request);
             if (result == false)
             {
-                return View(cardAndBook);
+                //return View(cardAndBook);
+                return Ok("Trả thất bại");
+
             }
 
-            return Redirect($"/Borrows/ReturnBook?idCard={request.IdCard}");
+            return Ok("Trả thành công");
+        }
+
+        [HttpPost("api/MissingBook")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> MissingBook(ReturnBookRequest request)
+        {
+            if (request.AmountReturn <= 0) return BadRequest("Số lượng báo mất không được bé hơn 1");
+            var result = await _borrow.MissingBook(request);
+            if (!result)
+                return Conflict("Số lượng báo mất không được bé hơn 1");
+            return Ok("Báo mất thành công");
         }
 
         [HttpGet("Edit")]

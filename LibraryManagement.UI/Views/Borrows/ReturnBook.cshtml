@@ -11,6 +11,7 @@
         color: #a2a5b9;
         cursor: pointer;
     }
+
     .input-number {
         height: 2.8rem;
         width: 100%;
@@ -21,8 +22,8 @@
         border: none;
         border-radius: .3rem;
         background-color: #27272a;
-       
     }
+
     .btn-return {
         margin-top: 1rem;
         width: 100%;
@@ -35,6 +36,7 @@
         color: #a2a5b9;
         border: .1rem solid;
     }
+
         .btn-return:hover {
             border-color: #05d69e;
             color: #05d69e;
@@ -57,7 +59,7 @@
 </div>
 
 <div class="page-content-inner">
-        
+
 
     <div class="card-grid">
         <div class="columns is-multiline">
@@ -87,7 +89,7 @@
                         </div>
                         <div class="right">
                             <div class="buttons">
-                                <div >
+                                <div>
                                     <form>
                                         <input asp-for="@Model.IdBorrow" name="IdBorrow" value="@Model.IdBorrow" hidden />
                                         <input asp-for="@Model.IdCard" name="IdCard" value="@Model.IdCard" hidden />
@@ -114,7 +116,7 @@
     <div class="page-content-inner">
         <div>
             <div class="flex-table">
-                
+
                 <div class="is-12">
                     <div class="t-5-book">Danh sách mượn</div>
                     <div class="data-table-wrapper">
@@ -141,8 +143,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach (var bib in Model.BookInBorrows)
-                                    {
+                                    @foreach (var bib in Model.BookInBorrows) {
                                         <tr>
                                             <td>
                                                 <div class="thumbnail">
@@ -159,22 +160,23 @@
                                                 <span>@bib.TimeBorrowed</span>
                                             </td>
                                             <td>
-                                                <span>@bib.AmountBorrowed</span>
+                                                @{ var amount = bib.AmountBorrowed - bib.AmountReturn - bib.AmountMissing;}
+                                                <span>@amount</span>
                                             </td>
                                             <td style="text-align:right">
-                                               
-                                                <form asp-action="ReturnBook" method="post" class="form-layout">
-                                                    <input asp-for="@bib." type="number" name="AmountReturn" class="input-number" min="0" max="@bib.AmountBorrowed" />
+
+                                                <form class="form" asp-antiforgery="true">
+                                                    <input asp-for="@bib.AmountReturn" type="number" name="AmountReturn" class="input-number" min="0" max="@amount" />
 
                                                     <input asp-for="@bib.AmountBorrowed" type="number" name="AmountReturn" class="light-text" min="0" max="@bib.AmountBorrowed" hidden />
                                                     <input asp-for="@bib.IdBook" name="IdBook" class="light-text" value="@bib.IdBook" hidden />
                                                     <input asp-for="@bib.IdBorrow" name="IdBook" class="light-text" value="@bib.IdBook" hidden />
                                                     <input asp-for="@Model.IdCard" name="IdCard" value="@Model.IdCard" hidden />
                                                     <input asp-for="@Model.IdBorrow" name="IdBorrow" value="@Model.IdBorrow" hidden />
-
-                                                    <button type="submit" class="btn-return">Trả</button>
+                                                    <button type="button" class="btn-return">Trả</button>
+                                                    <button type="button" class="btn-missing">Báo mất</button>
                                                 </form>
-                                                
+
                                             </td>
 
                                         </tr>
@@ -185,7 +187,7 @@
                         </div>
                     </div>
                 </div>
-             
+
 
 
             </div>
@@ -200,6 +202,39 @@
 
 @section Scripts{
     <script>
+        $$('.form').forEach(f => {
+            console.log(f);
+            f.querySelector('.btn-return').addEventListener('click', e => {
+                const form = new FormData(f)
+                fetch('/Borrows/api/ReturnBook', {
+                    method: 'POST',
+                    body: form
+                }).then(res => {
+                    if (res.status == 200) {
+                        alert('Trả sách thành công')
+                        window.location.reload()
+                    } else {
+                        alert('Trả sách thất bại')
+                    }
+                }).then(res => res.json())
 
+            })
+            f.querySelector('.btn-missing').addEventListener('click', e => {
+                const form = new FormData(f)
+                fetch('/Borrows/api/MissingBook', {
+                    method: 'POST',
+                    body: form
+                }).then(res => {
+                    console.log(res);
+                    if (res.status == 200) {
+                        alert('Báo mất sách thành công')
+                        window.location.reload()
+                    } else {
+                        alert('Báo mất sách thất bại')
+                    }
+                }).then(res => res.json())
+
+            })
+        })
     </script>
 }
