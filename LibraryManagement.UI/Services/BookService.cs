@@ -121,7 +121,7 @@ namespace LibraryManagement.UI.Services
             book.IdLibraryCode = request.IdLibraryCode;
             book.StatusBook = request.StatusBook;
 
-            //_context.Books.Update(book);
+                //_context.Books.Update(book);
             await _context.SaveChangesAsync();
 
             return book;

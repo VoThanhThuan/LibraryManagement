@@ -62,9 +62,6 @@ namespace Library.Library.Migrations
                     b.Property<string>("Thumbnail")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("TimeMissing")
-                        .HasColumnType("datetime2");
-
                     b.Property<int>("TotalBorrow")
                         .HasColumnType("int");
 
@@ -86,6 +83,12 @@ namespace Library.Library.Migrations
                     b.Property<int>("AmountBorrowed")
                         .HasColumnType("int");
 
+                    b.Property<int>("AmountMissing")
+                        .HasColumnType("int");
+
+                    b.Property<int>("AmountReturn")
+                        .HasColumnType("int");
+
                     b.Property<string>("BorrowStatus")
                         .HasColumnType("nvarchar(max)");
 
@@ -96,6 +99,9 @@ namespace Library.Library.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("GETDATE()");
+
+                    b.Property<DateTime?>("TimeMissing")
+                        .HasColumnType("datetime2");
 
                     b.Property<DateTime?>("TimeRealReturn")
                         .HasColumnType("datetime2");

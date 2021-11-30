@@ -44,7 +44,28 @@ namespace Library.Library.Entities
                 TotalBorrow = TotalBorrow,
                 IdLibraryCode = IdLibraryCode,
                 Thumbnail = Thumbnail,
-                TimeMissing = TimeMissing
+            };
+        }
+
+        public BookVM ToViewModel(BookInBorrow bookInBorrow, int statisticalAmount)
+        {
+            return new() {
+                Id = Id,
+                Name = Name,
+                PublishingCompany = PublishingCompany,
+                PublicationDate = PublicationDate,
+                Author = Author,
+                Amount = Amount,
+                PageNumber = PageNumber,
+                DateCanBorrow = DateCanBorrow,
+                Rank = Rank,
+                StatusBook = StatusBook,
+                TotalBorrow = TotalBorrow,
+                IdLibraryCode = IdLibraryCode,
+                Thumbnail = Thumbnail,
+                TimeBorrowed = bookInBorrow.TimeBorrowed,
+                TimeReturn = bookInBorrow.TimeReturn,
+                StatisticalAmount = statisticalAmount
             };
         }
 
@@ -88,9 +109,6 @@ namespace Library.Library.Entities
         [Display(Name = "Sô Lần Mượn")]
         [Required]
         public int TotalBorrow { get; set; } = 0;
-
-
-        public DateTime? TimeMissing { get; set; } = null;
 
 
         //Khóa ngoại

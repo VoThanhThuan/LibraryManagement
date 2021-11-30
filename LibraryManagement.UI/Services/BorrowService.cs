@@ -197,17 +197,18 @@ namespace LibraryManagement.UI.Services
 
             var card = await _context.LibraryCards.FindAsync(request.IdCard);
 
+            // Xử lý lỗi: nếu số lượng sách đang mượn bé hơn số sách trả thì coi như trả hết.
             if (bib.AmountBorrowed < request.AmountReturn)
             {
                 request.AmountReturn = bib.AmountBorrowed;
             }
 
-            bib.AmountBorrowed -= request.AmountReturn;
+            bib.AmountReturn += request.AmountReturn;
             borrow.AmountReturned += request.AmountReturn;
 
             bib.TimeRealReturn = DateTime.Now;
 
-
+            // Xử lý lỗi: nếu tổng số lượng sách đang mượn bé hơn số sách trả thì coi như trả hết.
             if (borrow.AmountReturned > borrow.AmountBorrow)
             {
                 borrow.AmountReturned = borrow.AmountBorrow;

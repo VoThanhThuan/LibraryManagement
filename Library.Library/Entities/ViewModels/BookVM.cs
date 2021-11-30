@@ -56,6 +56,9 @@ namespace Library.Library.Entities.ViewModels
         public string IdLibraryCode { get; set; } = "";
 
         public DateTime? TimeMissing { get; set; } = null;
+        public DateTime TimeBorrowed { get; set; }
+        public DateTime TimeReturn { get; set; }
+        public int StatisticalAmount { get; set; } = 0;
 
 
     }

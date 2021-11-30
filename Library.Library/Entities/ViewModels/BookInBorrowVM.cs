@@ -11,12 +11,16 @@ namespace Library.Library.Entities.ViewModels
         public DateTime TimeBorrowed { get; set; }
         public DateTime TimeReturn { get; set; }
         public DateTime? TimeRealReturn { get; set; } = null;
+        public DateTime? TimeMissing { get; set; } = null;
+
         public int AmountBorrowed { get; set; } = 0;
+        public int AmountReturn { get; set; } = 0;
+        public int AmountMissing { get; set; } = 0;
+
         public string BorrowStatus { get; set; } = "";
         public string ReturnStatus { get; set; } = "";
 
 
-        public int AmountReturn { get; set; }
 
 
 
