@@ -14,8 +14,7 @@ namespace Library.Library.Entities
     {
         public BookRequest ToRequest()
         {
-            return new()
-            {
+            return new() {
                 Id = Id,
                 Name = Name,
                 PublishingCompany = PublishingCompany,
@@ -31,8 +30,7 @@ namespace Library.Library.Entities
 
         public BookVM ToViewModel()
         {
-            return new()
-            {
+            return new() {
                 Id = Id,
                 Name = Name,
                 PublishingCompany = PublishingCompany,
@@ -45,7 +43,8 @@ namespace Library.Library.Entities
                 StatusBook = StatusBook,
                 TotalBorrow = TotalBorrow,
                 IdLibraryCode = IdLibraryCode,
-                Thumbnail = Thumbnail
+                Thumbnail = Thumbnail,
+                TimeMissing = TimeMissing
             };
         }
 
@@ -78,8 +77,8 @@ namespace Library.Library.Entities
         [Required]
         public int DateCanBorrow { get; set; } = 0;
 
-        [Display(Name = "Hạng")] 
-        [Required] 
+        [Display(Name = "Hạng")]
+        [Required]
         public RankLibrary Rank { get; set; } = RankLibrary.Beginner;
 
         [Display(Name = "Tình trạng sách")]
@@ -89,6 +88,10 @@ namespace Library.Library.Entities
         [Display(Name = "Sô Lần Mượn")]
         [Required]
         public int TotalBorrow { get; set; } = 0;
+
+
+        public DateTime? TimeMissing { get; set; } = null;
+
 
         //Khóa ngoại
         [Display(Name = "Mã Thư Viện")]

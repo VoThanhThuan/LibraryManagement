@@ -8,7 +8,7 @@ namespace Library.Library.Enums
 {
     public enum StatusBorrow
     {
-        Borrowed,
+        Borrowing,
         Finish,
         NotEnough
     }

@@ -62,6 +62,9 @@ namespace Library.Library.Migrations
                     b.Property<string>("Thumbnail")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime?>("TimeMissing")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("TotalBorrow")
                         .HasColumnType("int");
 
@@ -94,7 +97,7 @@ namespace Library.Library.Migrations
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("GETDATE()");
 
-                    b.Property<DateTime>("TimeRealReturn")
+                    b.Property<DateTime?>("TimeRealReturn")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("TimeReturn")

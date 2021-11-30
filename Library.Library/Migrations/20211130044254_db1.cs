@@ -97,6 +97,7 @@ namespace Library.Library.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     MSSV = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Class = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Karma = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
@@ -211,6 +212,8 @@ namespace Library.Library.Migrations
                     DateCanBorrow = table.Column<int>(type: "int", nullable: false),
                     Rank = table.Column<int>(type: "int", nullable: false),
                     StatusBook = table.Column<int>(type: "int", nullable: false),
+                    TotalBorrow = table.Column<int>(type: "int", nullable: false),
+                    TimeMissing = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IdLibraryCode = table.Column<string>(type: "nvarchar(8)", nullable: false)
                 },
                 constraints: table =>
@@ -232,7 +235,7 @@ namespace Library.Library.Migrations
                     IdBorrow = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     TimeBorrowed = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETDATE()"),
                     TimeReturn = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    TimeRealReturn = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    TimeRealReturn = table.Column<DateTime>(type: "datetime2", nullable: true),
                     AmountBorrowed = table.Column<int>(type: "int", nullable: false),
                     BorrowStatus = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ReturnStatus = table.Column<string>(type: "nvarchar(max)", nullable: true)

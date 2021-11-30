@@ -28,7 +28,7 @@ namespace Library.Library.Entities
 
         public DateTime TimeBorrowed { get; set; }
         public DateTime TimeReturn { get; set; }
-        public DateTime TimeRealReturn { get; set; }
+        public DateTime? TimeRealReturn { get; set; } = null;
         public int AmountBorrowed { get; set; } = 0;
         public string BorrowStatus { get; set; } = "";
         public string ReturnStatus { get; set; } = "";
