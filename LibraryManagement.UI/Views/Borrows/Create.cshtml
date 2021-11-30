@@ -15,7 +15,7 @@
                     <div class="column is-12">
                         <div class="header-borrow">
                             <div class="header-image">
-                                <img src="/avatar/reading-book.svg" alt="">
+                                <img src="/public/reading-book.svg" alt="">
                             </div>
                             <div class="header-info">
                                 @{
@@ -175,8 +175,10 @@
                                                     </div>
                                                     <div class="flex-table-cell cell-end">
                                                         <div>
-                                                            <button class="add-book-borrow-search" value="${book.id}" data-quantity="${book.amount}" data-thumnail="${book.thumbnail}" data-bookname="${book.name}" data-author="${book.author}">
-                                                                Mượn
+                                                            <button type="button" class="button-hint hint--bubble add-book-borrow-search" data-hint="Thêm" value="${book.id}" data-quantity="${book.amount}" data-thumnail="${book.thumbnail}" data-bookname="${book.name}" data-author="${book.author}">
+                                                                <span class="icon">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--feather" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" data-icon="feather:bookmark"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5l-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></g></svg>
+                                                                </span>
                                                             </button>
                                                          </div>
                                                         </div>
