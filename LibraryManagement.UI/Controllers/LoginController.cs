@@ -1,4 +1,7 @@
-﻿using System.Text.Json;
+﻿using System;
+using System.Collections.Generic;
+using System.Security.Claims;
+using System.Text.Json;
 using Library.Library.Entities;
 using Library.Library.Entities.Requests;
 using LibraryManagement.UI.Constants;
@@ -9,6 +12,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System.Threading.Tasks;
 using Library.Library.Entities.ViewModels;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
 
 namespace LibraryManagement.UI.Controllers
@@ -50,19 +55,21 @@ namespace LibraryManagement.UI.Controllers
         {
             if (!ModelState.IsValid) return View(request);
 
-            //var token = await _user.Authenticate(request);
             var user = await _userManager.FindByNameAsync(request.Username);
             var result = await _signInManager.PasswordSignInAsync(user, request.Password, request.RememberMe, false);
-            if (!result.Succeeded)
-            {
+            if (!result.Succeeded) {
                 ModelState.AddModelError("", "Tài khoản hoặc mật khẩu sai");
                 return View(request);
             }
             var json = JsonSerializer.Serialize(user.ToViewModel());
-            //HttpContext.Session.SetString("User", json);
+            HttpContext.Session.SetString("User", json);
             HttpContext.Response.Cookies.Append("User", json);
-            //if (string.IsNullOrEmpty(token))
-            //{
+            return Redirect(request.ReturnUrl ?? "/");
+
+
+            //var token = await _user.Authenticate(request);
+
+            //if (string.IsNullOrEmpty(token)) {
             //    ModelState.AddModelError("", "Tài khoản hoặc mật khẩu sai");
             //    return View(request);
             //}
@@ -81,7 +88,26 @@ namespace LibraryManagement.UI.Controllers
             //    authProperties);
 
             //return RedirectToAction("Index", "Home");
-            return Redirect(request.ReturnUrl ?? "/");
+            //var claims = new[]
+            //{
+            //    new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+            //    new Claim(ClaimTypes.Email, string.IsNullOrEmpty(user.Email) ? "" : user.Email),
+            //    new Claim(ClaimTypes.GivenName, user.Nickname),
+            //    new Claim(ClaimTypes.Role, string.Join(";", "Admin")),
+            //    new Claim(ClaimTypes.Name, user.UserName)
+            //};
+            //var authProperties = new AuthenticationProperties {
+            //    ExpiresUtc = DateTimeOffset.UtcNow.AddHours(1),
+            //    IsPersistent = request.RememberMe //xác thực mỗi lần mở lại browser
+            //};
+
+            //var principal = new ClaimsPrincipal(new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme));
+
+            //await HttpContext.SignInAsync(
+            //    CookieAuthenticationDefaults.AuthenticationScheme,
+            //    principal,
+            //    authProperties);
+
         }
 
         //private ClaimsPrincipal ValidateToken(string jwtToken)

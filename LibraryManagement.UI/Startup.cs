@@ -55,18 +55,18 @@ namespace LibraryManagement.UI {
                 .AddEntityFrameworkStores<LibraryDbContext>()
                 .AddDefaultTokenProviders();
 
-            //services.AddAuthentication(options =>
-            //    {
-            //        options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-            //        options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-            //        options.DefaultSignOutScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-            //    })
-            //    .AddCookie(options =>
-            //    {
-            //        options.LoginPath = new PathString("/Login");
-            //        options.AccessDeniedPath = new PathString("/Login");
-            //        //options.SlidingExpiration = true;
-            //    });
+
+            services.AddAuthentication(options => {
+                options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                options.DefaultSignOutScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+            })
+                .AddCookie(options => {
+                    options.LoginPath = new PathString("/Login");
+                    options.AccessDeniedPath = new PathString("/Login");
+                    //options.SlidingExpiration = true;
+                });
+
             services.ConfigureApplicationCookie(options => {
                 options.LoginPath = "/Login";
                 options.Cookie.Name = ".AspNetCore.Identity.Application";
