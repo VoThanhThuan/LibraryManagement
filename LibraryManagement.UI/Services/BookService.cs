@@ -65,7 +65,7 @@ namespace LibraryManagement.UI.Services
         public async Task<List<BookVM>> GetBorrowingBooks()
         {
             var books = await (from br in _context.Borrows
-                where br.StatusBorrow == StatusBorrow.Borrowed
+                where br.StatusBorrow == StatusBorrow.Borrowing
                 join bib in _context.BookInBorrows on br.Id equals bib.IdBorrow
                 join b in _context.Books on bib.IdBook equals b.Id
                 select b.ToViewModel()).ToListAsync();
@@ -119,6 +119,7 @@ namespace LibraryManagement.UI.Services
             book.DateCanBorrow = request.DateCanBorrow;
             book.Rank = request.Rank;
             book.IdLibraryCode = request.IdLibraryCode;
+            book.StatusBook = request.StatusBook;
 
             //_context.Books.Update(book);
             await _context.SaveChangesAsync();

@@ -92,6 +92,8 @@ namespace LibraryManagement.UI.Controllers
             await _genre.PostBookInGenre(book.Id, idGenres);
             ViewData["Genre"] = new SelectList(_context.Genres, "Id", "Name");
             ViewData["IdLibraryCode"] = new SelectList(_context.LibraryCodes, "Id", "Id");
+
+            TempData["success"] = $"Thêm mới sách {request.Name} thành công";
             return View(book.ToRequest());
         }
 

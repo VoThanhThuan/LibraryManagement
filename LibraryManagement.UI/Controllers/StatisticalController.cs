@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 using LibraryManagement.UI.Services;
 
@@ -25,5 +26,15 @@ namespace LibraryManagement.UI.Controllers
 
             return View(statistical);
         }
+
+        [HttpGet("api/Statistical")]
+        public async Task<IActionResult> GetData(DateTime start, DateTime end)
+        {
+
+            var statistical = await _statistical.GetStatiscals(start, end);
+
+            return Ok(statistical);
+        }
+
     }
 }

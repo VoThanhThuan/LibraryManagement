@@ -65,7 +65,7 @@ namespace LibraryManagement.UI {
                 .AddCookie(options => {
                     options.LoginPath = new PathString("/Login");
                     options.AccessDeniedPath = new PathString("/Login");
-                    options.Cookie.Name = ".AspNetCore.Identity.Application";
+                    //options.Cookie.Name = ".AspNetCore.Identity.Application";
                     //options.SlidingExpiration = true;
                 });
 

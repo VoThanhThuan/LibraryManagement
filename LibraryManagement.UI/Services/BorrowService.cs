@@ -35,7 +35,7 @@ namespace LibraryManagement.UI.Services
         public async Task<List<(LibraryCard card, List<BookInBorrow> bibs)>> GetBorrows()
         {
             var listBorrow = await _context.Borrows
-                .Where(x => x.StatusBorrow == StatusBorrow.Borrowed).ToListAsync();
+                .Where(x => x.StatusBorrow == StatusBorrow.Borrowing).ToListAsync();
             //var borrows = new List<BorrowVM>();
             var ListCardAndBorrow = new List<(LibraryCard card, List<BookInBorrow> bibs)>();
             foreach (var borrow in listBorrow)
@@ -55,7 +55,7 @@ namespace LibraryManagement.UI.Services
 
         public async Task<ReturnBookVM> GetBorrow(Guid idBorrow)
         {
-            var borrow = await _context.Borrows.FirstOrDefaultAsync(x => x.Id == idBorrow && x.StatusBorrow == StatusBorrow.Borrowed);
+            var borrow = await _context.Borrows.FirstOrDefaultAsync(x => x.Id == idBorrow && x.StatusBorrow == StatusBorrow.Borrowing);
             //var borrows = new List<BorrowVM>();
 
             var card = await _context.LibraryCards.FirstOrDefaultAsync(x => x.Id == borrow.IdCard);
@@ -115,7 +115,7 @@ namespace LibraryManagement.UI.Services
             {
                 var borrow = await _context.Borrows.FirstOrDefaultAsync(x => x.IdCard == libcrad.Id);
                 idBorrow = borrow.Id;
-                borrow.StatusBorrow = StatusBorrow.Borrowed;
+                borrow.StatusBorrow = StatusBorrow.Borrowing;
             }
             else
             {
