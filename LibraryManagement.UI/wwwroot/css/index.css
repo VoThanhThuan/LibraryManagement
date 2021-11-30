@@ -1,4 +1,84 @@
-﻿
+﻿/* Button hint*/
+.button-hint {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    text-align: center;
+    white-space: nowrap;
+    border-width: 1px;
+    border-radius: 99px;
+    padding-left: 1.4rem;
+    padding-right: 1.4rem;
+    padding-bottom: calc(0.5em - 1px);
+    padding-top: calc(0.5em - 1px);
+    background: #27272a;
+    color: #a9a9b2;
+    border: 1px solid #3f3f43;
+    -webkit-transition: all 0.3s;
+    transition: all 0.3s;
+}
+
+    .button-hint:hover {
+        border-color: #10cb8a;
+        color: #10cb8a;
+    }
+
+    .button-hint::after {
+        border-radius: 100px !important;
+        font-size: 1rem !important;
+        text-transform: uppercase !important;
+        line-height: 12px;
+        white-space: nowrap;
+        background: #383838;
+        color: white;
+        padding: 8px 10px;
+        font-weight: 600 !important;
+        -webkit-transition: all 0.2s ease;
+        transition: all 0.2s ease;
+        opacity: 0;
+    }
+
+    .button-hint[data-hint]::after {
+        content: attr(data-hint);
+        position: absolute;
+        -webkit-transform: translateX(-50%);
+        transform: translateX(-50%);
+        bottom: 100%;
+        left: 50%;
+    }
+
+    .button-hint:hover::after {
+        -webkit-transform: translateX(-50%) translateY(-8px);
+        transform: translateX(-50%) translateY(-8px);
+        -webkit-transition-delay: 100ms;
+        transition-delay: 100ms;
+        visibility: visible;
+        opacity: 1;
+        background: #10cb8a;
+    }
+
+    .button-hint .icon {
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        display: -webkit-inline-box;
+        display: -ms-inline-flexbox;
+        display: inline-flex;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        justify-content: center;
+        height: 2.1rem;
+        width: 2.1rem;
+    }
+
+        .button-hint .icon svg {
+            height: 14px;
+            width: 14px;
+        }
+/*//////////////////*/
 ::-webkit-scrollbar {
     width: 1.6rem;
 }
