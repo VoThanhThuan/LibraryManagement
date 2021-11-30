@@ -1,57 +1,579 @@
 ﻿@using Library.Library.Entities.ViewModels
 @model StatisticalVM
 
-<p>Sách đã mượn</p>
-@foreach (var item in Model.BooksBorrowed)
-{
-    <span>@item.Name</span>
-}
-<br />
-<p>Sách đang mượn</p>
-@foreach (var item in Model.BooksBorrowing)
-{
-    <span>@item.Name</span>
-}
-<br />
-<p>Sách đã trả</p>
-@foreach (var item in Model.BooksReturn)
-{
-    <span>@item.Name</span>
-}
-<br />
-<p>Sách đã mất</p>
-@foreach (var item in Model.BooksMissing)
-{
-    <span>@item.Name</span>
-}
-<br />
-<p>Top sách được mượn</p>
-@foreach (var item in Model.TopBooks)
-{
-    <span>@item.Name</span>
-}
-<br />
-<p>Sách chưa được trả</p>
-@foreach (var item in Model.ReturnNotEnoughBooks)
-{
-    <span>@item.Name</span>
-}
-<br />
-<p>Top thẻ mượn</p>
-@foreach (var item in Model.TopLibraryCards)
-{
-    <span>@item.Name</span>
-}
-<br />
-<p>Thẻ mượn trả trễ</p>
-@foreach (var item in Model.CardReturnLate)
-{
-    <span>@item.Name</span>
-}
-<br />
-<p>Thẻ bị khóa</p>
-@foreach (var item in Model.CardsLock)
-{
-    <span>@item.Name</span>
-}
-<br />
+<style>
+    .report{
+        display: none;
+    }
+    .is-choose {
+        display: block;
+        -webkit-animation: fadeInLeft 1s ease;
+        animation: fadeInLeft 1s ease;
+    }
+</style>
+
+    <div class="page-title text-center">
+        <span class="menu-toggle">
+            <span class="icon-box-toggle">
+                <span>
+                    <i class="fal fa-horizontal-rule icon-line-top"></i>
+                    <i class="fal fa-horizontal-rule icon-line-center"></i>
+                    <i class="fal fa-horizontal-rule icon-line-bottom"></i>
+                </span>
+            </span>
+        </span>
+        <div class="title-wrap">
+            <h1 class="title">Thống Kê</h1>
+        </div>
+    </div>
+
+<div class="company-header is-bg-6">
+    <div class="header-time">
+        <div class="item-inner">
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--feather" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" data-icon="feather:briefcase"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></g></svg>
+            <span>@Model.BooksBorrowed.Count()</span>
+            <p>Sách đã mượn</p>
+        </div>
+    </div>
+    <div class="header-time">
+        <div class="item-inner">
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--feather" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" data-icon="feather:shopping-cart"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></g></svg>
+            <span>@Model.BooksBorrowing.Count()</span>
+            <p>Sách đang được mượn</p>
+        </div>
+    </div>
+    <div class="header-time">
+        <div class="item-inner">
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--feather" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" data-icon="feather:box"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><path d="M3.27 6.96L12 12.01l8.73-5.05"></path><path d="M12 22.08V12"></path></g></svg>
+            <span>@Model.BooksReturn.Count()</span>
+            <p>Sách đã được trả</p>
+        </div>
+    </div>
+    <div class="header-time">
+        <div class="item-inner">
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--feather" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" data-icon="feather:bell"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></g></svg>
+            <span>
+                @{
+                    var total = Model.BooksBorrowed.Count() - (Model.BooksBorrowing.Count() + Model.BooksReturn.Count());
+                    if (total > 0)
+                    {
+                        <span>@total</span>
+                    }
+                    else
+                    {
+                        <span>0</span>
+                    }
+                }
+            </span>
+            <p>Sách bị mất</p>
+        </div>
+    </div>
+</div>
+
+<div class="is-12">
+    <div class="illustration-header">
+        <img class="dark-image" src="/avatar/header.svg" alt="">
+        <div class="header-stats">
+            <div class="stats-inner">
+                <div class="stat-item">
+                    <span class="is-success pulsate" style="--delay: 1s">@Model.TopLibraryCards.Count()</span>
+                    <p>Top thẻ mượn</p>
+                </div>
+                <div class="stat-item">
+                    <span class="is-warning pulsate" style="--delay: 3s">@Model.CardsLock.Count()</span>
+                    <p>Thẻ Bị Khóa</p>
+                </div>
+                <div class="stat-item">
+                    <span class="is-info pulsate" style="--delay: 5s">@Model.CardReturnLate.Count()</span>
+                    <p>Thẻ trả Sách trễ</p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<button class="choose-report">Sachs</button>
+<button class="choose-report">Ther</button>
+
+<div class="report is-choose">
+    <h3 class="section-heading" style="margin-top: 20px;">Danh Sách Thống Kê</h3>
+
+    <div class="select-display tabs">
+        <div class="column">
+            <div class="project-grid-item tab-item active-item" style="border-color: #8f23f7;">
+                <img class="project-avatar" src="/avatar/slicer.svg" alt="">
+                <h3>Sách Đã Mượn</h3>
+                <p></p>
+            </div>
+        </div>
+
+        <div class="column">
+            <div class="project-grid-item tab-item">
+                <img class="project-avatar" src="/avatar/metamovies.svg" alt="">
+                <h3>Sách Đang Mượn</h3>
+                <p></p>
+            </div>
+        </div>
+        <div class="column">
+            <div class="project-grid-item tab-item">
+                <img class="project-avatar" src="/avatar/company.svg" alt="">
+                <h3>Sách Đã Mất</h3>
+                <p></p>
+            </div>
+        </div>
+        <div class="column">
+            <div class="project-grid-item tab-item">
+                <img class="project-avatar" src="/avatar/fastpizza.svg" alt="">
+                <h3>Sách Đã Trả</h3>
+                <p></p>
+            </div>
+        </div>
+        <div class="column">
+            <div class="project-grid-item tab-item">
+                <img class="project-avatar" src="/avatar/drop.svg" alt="">
+                <h3>Sách Chưa Trả Đủ</h3>
+                <p></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="tab-content">
+        <div class="tab-pane active-pane">
+            <div class="is-12">
+                <h3 class="section-heading">Sách đã mượn</h3>
+
+                <div class="timeline-wrapper">
+                    <div class="timeline-wrapper-inner">
+                        @if (Model.BooksBorrowed.Count() <= 0)
+                        {
+                            <div style="display: flex; align-items: center; justify-content:center">
+                                <img style="width: 600px; height: 600px;" src="/avatar/search-7-dark.21d246ce.svg">
+                            </div>
+                        }
+                        else
+                        {
+                            @foreach (var item in Model.BooksBorrowed)
+                            {
+
+                                <div class="timeline-item" data-v-5c9a314b="">
+                                    <div class="date">
+                                        <span>@item.PublicationDate.ToShortDateString()</span>
+                                    </div>
+                                    <div class="dot is-info"></div>
+                                    <div class="content-wrap">
+                                        <div class="content-box">
+                                            <div class="status"></div>
+                                            <div class="v-avatar">
+                                                <img class="thumbnails" src="@item.Thumbnail" alt="">
+                                            </div>
+                                            <div class="box-text">
+                                                <div class="meta-text">
+                                                    <p>
+                                                        <span>@item.Name</span>@*<span style="color: #00ff90">&nbsp;Tác giả: @item.Author</span>*@
+                                                    </p>
+                                                    <span>@item.PublicationDate.ToShortTimeString().ToLower()</span>
+                                                </div>
+                                            </div>
+                                            <div class="box-end">
+                                                <div class="v-avatar is-small">
+                                                    <img class="avatar" src="" alt="">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            }
+                        }
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="tab-pane">
+            <div class="is-12">
+                <h3 class="section-heading">Sách đang mượn</h3>
+
+                <div class="timeline-wrapper">
+                    <div class="timeline-wrapper-inner">
+                        @if (Model.BooksBorrowing.Count() <= 0)
+                        {
+                            <div style="display: flex; align-items: center; justify-content:center">
+                                <img style="width: 600px; height: 600px;" src="/avatar/search-7-dark.21d246ce.svg">
+                            </div>
+                        }
+                        else
+                        {
+                            @foreach (var item in Model.BooksBorrowing)
+                            {
+
+                                <div class="timeline-item" data-v-5c9a314b="">
+                                    <div class="date">
+                                        <span>@item.PublicationDate.ToShortDateString()</span>
+                                    </div>
+                                    <div class="dot is-info"></div>
+                                    <div class="content-wrap">
+                                        <div class="content-box">
+                                            <div class="status"></div>
+                                            <div class="v-avatar">
+                                                <img class="thumbnails" src="@item.Thumbnail" alt="">
+                                            </div>
+                                            <div class="box-text">
+                                                <div class="meta-text">
+                                                    <p>
+                                                        <span>@item.Name</span>@*<span style="color: #00ff90">&nbsp;Tác giả: @item.Author</span>*@
+                                                    </p>
+                                                    <span>@item.PublicationDate.ToShortTimeString().ToLower()</span>
+                                                </div>
+                                            </div>
+                                            <div class="box-end">
+                                                <div class="v-avatar is-small">
+                                                    <img class="avatar" src="" alt="">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            }
+                        }
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="tab-pane">
+            <div class="is-12">
+                <h3 class="section-heading">Sách đã mất</h3>
+                @if (Model.BooksMissing.Count() <= 0)
+                {
+                    <div style="display: flex; align-items: center; justify-content:center">
+                        <img style="width: 600px; height: 600px;" src="/avatar/search-7-dark.21d246ce.svg">
+                    </div>
+                }
+                else
+                {
+                    @foreach (var item in Model.BooksMissing)
+                    {
+
+                        <div class="timeline-item" data-v-5c9a314b="">
+                            <div class="date">
+                                <span>@item.PublicationDate.ToShortDateString()</span>
+                            </div>
+                            <div class="dot is-info"></div>
+                            <div class="content-wrap">
+                                <div class="content-box">
+                                    <div class="status"></div>
+                                    <div class="v-avatar">
+                                        <img class="thumbnails" src="@item.Thumbnail" alt="">
+                                    </div>
+                                    <div class="box-text">
+                                        <div class="meta-text">
+                                            <p>
+                                                <span>@item.Name</span>@*<span style="color: #00ff90">&nbsp;Tác giả: @item.Author</span>*@
+                                            </p>
+                                            <span>@item.PublicationDate.ToShortTimeString().ToLower()</span>
+                                        </div>
+                                    </div>
+                                    <div class="box-end">
+                                        <div class="v-avatar is-small">
+                                            <img class="avatar" src="" alt="">
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    }
+                }
+            </div>
+        </div>
+        <div class="tab-pane">
+            <div class="is-12">
+                <h3 class="section-heading">Sách Đã Trả</h3>
+
+                <div class="timeline-wrapper">
+                    <div class="timeline-wrapper-inner">
+                        @if (Model.BooksReturn.Count() <= 0)
+                        {
+                            <div style="display: flex; align-items: center; justify-content:center">
+                                <img style="width: 600px; height: 600px;" src="/avatar/search-7-dark.21d246ce.svg">
+                            </div>
+                        }
+                        else
+                        {
+                            @foreach (var item in Model.BooksReturn)
+                            {
+
+                                <div class="timeline-item" data-v-5c9a314b="">
+                                    <div class="date">
+                                        <span>@item.PublicationDate.ToShortDateString()</span>
+                                    </div>
+                                    <div class="dot is-info"></div>
+                                    <div class="content-wrap">
+                                        <div class="content-box">
+                                            <div class="status"></div>
+                                            <div class="v-avatar">
+                                                <img class="thumbnails" src="@item.Thumbnail" alt="">
+                                            </div>
+                                            <div class="box-text">
+                                                <div class="meta-text">
+                                                    <p>
+                                                        <span>@item.Name</span>@*<span style="color: #00ff90">&nbsp;Tác giả: @item.Author</span>*@
+                                                    </p>
+                                                    <span>@item.PublicationDate.ToShortTimeString().ToLower()</span>
+                                                </div>
+                                            </div>
+                                            <div class="box-end">
+                                                <div class="v-avatar is-small">
+                                                    <img class="avatar" src="" alt="">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            }
+                        }
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="tab-pane">
+            <div class="is-12">
+                <h3 class="section-heading">Sách Chưa Trả Đủ</h3>
+
+                <div class="timeline-wrapper">
+                    <div class="timeline-wrapper-inner">
+                        @if (Model.ReturnNotEnoughBooks.Count() <= 0)
+                        {
+                            <div style="display: flex; align-items: center; justify-content:center">
+                                <img style="width: 600px; height: 600px;" src="/avatar/search-7-dark.21d246ce.svg">
+                            </div>
+                        }
+                        else
+                        {
+                            @foreach (var item in Model.ReturnNotEnoughBooks)
+                            {
+
+                                <div class="timeline-item" data-v-5c9a314b="">
+                                    <div class="date">
+                                        <span>@item.PublicationDate.ToShortDateString()</span>
+                                    </div>
+                                    <div class="dot is-info"></div>
+                                    <div class="content-wrap">
+                                        <div class="content-box">
+                                            <div class="status"></div>
+                                            <div class="v-avatar">
+                                                <img class="thumbnails" src="@item.Thumbnail" alt="">
+                                            </div>
+                                            <div class="box-text">
+                                                <div class="meta-text">
+                                                    <p>
+                                                        <span>@item.Name</span>@*<span style="color: #00ff90">&nbsp;Tác giả: @item.Author</span>*@
+                                                    </p>
+                                                    <span>@item.PublicationDate.ToShortTimeString().ToLower()</span>
+                                                </div>
+                                            </div>
+                                            <div class="box-end">
+                                                <div class="v-avatar is-small">
+                                                    <img class="avatar" src="" alt="">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            }
+                        }
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+<div class="report">
+    <h1>Tabs</h1>
+</div>
+
+    <script>
+        const dots = document.querySelectorAll(".dot")
+        const colors = [
+            '#e62864',
+            '#05d69e',
+            '#00BCD4',
+            '#ff5652',
+            '#ffc107',
+        ]
+
+        let colorIndex = 0;
+        const changeColor = () => {
+            if (colorIndex === colors.length) {
+                colorIndex = 0;
+            }
+            return colors[colorIndex++];
+        }
+        dots.forEach(e => {
+            e.style.borderColor = changeColor()
+        });
+
+        /////////////////////// Choose REPORT BOOKS OR REPORT CARDS///////////////
+        const chooseReport = document.querySelectorAll('.choose-report')
+        const tabReports = document.querySelectorAll('.report')
+        chooseReport.forEach((tab, index) => {
+            tab.onclick = function () { 
+                $(".report.is-choose").classList.remove("is-choose")
+                tabReports[index].classList.add("is-choose")
+            }
+        })
+
+        ///CHOOSE CARDS REPORT
+
+
+        /// CHOOSE BOOKS REPORT
+        const tabs = document.querySelectorAll(".tab-item");
+        const panes = document.querySelectorAll(".tab-pane");
+
+        const colorBorders = [
+            '#8f23f7',
+            '#fcaa32',
+            '#f42557',
+            '#4067d3',
+            '#fc309b',
+        ]
+
+
+        tabs.forEach((tab, index) => {
+
+            tab.onclick = function () {
+                $(".tab-item.active-item").classList.remove("active-item");
+                $(".tab-pane.active-pane").classList.remove("active-pane");
+
+                this.classList.add("active-item");
+                panes[index].classList.add("active-pane");
+
+                tabs.forEach((e) => {
+                    e.style.borderColor = `#404045`;
+                })
+                tab.style.borderColor = colorBorders[index];
+            };
+
+        })
+
+    </script>
+
+    @*<div class="is-12">
+            <div class="t-5-book">Top 5 sách được mượn nhiều nhất </div>
+            <div class="data-table-wrapper">
+                <div class="data-table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th style="width: 14.1964%;">Thumbnails</th>
+                                <th style="width: 24.5536%;">
+                                    <a href="#" class="data-sorter">Book Name</a>
+                                </th>
+                                <th style="width: 23.3929%;">
+                                    <a href="#" class="data-sorter">Author</a>
+                                </th>
+                                <th style="width: 16.6071%;">
+                                    <a href="#" class="data-sorter">Số lần mượn</a>
+                                </th>
+                                <th style="width: 21.25%;">
+                                    <a href="#" class="data-sorter">publishing company</a>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var book in Model.TopBooks)
+                            {
+                                <tr>
+                                    <td>
+                                        <div class="thumbnail">
+                                            <img src="@book.Thumbnail" alt="">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <span>@book.PublicationDate.ToShortDateString()</span>
+                                    </td>
+                                    <td>
+                                        <span>@book.Author</span>
+                                    </td>
+                                    <td>
+                                        <span>@book.TotalBorrow</span>
+                                    </td>
+                                    <td>
+                                        <span>@book.PublishingCompany</span>
+                                    </td>
+
+                                </tr>
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <
+        <br />
+
+        <br />
+        <p>Sách đã trả</p>
+        @foreach (var item in Model.BooksReturn)
+        {
+            <span>@item.Name</span>
+        }
+        <br />
+        <p>Sách đã mất</p>
+        @foreach (var item in Model.BooksMissing)
+        {
+            <span>@item.Name</span>
+        }
+        <br />
+        <p>Top sách được mượn</p>
+        @foreach (var item in Model.TopBooks)
+        {
+            <span>@item.Name</span>
+        }
+        <br />
+        <p>Sách chưa được trả</p>
+        @foreach (var item in Model.ReturnNotEnoughBooks)
+        {
+            <span>@item.Name</span>
+        }
+        <p>Sách đang mượn</p>
+        @foreach (var item in Model.BooksBorrowing)
+        {
+            <span>@item.Name</span>
+        }
+        <br />
+        <p>Top thẻ mượn</p>
+        @foreach (var item in Model.TopLibraryCards)
+        {
+            <span>@item.Name</span>
+        }
+        <br />
+        <p>Thẻ mượn trả trễ</p>
+        @foreach (var item in Model.CardReturnLate)
+        {
+            <span>@item.Name</span>
+        }
+        <br />
+        <p>Thẻ bị khóa</p>
+        @foreach (var item in Model.CardsLock)
+        {
+            <span>@item.Name</span>
+        }
+        <br />*@
