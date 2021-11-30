@@ -11,6 +11,135 @@
         -webkit-animation: fadeInLeft 1s ease;
         animation: fadeInLeft 1s ease;
     }
+    .title-choose-report {
+        /*max-width: 980px;
+        margin: 0 auto;*/
+        margin-top: 10px;
+        padding-bottom: 10px;
+        margin-bottom: 10px;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+    }
+
+        .title-choose-report .plans {
+            width: 50%;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -ms-flex-wrap: wrap;
+            flex-wrap: wrap;
+            margin-left: -8px;
+            margin-right: -8px;
+        }
+
+            .title-choose-report .plans .plan {
+                position: relative;
+                width: calc(50% - 16px);
+                max-width: calc(50% - 16px);
+                margin: 8px;
+            }
+
+                .title-choose-report .plans .plan input {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    height: 100%;
+                    width: 100%;
+                    opacity: 0;
+                    cursor: pointer;
+                    z-index: 1;
+                }
+
+            .title-choose-report .plans .plan-inner {
+                width: 100%;
+                -webkit-box-flex: 0;
+                -ms-flex: 0;
+                flex: 0;
+                display: -webkit-box;
+                display: -ms-flexbox;
+                display: flex;
+                -webkit-box-align: center;
+                -ms-flex-align: center;
+                align-items: center;
+                -webkit-transition: all 0.3s;
+                transition: all 0.3s;
+                border-radius: 6px;
+                border: 1px solid #404045;
+                background-color: #313135;
+                padding: 20px;
+            }
+
+                .title-choose-report .plans .plan-inner img {
+                    display: block;
+                    height: 32px;
+                    width: 32px;
+                    min-width: 32px;
+                    -webkit-filter: grayscale(1);
+                    filter: grayscale(1);
+                    opacity: 0.6;
+                    pointer-events: none;
+                    -webkit-transition: all 0.3s;
+                    transition: all 0.3s;
+                }
+
+                .title-choose-report .plans .plan-inner .content {
+                    margin-left: 12px;
+                    line-height: 1.3;
+                }
+
+                    .title-choose-report .plans .plan-inner .content span {
+                        font-family: "Montserrat", sans-serif;
+                        font-size: 1.2rem;
+                        font-weight: 600 !important;
+                        color: #a2a5b9;
+                        text-transform: uppercase;
+                        display: block;
+                    }
+
+                .title-choose-report .plans .plan-inner .check-mark {
+                    margin-left: auto;
+                    display: none;
+                    -webkit-box-pack: center;
+                    -ms-flex-pack: center;
+                    justify-content: center;
+                    -webkit-box-align: center;
+                    -ms-flex-align: center;
+                    align-items: center;
+                    height: 32px;
+                    width: 32px;
+                    min-width: 32px;
+                    border-radius: 99px;
+                    color: #05d69e;
+                    border: 1px solid #3f3f43;
+                    -webkit-box-sizing: -1px 3px 10px 0 rgba(0, 0, 0, 0.06);
+                    box-sizing: -1px 3px 10px 0 rgba(0, 0, 0, 0.06);
+                }
+
+                    .title-choose-report .plans .plan-inner .check-mark svg {
+                        width: 16px;
+                        height: 16px;
+                        stroke-width: 3px;
+                    }
+
+            .title-choose-report .plans .plan input:checked + .plan-inner {
+                border-color: #10cb8a !important;
+            }
+
+                .title-choose-report .plans .plan input:checked + .plan-inner img {
+                    -webkit-filter: grayscale(0);
+                    filter: grayscale(0);
+                    opacity: 1;
+                }
+
+                .title-choose-report .plans .plan input:checked + .plan-inner .check-mark {
+                    display: -webkit-box;
+                    display: -ms-flexbox;
+                    display: flex;
+                }
 </style>
 
 <div class="page-title text-center">
@@ -91,8 +220,37 @@
     </div>
 </div>
 
-<button class="choose-report">Sachs</button>
-<button class="choose-report">Ther</button>
+@*<button class="choose-report">Sachs</button>
+<button class="choose-report">Ther</button>*@
+<div class="title-choose-report">
+    <div class="plans">
+        <div class="plan choose-report">
+            <input type="radio" name="plan_selection" checked>
+            <div class="plan-inner">
+                <img src="/public/logo.svg" alt="">
+                <div class="content">
+                    <span>Thống Kê Sách</span>
+                </div>
+                <div class="check-mark">
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--feather" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" data-icon="feather:check"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"></path></g></svg>
+                </div>
+            </div>
+        </div>
+        <div class="plan choose-report">
+            <input type="radio" name="plan_selection">
+            <div class="plan-inner">
+                <img src="/public/logo2.svg" alt="">
+                <div class="content">
+                    <span>Thống Kê Thẻ</span>
+                </div>
+                <div class="check-mark">
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--feather" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" data-icon="feather:check"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"></path></g></svg>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="space"></div>
+</div>
 
 <div class="report is-choose">
     <h3 class="section-heading" style="margin-top: 20px;">Danh Sách Thống Kê</h3>
