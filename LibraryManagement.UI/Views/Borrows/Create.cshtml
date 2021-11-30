@@ -6,6 +6,88 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<style>
+    .button-hint {
+        position: relative;
+        display: inline-block;
+        cursor: pointer;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        justify-content: center;
+        text-align: center;
+        white-space: nowrap;
+        border-width: 1px;
+        border-radius: 99px;
+        padding-left: 1.4rem;
+        padding-right: 1.4rem;
+        padding-bottom: calc(0.5em - 1px);
+        padding-top: calc(0.5em - 1px);
+        background: #27272a;
+        color: #a9a9b2;
+        border: 1px solid #3f3f43;
+        -webkit-transition: all 0.3s;
+        transition: all 0.3s;
+    }
+
+        .button-hint:hover {
+            border-color: #10cb8a;
+            color: #10cb8a;
+        }
+
+        .button-hint::after {
+            border-radius: 100px !important;
+            font-size: 1rem !important;
+            text-transform: uppercase !important;
+            line-height: 12px;
+            white-space: nowrap;
+            background: #383838;
+            color: white;
+            padding: 8px 10px;
+            font-weight: 600 !important;
+            -webkit-transition: all 0.2s ease;
+            transition: all 0.2s ease;
+            opacity: 0;
+        }
+
+        .button-hint[data-hint]::after {
+            content: attr(data-hint);
+            position: absolute;
+            -webkit-transform: translateX(-50%);
+            transform: translateX(-50%);
+            bottom: 100%;
+            left: 50%;
+        }
+
+        .button-hint:hover::after {
+            -webkit-transform: translateX(-50%) translateY(-8px);
+            transform: translateX(-50%) translateY(-8px);
+            -webkit-transition-delay: 100ms;
+            transition-delay: 100ms;
+            visibility: visible;
+            opacity: 1;
+            background: #10cb8a;
+        }
+
+        .button-hint .icon {
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            align-items: center;
+            display: -webkit-inline-box;
+            display: -ms-inline-flexbox;
+            display: inline-flex;
+            -webkit-box-pack: center;
+            -ms-flex-pack: center;
+            justify-content: center;
+            height: 2.1rem;
+            width: 2.1rem;
+        }
+
+            .button-hint .icon svg {
+                height: 14px;
+                width: 14px;
+            }
+</style>
+
 <div class="page-content-inner">
 
     <div class="borrow-wrapper">
@@ -15,7 +97,7 @@
                     <div class="column is-12">
                         <div class="header-borrow">
                             <div class="header-image">
-                                <img src="/avatar/reading-book.svg" alt="">
+                                <img src="/public/reading-book.svg" alt="">
                             </div>
                             <div class="header-info">
                                 @{
@@ -175,8 +257,10 @@
                                                     </div>
                                                     <div class="flex-table-cell cell-end">
                                                         <div>
-                                                            <button class="add-book-borrow-search" value="${book.id}" data-quantity="${book.amount}" data-thumnail="${book.thumbnail}" data-bookname="${book.name}" data-author="${book.author}">
-                                                                Mượn
+                                                            <button type="button" class="button-hint hint--bubble add-book-borrow-search" data-hint="Thêm" value="${book.id}" data-quantity="${book.amount}" data-thumnail="${book.thumbnail}" data-bookname="${book.name}" data-author="${book.author}">
+                                                                <span class="icon">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--feather" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" data-icon="feather:bookmark"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5l-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></g></svg>
+                                                                </span>
                                                             </button>
                                                          </div>
                                                         </div>
