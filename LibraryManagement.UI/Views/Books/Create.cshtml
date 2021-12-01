@@ -17,7 +17,7 @@
         </span>
     </span>
     <div class="title-wrap">
-        <h1 class="title">Create Book</h1>
+        <h1 class="title">Tạo Sách Mới</h1>
     </div>
 </div>
 
@@ -30,7 +30,7 @@
             <div class="form-header">
                 <div class="form-header-inner">
                     <div class="left">
-                        <h3>Create Book</h3>
+                        <h3>Nhập Thông Tin Sách</h3>
                     </div>
                     <div class="right">
                         <div class="buttons">
@@ -38,9 +38,9 @@
                                 <div class="icon">
                                     <i class="far fa-long-arrow-alt-left"></i>
                                 </div>
-                                <span>Cancel</span>
+                                <span>Quay Lại</span>
                             </a>
-                            <input type="submit" value="Create" class="button v-button is-primary">
+                            <input type="submit" value="Tạo Mới" class="button v-button is-primary">
                         </div>
                     </div>
                 </div>
@@ -48,8 +48,8 @@
             <div class="form-body">
                 <div class="form-fieldset">
                     <div class="fieldset-heading">
-                        <h4>Book Info</h4>
-                        <p>Information of the book</p>
+                        <h4>Thông Tin Sách</h4>
+                        <p></p>
                     </div>
                     <div class="columns is-multiline">
                         <div class="column is-6">
@@ -107,7 +107,7 @@
                         </div>
                         <div class="column is-6">
                             <div class="field">
-                                <label>Ngày Xuất Bản ( Month - Day - Year )</label>
+                                <label>Ngày Xuất Bản</label>
                                 <div class="control has-icon">
                                     <input class="input" asp-for="PublicationDate">
                                     <div class="form-icon" data-v-aad2da70="">
@@ -163,7 +163,7 @@
                         </div>
                         <div class="column is-6">
                             <div class="field">
-                                <label>Hạng Mượn</label>
+                                <label>Cấp Độ Mượn</label>
                                 <div class="control has-icon">
                                     <select asp-for="Rank" class="input">
                                         @{
@@ -183,10 +183,8 @@
                             <div class="field">
                                 <label>Thể Loại</label>
                                 <div class="control has-icon">
-                                    <select id="selectgenre" name="idGenres" multiple class="input" asp-items="ViewBag.Genre"></select>
-                                    <div class="form-icon" data-v-aad2da70="">
-                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--feather" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" data-icon="feather:mail" data-v-aad2da70=""><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><path d="M22 6l-10 7L2 6"></path></g></svg>
-                                    </div>
+                                    <select class="input" id="selectgenre" name="idGenres" multiple class="input" asp-items="ViewBag.Genre"></select>
+                                    
                                 </div>
                             </div>
                         </div>
