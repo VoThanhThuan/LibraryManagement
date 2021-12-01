@@ -1209,6 +1209,11 @@ h3 {
                     max-height: 8rem;
                     min-height: 8rem;
                 }
+                .card-grid .columns .column .card-item-body-left .c-avatar.is-big img{
+                    width: 80px;
+                    height: 80px;
+                    object-fit: cover;
+                }
             .card-grid .columns .column .card-item-body-left .meta {
                 margin-left: 1.2rem;
                 line-height: 1.5;
