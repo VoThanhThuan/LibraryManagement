@@ -37,6 +37,7 @@ namespace Library.Library.Entities
         [Display(Name = "Số lượng mượn")] public int AmountBorrow { get; set; } = 0;
 
         [Display(Name = "Số lượng đã trả")] public int AmountReturned { get; set; } = 0;
+        [Display(Name = "Số số sách mất")] public int AmountMissing{ get; set; } = 0;
         [Display(Name = "Tình trạng mượn")] public StatusBorrow StatusBorrow { get; set; } = StatusBorrow.Borrowing;
 
         //Khóa ngoại

@@ -197,14 +197,26 @@ namespace LibraryManagement.UI.Services
 
             var card = await _context.LibraryCards.FindAsync(request.IdCard);
 
+            bib.AmountReturn += request.AmountReturn;
+
             // Xử lý lỗi: nếu số lượng sách đang mượn bé hơn số sách trả thì coi như trả hết.
-            if (bib.AmountBorrowed < request.AmountReturn)
-            {
-                request.AmountReturn = bib.AmountBorrowed;
+            if (bib.AmountBorrowed < bib.AmountReturn) {
+                bib.AmountReturn = bib.AmountBorrowed;
             }
 
-            bib.AmountReturn += request.AmountReturn;
-            borrow.AmountReturned += request.AmountReturn;
+            // Xử lý lỗi: nếu số sách trả cộng với số sách bị mất mà lớn hơn số sách đã mượn thì phải trừ lại số sách trả.
+            if (bib.AmountBorrowed < bib.AmountReturn + bib.AmountMissing)
+            {
+                // Số sách trả trừ cho số sách đã mất
+                bib.AmountReturn -= bib.AmountMissing;
+            }
+
+            // Cập nhật tổng số sách mất
+            borrow.AmountMissing += bib.AmountMissing;
+
+            // Cập nhật vào tổng số sách trả được
+            borrow.AmountReturned += bib.AmountReturn;
+
 
             bib.TimeRealReturn = DateTime.Now;
 
@@ -227,6 +239,29 @@ namespace LibraryManagement.UI.Services
 
             await _context.SaveChangesAsync();
 
+            return true;
+        }
+
+
+        public async Task<bool> MissingBook(ReturnBookRequest request)
+        {
+            var book = await _context.BookInBorrows.FirstOrDefaultAsync(x =>
+                x.IdBorrow == request.IdBorrow && x.IdBook == request.IdBook);
+
+            var borrow = await _context.Borrows.FirstOrDefaultAsync(x => x.Id == request.IdBorrow);
+
+            if (book == null)
+                return false;
+            //Sử dụng chung AmountReturn trên giao diện
+            book.AmountMissing = request.AmountReturn;
+
+            if (book.AmountBorrowed <= book.AmountMissing)
+                book.AmountMissing = book.AmountBorrowed;
+
+            borrow.AmountReturned = book.AmountMissing;
+            borrow.StatusBorrow = StatusBorrow.NotEnough;
+
+            await _context.SaveChangesAsync();
             return true;
         }
     }

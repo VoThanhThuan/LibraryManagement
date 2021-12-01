@@ -140,6 +140,9 @@ namespace Library.Library.Migrations
                     b.Property<int>("AmountBorrow")
                         .HasColumnType("int");
 
+                    b.Property<int>("AmountMissing")
+                        .HasColumnType("int");
+
                     b.Property<int>("AmountReturned")
                         .HasColumnType("int");
 

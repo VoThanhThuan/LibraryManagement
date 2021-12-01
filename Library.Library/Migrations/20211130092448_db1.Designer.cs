@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Library.Library.Migrations
 {
     [DbContext(typeof(LibraryDbContext))]
-    [Migration("20211130074343_db1")]
+    [Migration("20211130092448_db1")]
     partial class db1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -140,6 +140,9 @@ namespace Library.Library.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("AmountBorrow")
+                        .HasColumnType("int");
+
+                    b.Property<int>("AmountMissing")
                         .HasColumnType("int");
 
                     b.Property<int>("AmountReturned")

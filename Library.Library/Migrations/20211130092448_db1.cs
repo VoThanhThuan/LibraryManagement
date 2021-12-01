@@ -183,6 +183,7 @@ namespace Library.Library.Migrations
                     UserName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     AmountBorrow = table.Column<int>(type: "int", nullable: false),
                     AmountReturned = table.Column<int>(type: "int", nullable: false),
+                    AmountMissing = table.Column<int>(type: "int", nullable: false),
                     StatusBorrow = table.Column<int>(type: "int", nullable: false),
                     IdCard = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
