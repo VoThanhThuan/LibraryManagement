@@ -221,8 +221,8 @@
     </div>
 </div>
 
-@*<button class="choose-report">Sachs</button>
-    <button class="choose-report">Ther</button>*@
+
+
 <div class="title-choose-report">
     <div class="plans">
         <div class="plan choose-report">
@@ -304,7 +304,7 @@
                     <div class="timeline-wrapper-inner">
                         @if (Model.BooksBorrowed.Count() <= 0) {
                             <div style="display: flex; align-items: center; justify-content:center">
-                                <img style="width: 600px; height: 600px;" src="/public/search-7-dark.21d246ce.svg">
+                                <img style="width: 500px; height: 500px;" src="/public/search-7-dark.21d246ce.svg">
                             </div>
                         } else {
                             @foreach (var item in Model.BooksBorrowed) {
@@ -353,7 +353,7 @@
                     <div class="timeline-wrapper-inner">
                         @if (Model.BooksBorrowing.Count() <= 0) {
                             <div style="display: flex; align-items: center; justify-content:center">
-                                <img style="width: 600px; height: 600px;" src="/public/search-7-dark.21d246ce.svg">
+                                <img style="width: 500px; height: 500px;" src="/public/search-7-dark.21d246ce.svg">
                             </div>
                         } else {
                             @foreach (var item in Model.BooksBorrowing) {
@@ -403,7 +403,7 @@
                     <div class="timeline-wrapper-inner">
                         @if (!Model.BooksMissing.Any()) {
                             <div style="display: flex; align-items: center; justify-content:center">
-                                <img style="width: 600px; height: 600px;" src="/public/search-7-dark.21d246ce.svg">
+                                <img style="width: 500px; height: 500px;" src="/public/search-7-dark.21d246ce.svg">
                             </div>
                         } else {
                             @foreach (var item in Model.BooksMissing) {
@@ -455,7 +455,7 @@
                     <div class="timeline-wrapper-inner">
                         @if (Model.BooksReturn.Count() <= 0) {
                             <div style="display: flex; align-items: center; justify-content:center">
-                                <img style="width: 600px; height: 600px;" src="/public/search-7-dark.21d246ce.svg">
+                                <img style="width: 500px; height: 500px;" src="/public/search-7-dark.21d246ce.svg">
                             </div>
                         } else {
                             @foreach (var item in Model.BooksReturn) {
@@ -504,7 +504,7 @@
                     <div class="timeline-wrapper-inner">
                         @if (Model.ReturnNotEnoughBooks.Count() <= 0) {
                             <div style="display: flex; align-items: center; justify-content:center">
-                                <img style="width: 600px; height: 600px;" src="/public/search-7-dark.21d246ce.svg">
+                                <img style="width: 500px; height: 500px;" src="/public/search-7-dark.21d246ce.svg">
                             </div>
                         } else {
                             @foreach (var item in Model.ReturnNotEnoughBooks) {
@@ -552,7 +552,7 @@
 </div>
 
 <div class="report">
-    <h1>Tabs</h1>
+    <h3 class="section-heading" style="margin-top: 20px;">Danh Sách Thống Kê</h3>
 </div>
 
 <script>
