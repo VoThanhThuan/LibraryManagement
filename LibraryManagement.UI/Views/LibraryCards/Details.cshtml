@@ -16,7 +16,7 @@
         </span>
     </span>
     <div class="title-wrap">
-        <h1 class="title">Details Library Card</h1>
+        <h1 class="title">Chi Tiết Thẻ Thư Viện</h1>
     </div>
 </div>
 
@@ -26,7 +26,7 @@
             <div class="form-header">
                 <div class="form-header-inner">
                     <div class="left">
-                        <h3>Details Library Card</h3>
+                        <h3></h3>
                     </div>
                     <div class="right">
                         <div class="buttons">
@@ -34,9 +34,9 @@
                                 <div class="icon">
                                     <i class="far fa-long-arrow-alt-left"></i>
                                 </div>
-                                <span>Cancel</span>
+                                <span>Quay Lại</span>
                             </a>
-                            <a asp-action="Edit" asp-route-id="@Model.Id" class="button v-button is-primary">Edit</a>
+                            <a asp-action="Edit" asp-route-id="@Model.Id" class="button v-button is-primary">Đi Đến Cập Nhật</a>
                         </div>
                     </div>
                 </div>
@@ -99,7 +99,7 @@
 
                         <div class="column is-6">
                             <div class="field">
-                                <label>Rank</label>
+                                <label>Cấp Độ Thẻ</label>
                                 <div class="control has-icon">
                                     <input class="input" asp-for="Rank" readonly>
                                     <div class="form-icon" data-v-aad2da70="">
@@ -111,7 +111,7 @@
                         </div>
                         <div class="column is-6">
                             <div class="field">
-                                <label>Exp</label>
+                                <label>Kinh Nghiệm</label>
                                 <div class="control has-icon">
                                     <input class="input" asp-for="Exp" readonly>
                                     <div class="form-icon" data-v-aad2da70="">
@@ -123,7 +123,7 @@
                         </div>
                         <div class="column is-6">
                             <div class="field">
-                                <label>Exp Level Up</label>
+                                <label>Kinh Nghiệm Cần Để Lên Cấp Tiếp Theo</label>
                                 <div class="control has-icon">
                                     <input class="input" asp-for="ExpLevelUp" readonly>
                                     <div class="form-icon" data-v-aad2da70="">
@@ -143,9 +143,9 @@
                                             <i></i>
                                         </label>
                                         <div class="text">
-                                            <span class="text-librarian">Not Locked</span>
+                                            <span class="text-librarian">Không Khóa</span>
                                             <span>&nbsp; | &nbsp;</span>
-                                            <span class="text-admin">Locked</span>
+                                            <span class="text-admin">Khóa</span>
                                         </div>
                                     </div>
                                 </div>

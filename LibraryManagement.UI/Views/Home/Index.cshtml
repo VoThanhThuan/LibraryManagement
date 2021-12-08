@@ -36,11 +36,11 @@
                 <img src="@user.Avatar" alt="">
             </div>
             <div class="user-meta">
-                <h3>Hi! @user.Nickname.</h3>
-                <p>It's really nice to see you again</p>
+                <h3>Chào! @user.Nickname.</h3>
+                <p>Rất vui được gặp lại bạn.</p>
             </div>
             <div class="sum-books">
-                @{
+                @*@{
                     var sum = 0;
                     foreach (var book in Model.TopBooks)
                     {
@@ -48,17 +48,17 @@
                         sum += bookA;
                     }
                     
-                }
-                <h3>@sum</h3>
+                }*@
+                <h3>@Model.TopBooks.Count()</h3>
                 <p>Tống số sách trong thư viện</p>
-                <a href="/books">View List Book</a>
+                <a href="/books">Quản Lý Sách</a>
             </div>
             <div class="cta">
                 <div class="inverted-text">
                     <i class="far fa-chart-bar"></i>
-                    <p> Start using our team and project management tools </p>
+                    <p> Danh Sách Thống Kê Chi Tiết</p>
                 </div>
-                <a href="/statistical">Learn More</a>
+                <a href="/statistical">Xem Ngay</a>
             </div>
         </div>
     </div>
@@ -111,18 +111,18 @@
                 <table>
                     <thead>
                         <tr>
-                            <th style="width: 14.1964%;">Thumbnails</th>
+                            <th style="width: 14.1964%;">Ảnh Bìa</th>
                             <th style="width: 24.5536%;">
-                                <a href="#" class="data-sorter">Book Name</a>
+                                <a href="#" class="data-sorter">Tên Sách</a>
                             </th>
                             <th style="width: 23.3929%;">
-                                <a href="#" class="data-sorter">Author</a>
+                                <a href="#" class="data-sorter">Tác giả</a>
                             </th>
                             <th style="width: 16.6071%;">
                                 <a href="#" class="data-sorter">Số lần mượn</a>
                             </th>
                             <th style="width: 21.25%;">
-                                <a href="#" class="data-sorter">publishing company</a>
+                                <a href="#" class="data-sorter">Nhà xuất bản</a>
                             </th>
                         </tr>
                     </thead>

@@ -79,6 +79,7 @@
             width: 14px;
         }
 /*//////////////////*/
+
 ::-webkit-scrollbar {
     width: 1.6rem;
 }
@@ -1207,6 +1208,11 @@ h3 {
                     min-width: 8rem;
                     max-height: 8rem;
                     min-height: 8rem;
+                }
+                .card-grid .columns .column .card-item-body-left .c-avatar.is-big img{
+                    width: 80px;
+                    height: 80px;
+                    object-fit: cover;
                 }
             .card-grid .columns .column .card-item-body-left .meta {
                 margin-left: 1.2rem;

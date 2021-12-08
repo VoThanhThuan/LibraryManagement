@@ -6,10 +6,12 @@ html {
     font-size: 62.5%;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
+    scroll-behavior: smooth;
 }
 
 body {
     background-color: #3b3b40;
+    scroll-behavior: smooth;
 }
 
 :focus {

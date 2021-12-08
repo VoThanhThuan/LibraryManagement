@@ -17,7 +17,7 @@
         </span>
     </span>
     <div class="title-wrap">
-        <h1 class="title">Create Account</h1>
+        <h1 class="title">Tạo Tài Khoản Mới</h1>
     </div>
 </div>
 
@@ -31,7 +31,7 @@
             <div class="form-header">
                 <div class="form-header-inner">
                     <div class="left">
-                        <h3>Create Account</h3>
+                        <h3>Nhập Thông Tin</h3>
                     </div>
                     <div class="right">
                         <div class="buttons">
@@ -39,9 +39,9 @@
                                 <div class="icon">
                                     <i class="far fa-long-arrow-alt-left"></i>
                                 </div>
-                                <span>Cancel</span>
+                                <span>Quay Lại</span>
                             </a>
-                            <button type="submit" class="button v-button is-primary">Create</button>
+                            <button type="submit" class="button v-button is-primary">Tạo Mới</button>
                         </div>
                     </div>
                 </div>
@@ -49,13 +49,13 @@
             <div class="form-body">
                 <div class="form-fieldset">
                     <div class="fieldset-heading">
-                        <h4>Personal Info</h4>
-                        <p>This helps us to know you</p>
+                        <h4>Thông Tin Tài Khoản</h4>
+                        <p></p>
                     </div>
                     <div class="columns is-multiline">
                         <div class="column is-6">
                             <div class="field">
-                                <label>Full Name</label>
+                                <label>Họ và Tên</label>
                                 <div class="control has-icon">
                                     <input type="text" class="input" asp-for="Nickname">
                                     <div class="form-icon" data-v-aad2da70="">
@@ -66,7 +66,7 @@
                         </div>
                         <div class="column is-6">
                             <div class="field">
-                                <label>Phone Number</label>
+                                <label>Số Điện Thoại</label>
                                 <div class="control has-icon">
                                     <input type="text" class="input" asp-for="PhoneNumber">
                                     <div class="form-icon" data-v-aad2da70="">
@@ -88,7 +88,7 @@
                         </div>
                         <div class="column is-12">
                             <div class="field">
-                                <label>Address</label>
+                                <label>Địa Chỉ</label>
                                 <div class="control has-icon">
                                     <input type="text" class="input" asp-for="Address">
                                     <div class="form-icon" data-v-aad2da70="">
@@ -99,7 +99,7 @@
                         </div>
                         <div class="column is-6">
                             <div class="field">
-                                <label>Date of Birth ( Month - Day - Year )</label>
+                                <label>Ngày Sinh</label>
                                 <div class="control has-icon">
                                     <input class="input" asp-for="Dob">
                                     <div class="form-icon" data-v-aad2da70="">
@@ -110,7 +110,7 @@
                         </div>
                         <div class="column is-6">
                             <div class="field">
-                                <label>Sex</label>
+                                <label>Giới Tính</label>
                                 <div class="control">
                                     <div class="switch-block input">
                                         <label for="switch-block-1" class="form-switch">
@@ -118,9 +118,9 @@
                                             <i></i>
                                         </label>
                                         <div class="text">
-                                            <span class="text-librarian">Male</span>
+                                            <span class="text-librarian">Nam</span>
                                             <span>&nbsp; | &nbsp;</span>
-                                            <span class="text-admin">Female</span>
+                                            <span class="text-admin">Nữ</span>
                                         </div>
                                     </div>
                                 </div>
@@ -128,7 +128,7 @@
                         </div>
                         <div class="column is-12">
                             <div class="field">
-                                <label>Choose Avatar</label>
+                                <label>Ảnh Đại Diện</label>
                                 <div class="control has-icon">
                                     <input type="file" class="choose-file" asp-for="Avatar">
                                     <span><Label for="choose-file"></Label></span>
@@ -139,12 +139,12 @@
                 </div>
                 <div class="form-fieldset">
                     <div class="fieldset-heading">
-                        <h4>Personal Account</h4>
+                        <h4> </h4>
                     </div>
                     <div class="columns is-multiline">
                         <div class="column is-6">
                             <div class="field">
-                                <label>User Name</label>
+                                <label>Tài Khoản</label>
                                 <div class="control has-icon">
                                     <input type="text" class="input" asp-for="Username">
                                     <div class="form-icon" data-v-aad2da70="">
@@ -155,7 +155,7 @@
                         </div>
                         <div class="column is-6">
                             <div class="field">
-                                <label>Password</label>
+                                <label>Mật Khẩu</label>
                                 <div class="control has-icon">
                                     <input type="password" class="input" asp-for="Password">
                                     <div class="form-icon" data-v-aad2da70="">
@@ -166,7 +166,7 @@
                         </div>
                         <div class="column is-6">
                             <div class="field">
-                                <label>Role</label>
+                                <label>Quyền</label>
                                 <div class="control">
                                     <select class="input" aria-label="Default select example" name="IdRole">
                                         @{
@@ -196,7 +196,7 @@
                         </div>
                         <div class="column is-6">
                             <div class="field">
-                                <label>Repeat Password</label>
+                                <label>Nhập Lại Mật Khẩu</label>
                                 <div class="control has-icon">
                                     <input type="password" class="input" asp-for="ConfirmPassword">
                                     <div class="form-icon" data-v-aad2da70="">

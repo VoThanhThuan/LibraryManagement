@@ -17,7 +17,7 @@
         </span>
     </span>
     <div class="title-wrap">
-        <h1 class="title">Edit Book</h1>
+        <h1 class="title">Cập Nhật Sách</h1>
     </div>
 </div>
 
@@ -29,7 +29,7 @@
             <div class="form-header">
                 <div class="form-header-inner">
                     <div class="left">
-                        <h3>Edit Book</h3>
+                        <h3>Nhập Thông Tin Cần Thay Đổi</h3>
                     </div>
                     <div class="right">
                         <div class="buttons">
@@ -37,9 +37,9 @@
                                 <div class="icon">
                                     <i class="far fa-long-arrow-alt-left"></i>
                                 </div>
-                                <span>Cancel</span>
+                                <span>Quay Lại</span>
                             </a>
-                            <input type="submit" value="Edit" class="button v-button is-primary">
+                            <input type="submit" value="Cập Nhật" class="button v-button is-primary">
                         </div>
                     </div>
                 </div>
@@ -47,8 +47,8 @@
             <div class="form-body">
                 <div class="form-fieldset">
                     <div class="fieldset-heading">
-                        <h4>Book Info</h4>
-                        <p>Information of the book</p>
+                        <h4></h4>
+                        <p></p>
                     </div>
                     <div class="columns is-multiline">
                         <div class="column is-6">
@@ -106,7 +106,7 @@
                         </div>
                         <div class="column is-6">
                             <div class="field">
-                                <label>Ngày Xuất Bản ( Month - Day - Year )</label>
+                                <label>Ngày Xuất Bản</label>
                                 <div class="control has-icon">
                                     <input class="input" asp-for="PublicationDate">
                                     <div class="form-icon" data-v-aad2da70="">
@@ -209,79 +209,6 @@
 
 </div>
 
-@*<h1>Edit</h1>
-
-    <h4>Book</h4>
-    <hr />
-    <div class="row">
-        <div class="col-md-4">
-            <form asp-action="Edit">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <input type="hidden" asp-for="Id" />
-                <div class="form-group">
-                    <label asp-for="Thumbnail" class="control-label"></label>
-                    <input asp-for="Thumbnail" class="form-control" />
-                    <span asp-validation-for="Thumbnail" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Name" class="control-label"></label>
-                    <input asp-for="Name" class="form-control" />
-                    <span asp-validation-for="Name" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="PublishingCompany" class="control-label"></label>
-                    <input asp-for="PublishingCompany" class="form-control" />
-                    <span asp-validation-for="PublishingCompany" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="PublicationDate" class="control-label"></label>
-                    <input asp-for="PublicationDate" class="form-control" />
-                    <span asp-validation-for="PublicationDate" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Author" class="control-label"></label>
-                    <input asp-for="Author" class="form-control" />
-                    <span asp-validation-for="Author" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Amount" class="control-label"></label>
-                    <input asp-for="Amount" class="form-control" />
-                    <span asp-validation-for="Amount" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="PageNumber" class="control-label"></label>
-                    <input asp-for="PageNumber" class="form-control" />
-                    <span asp-validation-for="PageNumber" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="DateCanBorrow" class="control-label"></label>
-                    <input asp-for="DateCanBorrow" class="form-control" />
-                    <span asp-validation-for="DateCanBorrow" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Rank" class="control-label"></label>
-                    <select asp-for="Rank" class="form-control"></select>
-                    <span asp-validation-for="Rank" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="IdLibraryCode" class="control-label"></label>
-                    <select asp-for="IdLibraryCode" class="form-control" asp-items="ViewBag.IdLibraryCode"></select>
-                    <span asp-validation-for="IdLibraryCode" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <input type="submit" value="Save" class="btn btn-primary" />
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <div>
-        <a asp-action="Index">Back to List</a>
-    </div>*@
-
-@*@section Scripts {
-        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-    }*@
 
 @section Scripts
 {

@@ -17,7 +17,7 @@
     </span>
 </span>
 <div class="title-wrap">
-    <h1 class="title">Details Account</h1>
+    <h1 class="title">Thông Tin Chi Tiết Tài Khoản</h1>
 </div>
 </div>
 
@@ -29,7 +29,7 @@
             <div class="form-header">
                 <div class="form-header-inner">
                     <div class="left">
-                        <h3>Details Account</h3>
+                        <h3></h3>
                     </div>
                     <div class="right">
                         <div class="buttons">
@@ -37,9 +37,9 @@
                                 <div class="icon">
                                     <i class="far fa-long-arrow-alt-left"></i>
                                 </div>
-                                <span>Cancel</span>
+                                <span>Quay Lại</span>
                             </a>
-                            <a asp-action="Edit" asp-route-id="@Model.Id" class="button v-button is-primary">Edit</a>
+                            <a asp-action="Edit" asp-route-id="@Model.Id" class="button v-button is-primary">Đi Đến Cập Nhật</a>
                         </div>
                     </div>
                 </div>
@@ -47,13 +47,13 @@
             <div class="form-body">
                 <div class="form-fieldset">
                     <div class="fieldset-heading">
-                        <h4>Personal Info</h4>
-                        <p>This helps us to know you</p>
+                        <h4></h4>
+                        <p></p>
                     </div>
                     <div class="columns is-multiline">
                         <div class="column is-6">
                             <div class="field">
-                                <label>Full Name</label>
+                                <label>Họ và Tên</label>
                                 <div class="control has-icon">
                                     <input class="input" value="@Model.Nickname" readonly>
                                     <div class="form-icon" data-v-aad2da70="">
@@ -64,7 +64,7 @@
                         </div>
                         <div class="column is-6">
                             <div class="field">
-                                <label>Phone Number</label>
+                                <label>Số Điện Thoại</label>
                                 <div class="control has-icon">
                                     <input class="input" value="@Model.PhoneNumber" readonly>
                                     <div class="form-icon" data-v-aad2da70="">
@@ -86,7 +86,7 @@
                         </div>
                         <div class="column is-12">
                             <div class="field">
-                                <label>Address</label>
+                                <label>Địa Chỉ</label>
                                 <div class="control has-icon">
                                     <input class="input" value="@Model.Address" readonly>
                                     <div class="form-icon" data-v-aad2da70="">
@@ -97,7 +97,7 @@
                         </div>
                         <div class="column is-6">
                             <div class="field">
-                                <label>Date of Birth</label>
+                                <label>Ngày Sinh</label>
                                 <div class="control has-icon">
                                     <input class="input date-of-birth" value="@Model.Dob" readonly>
                                     <div class="form-icon" data-v-aad2da70="">
@@ -108,7 +108,7 @@
                         </div>
                         <div class="column is-6">
                             <div class="field">
-                                <label>Sex</label>
+                                <label>Giới Tính</label>
                                 <div class="control">
                                     <div class="switch-block input">
                                         @if (Model.sex == true)
@@ -130,12 +130,12 @@
                 </div>
                 <div class="form-fieldset">
                     <div class="fieldset-heading">
-                        <h4>Personal Account</h4>
+                        <h4> </h4>
                     </div>
                     <div class="columns is-multiline">
                         <div class="column is-12">
                             <div class="field">
-                                <label>User Name</label>
+                                <label>Tài Khoản</label>
                                 <div class="control has-icon">
                                     <input class="input" value="@Model.Username" readonly>
                                     <div class="form-icon" data-v-aad2da70="">
@@ -146,7 +146,7 @@
                         </div>
                         <div class="column is-6">
                             <div class="field">
-                                <label>Password</label>
+                                <label>Mật Khẩu</label>
                                 <div class="control has-icon">
                                     <input class="input" value="@Model.Password" readonly>
                                     <div class="form-icon" data-v-aad2da70="">
@@ -157,7 +157,7 @@
                         </div>
                         <div class="column is-6">
                             <div class="field">
-                                <label>Role</label>
+                                <label>Quyền</label>
                                 <div class="control has-icon">
                                     <div class="switch-block input">
                                         @*<label for="switch-block-2" class="form-switch">

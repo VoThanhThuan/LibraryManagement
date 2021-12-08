@@ -17,7 +17,7 @@
         </span>
     </span>
     <div class="title-wrap">
-        <h1 class="title">Create Library Card</h1>
+        <h1 class="title">Tạo Thẻ Thư Viện Mới</h1>
     </div>
 </div>
 <div class="page-content-inner">
@@ -28,7 +28,7 @@
             <div class="form-header">
                 <div class="form-header-inner">
                     <div class="left">
-                        <h3>Create Library Card</h3>
+                        <h3>Nhập Thông Tin</h3>
                     </div>
                     <div class="right">
                         <div class="buttons">
@@ -36,9 +36,9 @@
                                 <div class="icon">
                                     <i class="far fa-long-arrow-alt-left"></i>
                                 </div>
-                                <span>Cancel</span>
+                                <span>Quay Lại</span>
                             </a>
-                            <button type="submit" value="Create" class="button v-button is-primary">Create</button>
+                            <button type="submit" value="Create" class="button v-button is-primary">Tạo Mới</button>
                         </div>
                     </div>
                 </div>
@@ -46,8 +46,8 @@
             <div class="form-body">
                 <div class="form-fieldset">
                     <div class="fieldset-heading">
-                        <h4>Personal Info</h4>
-                        <p>This helps us to know you</p>
+                        <h4>Thông Tin Thẻ</h4>
+                        <p></p>
                     </div>
                     <div class="columns is-multiline">
                         <div class="column is-6">
@@ -64,7 +64,7 @@
                         </div>
                         <div class="column is-6">
                             <div class="field">
-                                <label>Name</label>
+                                <label>Họ và Tên</label>
                                 <div class="control has-icon">
                                     <input type="text" class="input" asp-for="Name">
                                     <div class="form-icon" data-v-aad2da70="">
@@ -76,7 +76,7 @@
                         </div>
                         <div class="column is-6">
                             <div class="field">
-                                <label>Class</label>
+                                <label>Lớp</label>
                                 <div class="control has-icon">
                                     <input class="input" asp-for="Class">
                                     <div class="form-icon" data-v-aad2da70="">
@@ -88,7 +88,7 @@
                         </div>
                         <div class="column is-6">
                             <div class="field">
-                                <label>Phone Number</label>
+                                <label>Số Điện Thoại</label>
                                 <div class="control has-icon">
                                     <input class="input" asp-for="PhoneNumber">
                                     <div class="form-icon" data-v-aad2da70="">
@@ -100,7 +100,7 @@
                         </div>
                         <div class="column is-6">
                             <div class="field">
-                                <label>Rank</label>
+                                <label>Cấp Độ Thẻ</label>
                                 <div class="control has-icon">
                                     <select asp-for="Rank" class="input">
                                         @{
@@ -117,7 +117,7 @@
                                 <span asp-validation-for="Rank" class="text-danger"></span>
                             </div>
                         </div>
-                        <div class="column is-6">
+                        @*<div class="column is-6">
                             <div class="field">
                                 <label>Rank</label>
                                 <div class="control has-icon">
@@ -135,10 +135,10 @@
                                 </div>
                                 <span asp-validation-for="StatusCard" class="text-danger"></span>
                             </div>
-                        </div>
+                        </div>*@
                         <div class="column is-12">
                             <div class="field">
-                                <label>Choose Image</label>
+                                <label>Ảnh Đại Diện</label>
                                 <div class="control has-icon">
                                     <input type="file" class="choose-file" asp-for="Image">
                                     <span><Label for="choose-file"></Label></span>

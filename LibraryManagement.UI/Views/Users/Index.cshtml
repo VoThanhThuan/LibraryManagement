@@ -16,7 +16,7 @@
         </span>
     </span>
     <div class="title-wrap">
-        <h1 class="title">List Account</h1>
+        <h1 class="title">Danh Sách Tài Khoản</h1>
     </div>
 </div>
 
@@ -26,7 +26,7 @@
             <div class="search">
                 <div class="control">
                     <form action="/Users/Search" method="post">
-                        <input class="input" type="text" placeholder="Search..." name="content" value="@ViewData["Content Search"]">
+                        <input class="input" type="text" placeholder="Tìm Kiếm..." name="content" value="@ViewData["Content Search"]">
                     </form>
                     <div class="form-icon" data-v-aad2da70=""><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--feather" width="1.1em" height="1.1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" data-icon="feather:search" data-v-aad2da70=""><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><path d="M21 21l-4.35-4.35"></path></g></svg></div>
                 </div>
@@ -36,18 +36,18 @@
                     <span class="icon">
                         <i class="far fa-plus"></i>
                     </span>
-                    <span>Add User</span>
+                    <span>Thêm Tài Khoản</span>
                 </a>
             </div>
         </div>
         <div class="flex-table">
             <div class="flex-table-header">
-                <span class="is-grow-2">User</span>
+                <span class="is-grow-2">Người Dùng</span>
                 <span>Email</span>
-                <span>@Html.DisplayNameFor(model => model.RoleName)</span>
-                <span>@Html.DisplayNameFor(model => model.Username)</span>
-                <span>@Html.DisplayNameFor(model => model.Address)</span>
-                <span class="call-end">actions</span>
+                <span>Quyền</span>
+                <span>Tài Khoản</span>
+                <span>Địa Chỉ</span>
+                <span class="call-end">Hành Động</span>
             </div>
 
             @foreach (var item in Model) {
