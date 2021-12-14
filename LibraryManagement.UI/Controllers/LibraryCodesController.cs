@@ -13,7 +13,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace LibraryManagement.UI.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     public class LibraryCodesController : Controller
     {
         private readonly LibraryDbContext _context;
@@ -33,15 +33,13 @@ namespace LibraryManagement.UI.Controllers
         // GET: LibraryCodes/Details/5
         public async Task<IActionResult> Details(string id)
         {
-            if (id == null)
-            {
+            if (id == null) {
                 return NotFound();
             }
 
             var libraryCode = await _context.LibraryCodes
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (libraryCode == null)
-            {
+            if (libraryCode == null) {
                 return NotFound();
             }
 
@@ -61,8 +59,7 @@ namespace LibraryManagement.UI.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Name,Abbreviation,Description")] LibraryCode libraryCode)
         {
-            if (ModelState.IsValid)
-            {
+            if (ModelState.IsValid) {
                 _context.Add(libraryCode);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -73,14 +70,12 @@ namespace LibraryManagement.UI.Controllers
         // GET: LibraryCodes/Edit/5
         public async Task<IActionResult> Edit(string id)
         {
-            if (id == null)
-            {
+            if (id == null) {
                 return NotFound();
             }
 
             var libraryCode = await _context.LibraryCodes.FindAsync(id);
-            if (libraryCode == null)
-            {
+            if (libraryCode == null) {
                 return NotFound();
             }
             return View(libraryCode);
@@ -93,26 +88,18 @@ namespace LibraryManagement.UI.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(string id, [Bind("Id,Name,Abbreviation,Description")] LibraryCode libraryCode)
         {
-            if (id != libraryCode.Id)
-            {
+            if (id != libraryCode.Id) {
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
-            {
-                try
-                {
+            if (ModelState.IsValid) {
+                try {
                     _context.Update(libraryCode);
                     await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!LibraryCodeExists(libraryCode.Id))
-                    {
+                } catch (DbUpdateConcurrencyException) {
+                    if (!LibraryCodeExists(libraryCode.Id)) {
                         return NotFound();
-                    }
-                    else
-                    {
+                    } else {
                         throw;
                     }
                 }
@@ -124,15 +111,13 @@ namespace LibraryManagement.UI.Controllers
         // GET: LibraryCodes/Delete/5
         public async Task<IActionResult> Delete(string id)
         {
-            if (id == null)
-            {
+            if (id == null) {
                 return NotFound();
             }
 
             var libraryCode = await _context.LibraryCodes
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (libraryCode == null)
-            {
+            if (libraryCode == null) {
                 return NotFound();
             }
 

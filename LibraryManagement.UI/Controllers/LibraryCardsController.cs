@@ -10,21 +10,25 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Authorization;
 
-namespace LibraryManagement.UI.Controllers {
+namespace LibraryManagement.UI.Controllers
+{
     [Authorize]
-    public class LibraryCardsController : Controller {
+    public class LibraryCardsController : Controller
+    {
         private readonly LibraryDbContext _context;
         private readonly IStorageService _storage;
         private readonly IConfiguration _config; //lấy config từ appsetting.config
 
-        public LibraryCardsController(LibraryDbContext context, IStorageService storage, IConfiguration config) {
+        public LibraryCardsController(LibraryDbContext context, IStorageService storage, IConfiguration config)
+        {
             _context = context;
             _storage = storage;
             _config = config;
         }
 
         // GET: LibraryCards
-        public async Task<IActionResult> Index() {
+        public async Task<IActionResult> Index()
+        {
             var cards = await _context.LibraryCards.ToListAsync();
 
             return View(cards);
@@ -32,7 +36,8 @@ namespace LibraryManagement.UI.Controllers {
 
         // GET: LibraryCards/Search/content
         [HttpGet]
-        public async Task<IActionResult> Search(string content, int take = 10) {
+        public async Task<IActionResult> Search(string content, int take = 10)
+        {
             if (take > 40)
                 take = 40;
             if (string.IsNullOrEmpty(content))
@@ -48,7 +53,8 @@ namespace LibraryManagement.UI.Controllers {
         }
 
         // GET: LibraryCards/Details/5
-        public async Task<IActionResult> Details(Guid? id) {
+        public async Task<IActionResult> Details(Guid? id)
+        {
             if (id == null) {
                 return NotFound();
             }
@@ -63,7 +69,8 @@ namespace LibraryManagement.UI.Controllers {
         }
 
         // GET: LibraryCards/Create
-        public IActionResult Create() {
+        public IActionResult Create()
+        {
             return View();
         }
 
@@ -72,7 +79,8 @@ namespace LibraryManagement.UI.Controllers {
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,MSSV,Name,Class,PhoneNumber,Karma,IsLock,Rank,Exp,ExpLevelUp,StatusCard")] LibraryCard libraryCard, IFormFile Image) {
+        public async Task<IActionResult> Create([Bind("Id,MSSV,Name,Class,PhoneNumber,Karma,IsLock,Rank,Exp,ExpLevelUp,StatusCard")] LibraryCard libraryCard, IFormFile Image)
+        {
             if (!ModelState.IsValid) return View(libraryCard);
             libraryCard.Id = Guid.NewGuid();
             libraryCard.Image = await _storage.SaveFileAsync(Image, "libraryCard");
@@ -82,7 +90,8 @@ namespace LibraryManagement.UI.Controllers {
         }
 
         // GET: LibraryCards/Edit/5
-        public async Task<IActionResult> Edit(Guid? id) {
+        public async Task<IActionResult> Edit(Guid? id)
+        {
             if (id == null) {
                 return NotFound();
             }
@@ -99,7 +108,8 @@ namespace LibraryManagement.UI.Controllers {
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,MSSV,Name,Class,PhoneNumber,Karma,IsLock,Rank,Exp,ExpLevelUp,StatusCard")] LibraryCard libraryCard, IFormFile Image) {
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id,MSSV,Name,Class,PhoneNumber,Karma,IsLock,Rank,Exp,ExpLevelUp,StatusCard")] LibraryCard libraryCard, IFormFile Image)
+        {
             if (id != libraryCard.Id) {
                 return NotFound();
             }
@@ -118,7 +128,6 @@ namespace LibraryManagement.UI.Controllers {
             libCard.Rank = libraryCard.Rank;
             libCard.Exp = libraryCard.Exp;
             libCard.ExpLevelUp = libraryCard.ExpLevelUp;
-            libCard.StatusCard = libraryCard.StatusCard;
 
             if (Image is not null) {
                 await _storage.DeleteFileAsync(libCard.Image);
@@ -132,7 +141,8 @@ namespace LibraryManagement.UI.Controllers {
         }
 
         // GET: LibraryCards/Delete/5
-        public async Task<IActionResult> Delete(Guid? id) {
+        public async Task<IActionResult> Delete(Guid? id)
+        {
             if (id == null) {
                 return NotFound();
             }
@@ -149,14 +159,16 @@ namespace LibraryManagement.UI.Controllers {
         // POST: LibraryCards/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(Guid id) {
+        public async Task<IActionResult> DeleteConfirmed(Guid id)
+        {
             var libraryCard = await _context.LibraryCards.FindAsync(id);
             _context.LibraryCards.Remove(libraryCard);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool LibraryCardExists(Guid id) {
+        private bool LibraryCardExists(Guid id)
+        {
             return _context.LibraryCards.Any(e => e.Id == id);
         }
     }

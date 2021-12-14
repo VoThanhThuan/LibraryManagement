@@ -16,15 +16,13 @@
 <body>
     <div id="root" class="modal">
         <!-- Navbar Mobile -->
-
-        @if (TempData["success"] != null)
-        {
+        @if (TempData["success"] != null) {
             <div class="toast">
                 <div class="icon-check">
                     <i class="fas fa-check-circle"></i>
                 </div>
                 <div class="body">
-                    <h4 class="title">Thành Công !</h4>
+                    <h4 class="title">@TempData["success"]</h4>
                 </div>
                 <div class="icon-close">
                     <i class="fas fa-times"></i>
@@ -43,31 +41,46 @@
             </div>
             <div class="sidebar-inner">
                 <ul class="icon-menu">
-                    <li class="li-menu">
-                        <a class="tab-icon active" href="/Users"><i class="far fa-user-circle"></i></a>
-                    </li>
-                    <li class="li-menu">
-                        <a class="tab-icon" href="/LibraryCards"><i class="far fa-address-card"></i></a>
-                    </li>
-                    <li class="li-menu">
-                        <a class="tab-icon" href="/Books"><i class="fal fa-book"></i></a>
-                    </li>
-                    <li class="li-menu">
-                        <a class="tab-icon" href="/Borrows"><i class="fal fa-books"></i></a>
-                    </li>
-                    <li class="li-menu">
-                        <a class="tab-icon" href="#"><i class="fal fa-undo-alt"></i></a>
-                    </li>
-                    <li class="li-menu">
-                        <a class="tab-icon" href="/Statistical"><i class="fal fa-chart-bar"></i></a>
-                    </li>
+                    @if (Context.User.IsInRole("Admin")) {
+                        <li class="li-menu">
+                            <a class="tab-icon" href="/Users"><i class="far fa-user-circle"></i></a>
+                        </li>
+                        <li class="li-menu">
+                            <a class="tab-icon" href="/LibraryCards"><i class="far fa-address-card"></i></a>
+                        </li>
+                        <li class="li-menu">
+                            <a class="tab-icon" href="/Books"><i class="fal fa-book"></i></a>
+                        </li>
+                        <li class="li-menu">
+                            <a class="tab-icon" href="/Borrows"><i class="fal fa-books"></i></a>
+                        </li>
+                        <li class="li-menu">
+                            <a class="tab-icon" href="/Genres"><i class="fal fa-undo-alt"></i></a>
+                        </li>
+                        <li class="li-menu">
+                            <a class="tab-icon" href="/Statistical"><i class="fal fa-chart-bar"></i></a>
+                        </li>
+                    } else {
+                        <li class="li-menu">
+                            <a class="tab-icon" href="/LibraryCards"><i class="far fa-address-card"></i></a>
+                        </li>
+                        <li class="li-menu">
+                            <a class="tab-icon" href="/Borrows"><i class="fal fa-books"></i></a>
+                        </li>
+                        <li class="li-menu">
+                            <a class="tab-icon" href="/Genres"><i class="fal fa-undo-alt"></i></a>
+                        </li>
+                        <li class="li-menu">
+                            <a class="tab-icon" href="/Statistical"><i class="fal fa-chart-bar"></i></a>
+                        </li>
+                    }
+
                 </ul>
                 <ul class="bottom-menu">
                     @{
                         var json = Context.Request.Cookies["User"];
                         var user = new UserVM();
-                        if (!string.IsNullOrEmpty(json))
-                        {
+                        if (!string.IsNullOrEmpty(json)) {
                             user = JsonSerializer.Deserialize<UserVM>(json);
                         }
                     }
@@ -159,6 +172,20 @@
     </div>
 
     <script src="/js/_Layout.js"></script>
+
+        <script>
+        var tab = []
+        $$(".tab-icon").forEach((item) => {
+            tab.push(item);
+        })
+        window.onload = () =>{
+            tab.forEach((item) => {
+                if(location.href.indexOf(item.href) >= 0){
+                    item.classList.add("active");
+                }
+            })
+        }
+    </script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

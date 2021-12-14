@@ -61,9 +61,12 @@ namespace LibraryManagement.UI.Controllers
                 ModelState.AddModelError("", "Tài khoản hoặc mật khẩu sai");
                 return View(request);
             }
-            var json = JsonSerializer.Serialize(user.ToViewModel());
+            var userVM = await user.ToViewModel(_userManager);
+
+            var json = JsonSerializer.Serialize(userVM);
             HttpContext.Session.SetString("User", json);
             HttpContext.Response.Cookies.Append("User", json);
+            TempData["success"] = $"Đã đăng nhập thành công tài khoản {userVM.Nickname} với quyền {userVM.RoleName}";
             return Redirect(request.ReturnUrl ?? "/");
 
 

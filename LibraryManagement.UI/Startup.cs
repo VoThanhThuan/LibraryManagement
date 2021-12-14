@@ -15,9 +15,12 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
 
-namespace LibraryManagement.UI {
-    public class Startup {
-        public Startup(IConfiguration configuration, IWebHostEnvironment webHostEnvironment) {
+namespace LibraryManagement.UI
+{
+    public class Startup
+    {
+        public Startup(IConfiguration configuration, IWebHostEnvironment webHostEnvironment)
+        {
             Configuration = configuration;
             WebHostEnvironment = webHostEnvironment;
         }
@@ -26,7 +29,8 @@ namespace LibraryManagement.UI {
         public IWebHostEnvironment WebHostEnvironment { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services) {
+        public void ConfigureServices(IServiceCollection services)
+        {
             Console.OutputEncoding = Encoding.UTF8;
 
             Console.WriteLine(">>> Đang kiểm tra xem đang chạy trên máy tính của ai...");
@@ -64,7 +68,7 @@ namespace LibraryManagement.UI {
             })
                 .AddCookie(options => {
                     options.LoginPath = new PathString("/Login");
-                    options.AccessDeniedPath = new PathString("/Login");
+                    options.AccessDeniedPath = new PathString("/AccessDeniedPath");
                     //options.Cookie.Name = ".AspNetCore.Identity.Application";
                     //options.SlidingExpiration = true;
                 });
@@ -112,7 +116,8 @@ namespace LibraryManagement.UI {
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env) {
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        {
             if (env.IsDevelopment()) {
                 app.UseDeveloperExceptionPage();
             } else {
@@ -139,7 +144,8 @@ namespace LibraryManagement.UI {
         }
 
 
-        private void MakeMyFolder() {
+        private void MakeMyFolder()
+        {
             var root = Path.Combine(WebHostEnvironment.WebRootPath);
 
             var listFolder = new[] { "books", "avatar", "libraryCard" };

@@ -15,7 +15,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace LibraryManagement.UI.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     public class BooksController : Controller
     {
         private readonly LibraryDbContext _context;
@@ -39,10 +39,11 @@ namespace LibraryManagement.UI.Controllers
 
         // GET: Books/Search/content
         [AllowAnonymous]
-        public async Task<IActionResult> Search(string content) {
+        public async Task<IActionResult> Search(string content)
+        {
             if (string.IsNullOrEmpty(content)) return Redirect("Index");
             var books = await _book.SearchBook(content);
-            return View("Index",books);
+            return View("Index", books);
         }
 
         // GET: Books/Search/content
@@ -57,14 +58,12 @@ namespace LibraryManagement.UI.Controllers
         // GET: Books/Details/5
         public async Task<IActionResult> Details(string id)
         {
-            if (id == null)
-            {
+            if (id == null) {
                 return NotFound();
             }
 
             var book = await _book.GetBook(id);
-            if (book == null)
-            {
+            if (book == null) {
                 return NotFound();
             }
 
@@ -86,7 +85,7 @@ namespace LibraryManagement.UI.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(BookRequest request, List<int> idGenres)
         {
-            if (!ModelState.IsValid) return RedirectToAction(nameof(Index));
+            if (!ModelState.IsValid) return View(request);
 
             var book = await _book.PostBook(request);
             await _genre.PostBookInGenre(book.Id, idGenres);
@@ -100,14 +99,12 @@ namespace LibraryManagement.UI.Controllers
         // GET: Books/Edit/5
         public async Task<IActionResult> Edit(string id)
         {
-            if (id == null)
-            {
+            if (id == null) {
                 return NotFound();
             }
 
             var book = await _context.Books.FindAsync(id);
-            if (book == null)
-            {
+            if (book == null) {
                 return NotFound();
             }
 
@@ -126,8 +123,7 @@ namespace LibraryManagement.UI.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(string id, BookRequest request)
         {
-            if (id != request.Id)
-            {
+            if (id != request.Id) {
                 return NotFound();
             }
 
@@ -141,22 +137,21 @@ namespace LibraryManagement.UI.Controllers
 
             ViewData["Genre"] = new SelectList(_context.Genres, "Id", "Name");
             ViewData["IdLibraryCode"] = new SelectList(_context.LibraryCodes, "Id", "Id", book.IdLibraryCode);
+            TempData["success"] = $"Đã sửa {book.Name} thành công";
             return View(bookRequest);
         }
 
         // GET: Books/Delete/5
         public async Task<IActionResult> Delete(string id)
         {
-            if (id == null)
-            {
+            if (id == null) {
                 return NotFound();
             }
 
             var book = await _context.Books
                 .Include(b => b.LibraryCode)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (book == null)
-            {
+            if (book == null) {
                 return NotFound();
             }
 
@@ -171,6 +166,7 @@ namespace LibraryManagement.UI.Controllers
             var result = await _book.DeleteBook(id);
             if (result is not 200)
                 return Conflict();
+            TempData["success"] = $"Đã xóa sách có id là {id} thành công";
             return RedirectToAction(nameof(Index));
         }
 

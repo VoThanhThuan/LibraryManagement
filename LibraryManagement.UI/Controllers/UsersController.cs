@@ -6,7 +6,7 @@ using LibraryManagement.UI.Services;
 using Microsoft.AspNetCore.Authorization;
 
 namespace LibraryManagement.UI.Controllers {
-    [Authorize]
+    [Authorize (Roles = "Admin")]
     public class UsersController : Controller {
         private readonly UserService _user;
         private readonly RoleService _role;

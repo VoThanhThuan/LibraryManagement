@@ -85,18 +85,17 @@ li.short{
 	text-overflow: ellipsis;
 }
 
-.vsb-main button{
+.vsb-main button {
 	min-width: 120px;
-	border-radius: 0;
+	border-radius: 6px;
 	width: 100%;
 	text-align: left;
 	z-index: 1;
-	color: #333;
-	background: white !important;
-	border: 1px solid #999 !important;
-	line-height:20px;
-	font-size:14px;
-	padding:6px 12px;
+	color: #a9a9b2;
+	background: #27272a;
+	line-height: 20px;
+	font-size: 14px;
+	padding: 6px 12px;
 }
 
 .vsb-main button.disabled{

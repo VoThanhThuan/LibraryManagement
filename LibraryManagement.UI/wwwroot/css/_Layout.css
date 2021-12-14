@@ -42,7 +42,12 @@ div {
     color: #a2a5b9;
 }
 
+.text-danger{
+    color: red;
+}
+
 .toast {
+    z-index: 9999;
     position: fixed;
     bottom: 10%;
     right: 32px;
@@ -50,10 +55,10 @@ div {
     align-items: center;
     background-color: #fff;
     border-radius: 2px;
-    padding: 10px 0;
+    padding: 20px 0 !important;
     min-width: 350px;
     max-width: 400px;
-    border-radius: 4px;
+    border-radius: 6px !important;
     border-left: 4px solid #47d864;
     box-shadow: 0 5px 8px rgba(0, 0, 0, 0.08);
     transition: all linear .3s;
@@ -91,6 +96,8 @@ div {
 .body {
     flex-grow: 1;
     font-family: sans-serif;
+    font-size:16px;
+    color: black;
 }
 
 .icon-close {

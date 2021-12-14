@@ -8,9 +8,11 @@ using Microsoft.EntityFrameworkCore;
 using Library.Library.Data;
 using Library.Library.Entities;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 
 namespace LibraryManagement.UI.Controllers
 {
+    [Authorize]
     public class RolesController : Controller
     {
         private readonly LibraryDbContext _context;
@@ -31,8 +33,7 @@ namespace LibraryManagement.UI.Controllers
         // GET: Roles/Details/5
         public async Task<IActionResult> Details(Guid? id)
         {
-            if (id == null)
-            {
+            if (id == null) {
                 return NotFound();
             }
 
@@ -40,8 +41,7 @@ namespace LibraryManagement.UI.Controllers
                 .FirstOrDefaultAsync(m => m.Id == id);
             var claim = await _role.GetClaimsAsync(role);
             ViewBag.Claim = claim;
-            if (role == null)
-            {
+            if (role == null) {
                 return NotFound();
             }
 
@@ -61,8 +61,7 @@ namespace LibraryManagement.UI.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Description,Name")] Role role)
         {
-            if (ModelState.IsValid)
-            {
+            if (ModelState.IsValid) {
                 role.Id = Guid.NewGuid();
                 var result = await _role.CreateAsync(role);
                 //_context.Add(role);
@@ -75,14 +74,12 @@ namespace LibraryManagement.UI.Controllers
         // GET: Roles/Edit/5
         public async Task<IActionResult> Edit(Guid? id)
         {
-            if (id == null)
-            {
+            if (id == null) {
                 return NotFound();
             }
 
             var role = await _context.Roles.FindAsync(id);
-            if (role == null)
-            {
+            if (role == null) {
                 return NotFound();
             }
             return View(role);
@@ -95,15 +92,12 @@ namespace LibraryManagement.UI.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid id, [Bind("Description,Id,Name")] Role role)
         {
-            if (id != role.Id)
-            {
+            if (id != role.Id) {
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
-            {
-                try
-                {
+            if (ModelState.IsValid) {
+                try {
                     var r = await _role.FindByIdAsync(role.Id.ToString());
 
                     r.Name = role.Name;
@@ -112,15 +106,10 @@ namespace LibraryManagement.UI.Controllers
                     var result = await _role.UpdateAsync(r);
                     //_context.Update(role);
                     //await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!RoleExists(role.Id))
-                    {
+                } catch (DbUpdateConcurrencyException) {
+                    if (!RoleExists(role.Id)) {
                         return NotFound();
-                    }
-                    else
-                    {
+                    } else {
                         throw;
                     }
                 }
@@ -132,15 +121,13 @@ namespace LibraryManagement.UI.Controllers
         // GET: Roles/Delete/5
         public async Task<IActionResult> Delete(Guid? id)
         {
-            if (id == null)
-            {
+            if (id == null) {
                 return NotFound();
             }
 
             var role = await _context.Roles
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (role == null)
-            {
+            if (role == null) {
                 return NotFound();
             }
 

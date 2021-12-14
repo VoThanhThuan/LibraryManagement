@@ -25,7 +25,7 @@
 
     <!-- Form create -->
     <form asp-action="Create" method="post" enctype="multipart/form-data" class="form-layout">
-        <div asp-validation-summary="All" class="text-danger"></div>
+@*        <div asp-validation-summary="All" class="text-danger"></div> *@
         <div class="form-outer">
             <div class="form-header">
                 <div class="form-header-inner">
@@ -54,8 +54,10 @@
                     <div class="columns is-multiline">
                         <div class="column is-6">
                             <div class="field">
-                                <label>Mã Sách</label>
+                                <label>Mã Sách</label> 
+                                <span asp-validation-for="Id" class="text-danger"></span>
                                 <div class="control has-icon">
+                                   
                                     <input type="text" class="input" asp-for="Id">
                                     <div class="form-icon" data-v-aad2da70="">
                                         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--feather" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" data-icon="feather:user" data-v-aad2da70=""><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></g></svg>
@@ -66,6 +68,7 @@
                         <div class="column is-6">
                             <div class="field">
                                 <label>Nhà Xuất Bản</label>
+                                <span asp-validation-for="PublishingCompany" class="text-danger"></span>
                                 <div class="control has-icon">
                                     <input type="text" class="input" asp-for="PublishingCompany">
                                     <div class="form-icon" data-v-aad2da70="">
@@ -77,6 +80,7 @@
                         <div class="column is-12">
                             <div class="field">
                                 <label>Tên Sách</label>
+                                <span asp-validation-for="Name" class="text-danger"></span>
                                 <div class="control has-icon">
                                     <input type="text" class="input" asp-for="Name">
                                     <div class="form-icon" data-v-aad2da70="">
@@ -88,6 +92,7 @@
                         <div class="column is-12">
                             <div class="field">
                                 <label>Chọn Ảnh Bìa</label>
+                                <span asp-validation-for="Thumbnail" class="text-danger"></span>
                                 <div class="control has-icon">
                                     <input type="file" asp-for="Thumbnail" class="choose-file">
                                     <span><Label for="choose-file"></Label></span>
@@ -97,6 +102,7 @@
                         <div class="column is-12">
                             <div class="field">
                                 <label>Tác Giả</label>
+                                <span asp-validation-for="Author" class="text-danger"></span>
                                 <div class="control has-icon">
                                     <input type="text" class="input" asp-for="Author">
                                     <div class="form-icon" data-v-aad2da70="">
@@ -108,6 +114,7 @@
                         <div class="column is-6">
                             <div class="field">
                                 <label>Ngày Xuất Bản</label>
+                                <span asp-validation-for="PublicationDate" class="text-danger"></span>
                                 <div class="control has-icon">
                                     <input class="input" asp-for="PublicationDate">
                                     <div class="form-icon" data-v-aad2da70="">
@@ -120,6 +127,7 @@
                         <div class="column is-6">
                             <div class="field">
                                 <label>Số Lượng</label>
+                                <span asp-validation-for="Amount" class="text-danger"></span>
                                 <div class="control has-icon">
                                     <input type="text" class="input" asp-for="Amount">
                                     <div class="form-icon" data-v-aad2da70="">
@@ -131,6 +139,7 @@
                         <div class="column is-6">
                             <div class="field">
                                 <label>Số Trang</label>
+                                <span asp-validation-for="PageNumber" class="text-danger"></span>
                                 <div class="control has-icon">
                                     <input type="text" class="input" asp-for="PageNumber">
                                     <div class="form-icon" data-v-aad2da70="">
@@ -142,6 +151,7 @@
                         <div class="column is-6">
                             <div class="field">
                                 <label>Số Ngày Cho Phép Mượn</label>
+                                <span asp-validation-for="DateCanBorrow" class="text-danger"></span>
                                 <div class="control has-icon">
                                     <input type="text" class="input" asp-for="DateCanBorrow">
                                     <div class="form-icon" data-v-aad2da70="">
@@ -153,6 +163,7 @@
                         <div class="column is-6">
                             <div class="field">
                                 <label>Mã Thư Viện</label>
+                                <span asp-validation-for="IdLibraryCode" class="text-danger"></span>
                                 <div class="control has-icon">
                                     <select asp-for="IdLibraryCode" class="input" asp-items="ViewBag.IdLibraryCode"></select>
                                     <div class="form-icon" data-v-aad2da70="">
@@ -164,6 +175,7 @@
                         <div class="column is-6">
                             <div class="field">
                                 <label>Cấp Độ Mượn</label>
+                                <span asp-validation-for="Rank" class="text-danger"></span>
                                 <div class="control has-icon">
                                     <select asp-for="Rank" class="input">
                                         @{
@@ -182,6 +194,7 @@
                         <div class="column is-12">
                             <div class="field">
                                 <label>Thể Loại</label>
+                                <span asp-validation-for="idGenres" class="text-danger"></span>
                                 <div class="control has-icon">
                                     <select class="input" id="selectgenre" name="idGenres" multiple class="input" asp-items="ViewBag.Genre"></select>
                                     

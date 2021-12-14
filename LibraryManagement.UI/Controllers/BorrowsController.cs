@@ -12,9 +12,11 @@ using Library.Library.Entities.Requests;
 using Library.Library.Entities.ViewModels;
 using LibraryManagement.UI.Services;
 using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Authorization;
 
 namespace LibraryManagement.UI.Controllers
 {
+    [Authorize]
     [Route("[controller]")]
     public class BorrowsController : Controller
     {
@@ -41,16 +43,14 @@ namespace LibraryManagement.UI.Controllers
         // GET: Borrows/Details/5
         public async Task<IActionResult> Details(Guid id)
         {
-            if (id == Guid.Empty)
-            {
+            if (id == Guid.Empty) {
                 return NotFound();
             }
 
             var borrow = await _context.Borrows
                 .Include(b => b.LibraryCard)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (borrow == null)
-            {
+            if (borrow == null) {
                 return NotFound();
             }
 
@@ -66,6 +66,11 @@ namespace LibraryManagement.UI.Controllers
             ViewData["Name-User"] = (User.FindFirstValue(ClaimTypes.Name));
 
             var libCard = await _context.LibraryCards.FindAsync(idCard);
+            if (libCard.IsLock) {
+                TempData["success"] = $"Thẻ của {libCard.Name} đã bị khóa";
+                return Redirect("/");
+            }
+
             ViewBag.LibraryCard = libCard;
 
 
@@ -99,7 +104,7 @@ namespace LibraryManagement.UI.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,DateBorrow,Note,IdUser,UserName,IdCard")] Borrow borrow, List<string> idBooks, Guid idCard)
         {
-            if(!idBooks.Any())
+            if (!idBooks.Any())
                 return RedirectToAction(nameof(Index));
 
             ViewData["Id-User"] = User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -107,29 +112,32 @@ namespace LibraryManagement.UI.Controllers
 
             var isSuccess = false;
 
-            if (ModelState.IsValid)
-            {
+            if (ModelState.IsValid) {
                 var result = await _borrow.PostBorrow(borrow, idBooks);
 
                 isSuccess = result.isSuccess;
 
             }
             var libCard = await _context.LibraryCards.FindAsync(idCard);
+
+            if (libCard.IsLock) {
+                TempData["success"] = $"Thẻ của {libCard.Name} đã bị khóa";
+                return Redirect("/LibraryCards");
+            }
+
             ViewBag.LibraryCard = libCard;
             //ViewData["IdCard"] = new SelectList(_context.LibraryCards, "Id", "Id", borrow.IdCard);
             var books = await _book.GetBooks();
-            if (isSuccess)
-            {
+            if (isSuccess) {
+                TempData["success"] = $"Đã thêm lịch mượn cho đọc giả {libCard.Name} thành công";
                 return RedirectToAction(nameof(Index));
-            }
-            else
-            {
+            } else {
                 return View(borrow);
             }
         }
 
         [HttpGet("ReturnBook")]
-        public async Task<IActionResult> ReturnBook(Guid idCard , Guid idBorrow)
+        public async Task<IActionResult> ReturnBook(Guid idCard, Guid idBorrow)
         {
             var cardAndBook = new ReturnBookVM();
 
@@ -139,17 +147,15 @@ namespace LibraryManagement.UI.Controllers
                 return RedirectToAction(nameof(Index));
 
             ViewBag.LibraryCard = card;
-            if (idCard != Guid.Empty)
-            {
+            if (idCard != Guid.Empty) {
                 cardAndBook = await _borrow.GetBorrowWithCard(idCard);
-                if(cardAndBook is null)
+                if (cardAndBook is null)
                     return RedirectToAction(nameof(Index));
 
                 cardAndBook.IdCard = idCard;
 
                 return View(cardAndBook);
-            }else if (idBorrow != Guid.Empty)
-            {
+            } else if (idBorrow != Guid.Empty) {
                 cardAndBook = await _borrow.GetBorrow(idBorrow);
                 return View(cardAndBook);
             }
@@ -165,8 +171,7 @@ namespace LibraryManagement.UI.Controllers
             //var cardAndBook = new ReturnBookVM();
             //ViewData["IdCard"] = new SelectList(_context.LibraryCards, "Id", "Id", request.IdCard);
 
-            if (request.IdCard != Guid.Empty)
-            {
+            if (request.IdCard != Guid.Empty) {
                 var resultGet = await _borrow.GetBorrowWithCard(request.IdCard);
 
                 resultGet.IdCard = request.IdCard;
@@ -178,13 +183,12 @@ namespace LibraryManagement.UI.Controllers
             //}
 
             var result = await _borrow.ReturnBook(request);
-            if (result == false)
-            {
+            if (result == false) {
                 //return View(cardAndBook);
                 return Ok("Trả thất bại");
 
             }
-
+            TempData["success"] = $"Đã trả {request.AmountReturn} cuốn sách thành công";
             return Ok("Trả thành công");
         }
 
@@ -203,17 +207,16 @@ namespace LibraryManagement.UI.Controllers
         // GET: Borrows/Edit/5
         public async Task<IActionResult> Edit(Guid? id)
         {
-            if (id == null)
-            {
+            if (id == null) {
                 return NotFound();
             }
 
             var borrow = await _context.Borrows.FindAsync(id);
-            if (borrow == null)
-            {
+            if (borrow == null) {
                 return NotFound();
             }
             ViewData["IdCard"] = new SelectList(_context.LibraryCards, "Id", "Id", borrow.IdCard);
+
             return View(borrow);
         }
 
@@ -224,31 +227,24 @@ namespace LibraryManagement.UI.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid id, [Bind("Id,DateBorrow,Note,IdUser,UserName,IdCard")] Borrow borrow)
         {
-            if (id != borrow.Id)
-            {
+            if (id != borrow.Id) {
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
-            {
-                try
-                {
+            if (ModelState.IsValid) {
+                try {
                     _context.Update(borrow);
                     await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!BorrowExists(borrow.Id))
-                    {
+                } catch (DbUpdateConcurrencyException) {
+                    if (!BorrowExists(borrow.Id)) {
                         return NotFound();
-                    }
-                    else
-                    {
+                    } else {
                         throw;
                     }
                 }
                 return RedirectToAction(nameof(Index));
             }
+            TempData["success"] = $"Cập nhật thành công";
             ViewData["IdCard"] = new SelectList(_context.LibraryCards, "Id", "Id", borrow.IdCard);
             return View(borrow);
         }
@@ -257,16 +253,14 @@ namespace LibraryManagement.UI.Controllers
         // GET: Borrows/Delete/5
         public async Task<IActionResult> Delete(Guid? id)
         {
-            if (id == null)
-            {
+            if (id == null) {
                 return NotFound();
             }
 
             var borrow = await _context.Borrows
                 .Include(b => b.LibraryCard)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (borrow == null)
-            {
+            if (borrow == null) {
                 return NotFound();
             }
 

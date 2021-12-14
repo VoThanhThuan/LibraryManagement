@@ -70,13 +70,13 @@ namespace Library.Library.Entities
         }
 
         [Display(Name = "Mã Sách")]
-        [Required]
+        [Required(ErrorMessage = "Mã sách là bắt buộc")]
         public string Id { get; set; } = ""; //max 8
 
         public string Thumbnail { get; set; } = "";
 
         [Display(Name = "Tên Sách")]
-        [Required]
+        [Required(ErrorMessage = "tên sách là bắt buộc")]
         public string Name { get; set; } = "";
 
         [Display(Name = "Nhà Xuất Bản")]
@@ -89,31 +89,32 @@ namespace Library.Library.Entities
         public string Author { get; set; } = "";
 
         [Range(0, 1000, ErrorMessage = "Số lượng không được nhỏ hơn 0 và lớn hơn 1000")]
+        [Required(ErrorMessage = "số lượng sách là bắt buộc")]
         public int Amount { get; set; } = 0;
 
         [Range(0, 1000, ErrorMessage = "Số trang không được nhỏ hơn 1 và lớn hơn 1000")]
+        [Required(ErrorMessage = "số trang sách là bắt buộc")]
         public int PageNumber { get; set; } = 0;
 
         [Display(Name = "Số Ngày Có Thê Mượn")]
-        [Required]
+        [Required(ErrorMessage = "ngày có thể mượn sách là bắt buộc")]
         public int DateCanBorrow { get; set; } = 0;
 
         [Display(Name = "Hạng")]
-        [Required]
+        [Required(ErrorMessage = "hạng sách là bắt buộc")]
         public RankLibrary Rank { get; set; } = RankLibrary.Beginner;
 
         [Display(Name = "Tình trạng sách")]
-        [Required]
+        [Required(ErrorMessage = "tình trạng  sách là bắt buộc")]
         public StatusBook StatusBook { get; set; } = StatusBook.CanBorrow;
 
         [Display(Name = "Sô Lần Mượn")]
-        [Required]
         public int TotalBorrow { get; set; } = 0;
 
 
         //Khóa ngoại
         [Display(Name = "Mã Thư Viện")]
-        [Required]
+        [Required(ErrorMessage = "mã thư viện là bắt buộc")]
         public string IdLibraryCode { get; set; } = "";
         public virtual LibraryCode LibraryCode { get; set; }
         public virtual List<BookInBorrow> BookInBorrows { get; set; }
