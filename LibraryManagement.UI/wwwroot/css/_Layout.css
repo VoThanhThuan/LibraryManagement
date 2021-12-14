@@ -42,6 +42,65 @@ div {
     color: #a2a5b9;
 }
 
+.toast {
+    position: fixed;
+    bottom: 10%;
+    right: 32px;
+    display: flex;
+    align-items: center;
+    background-color: #fff;
+    border-radius: 2px;
+    padding: 10px 0;
+    min-width: 350px;
+    max-width: 400px;
+    border-radius: 4px;
+    border-left: 4px solid #47d864;
+    box-shadow: 0 5px 8px rgba(0, 0, 0, 0.08);
+    transition: all linear .3s;
+    animation: slideInLeft ease .7s, fadeOut linear 2s 3s forwards;
+}
+
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(calc(100% + 32px));
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes fadeOut {
+    to {
+        opacity: 0;
+    }
+}
+
+.icon-check,
+.icon-close {
+    padding: 0 16px;
+}
+
+.icon-check {
+    font-size: 24px;
+    color: #47d864;
+}
+
+.body {
+    flex-grow: 1;
+    font-family: sans-serif;
+}
+
+.icon-close {
+    font-size: 20px;
+    display: flex;
+    justify-content: flex-end;
+    color: rgba(0, 0, 0, .7);
+    cursor: pointer;
+}
+
 .black-bg {
     background: #27272a !important;
 }

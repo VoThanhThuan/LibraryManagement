@@ -11,14 +11,27 @@
     <link href="/css/reset.css" rel="stylesheet" />
     <link href="/css/index.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.2.0/css/all.css">
+
 </head>
 <body>
     <div id="root" class="modal">
         <!-- Navbar Mobile -->
-        <nav class="mobile-main-sidebar">
 
-        </nav>
-        <span>@TempData["success"]</span>
+        @if (TempData["success"] != null)
+        {
+            <div class="toast">
+                <div class="icon-check">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <div class="body">
+                    <h4 class="title">Thành Công !</h4>
+                </div>
+                <div class="icon-close">
+                    <i class="fas fa-times"></i>
+                </div>
+            </div>
+        }
+
         <!-- <div class="overplay"></div> -->
         <!-- Navbar Desktop -->
         <div class="main-sidebar">
