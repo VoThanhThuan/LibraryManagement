@@ -36,5 +36,10 @@ namespace LibraryManagement.UI.Controllers
             return Ok(statistical);
         }
 
+        public async Task<IActionResult> Export()
+        {
+            return View();
+        }
+
     }
 }
