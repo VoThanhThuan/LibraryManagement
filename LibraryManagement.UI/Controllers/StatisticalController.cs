@@ -28,7 +28,7 @@ namespace LibraryManagement.UI.Controllers
         }
 
         [HttpGet("api/Statistical")]
-        public async Task<IActionResult> GetData(DateTime start, DateTime end)
+        public async Task<IActionResult> GetData(DateTime? start = null, DateTime? end = null)
         {
 
             var statistical = await _statistical.GetStatiscals(start, end);
