@@ -1,0 +1,80 @@
+﻿
+
+
+    <style>
+        .smart-table {
+            width: 800px;
+            height: 600px;
+        }
+    </style>
+    <link rel="stylesheet" href="/css/smart.default.css">
+    <smart-table id="e-table" class="table-hover" auto-load-state auto-save-state column-resize column-reorder
+                 auto-save-state>
+        <table>
+            <thead>
+                <tr>
+                    <th data-field="id">Country</th>
+                    <th data-field="productName">Area</th>
+                    <th data-field="quantity">Population_Rural</th>
+                    <th data-field="price">Population_Total</th>
+                    <th data-field="date">GDP_Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td data-field="id">Brazil</td>
+                    <td data-field="productName">8515767</td>
+                    <td data-field="quantity">0.15</td>
+                    <td data-field="price">205809000</td>
+                    <td data-field="date">2353025</td>
+                </tr>
+
+            </tbody>
+        </table>
+    </smart-table>
+    <div class="options">
+        <smart-button id="csv">Export to CSV</smart-button>
+        <smart-button id="html">Export to HTML</smart-button>
+        <smart-button id="json">Export to JSON</smart-button>
+        <smart-button id="pdf">Export to PDF</smart-button>
+        <smart-button id="tsv">Export to TSV</smart-button>
+        <smart-button id="xlsx">Export to XLSX</smart-button>
+        <smart-button id="xml">Export to XML</smart-button>
+    </div>
+
+
+    <script src="/js/export/jszip.min.js"></script>
+    <script src="/js/export/pdfmake.min.js"></script>
+    <script src="/js/export/smart.table.js"></script>
+    <script src="/js/export/vfs_fonts.js"></script>
+
+    <script>
+        //const table = document.querySelector('smart-table');
+        //table.autoSaveState = true;
+
+        const table = document.getElementById('e-table');
+            document.getElementById('csv').addEventListener('click', function () {
+                table.exportData('csv', 'table');
+            });
+            document.getElementById('html').addEventListener('click', function () {
+                table.exportData('html', 'table');
+            });
+            document.getElementById('json').addEventListener('click', function () {
+                table.exportData('json', 'table');
+            });
+            document.getElementById('pdf').addEventListener('click', function () {
+                table.exportData('pdf', 'table');
+            });
+            document.getElementById('tsv').addEventListener('click', function () {
+                table.exportData('tsv', 'table');
+            });
+            document.getElementById('xlsx').addEventListener('click', function () {
+                table.exportData('xlsx', 'table');
+            });
+            document.getElementById('xml').addEventListener('click', function () {
+                table.exportData('xml', 'table');
+            });
+       
+    </script>
+
+

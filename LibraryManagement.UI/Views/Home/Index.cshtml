@@ -34,21 +34,14 @@
         <div class="dashboard-header">
             <div class="avatar is-xl">
                 <img src="@user.Avatar" alt="">
+                
             </div>
             <div class="user-meta">
                 <h3>Chào! @user.Nickname.</h3>
                 <p>Rất vui được gặp lại bạn.</p>
+               
             </div>
             <div class="sum-books">
-                @*@{
-                    var sum = 0;
-                    foreach (var book in Model.TopBooks)
-                    {
-                        var bookA = book.Amount;
-                        sum += bookA;
-                    }
-                    
-                }*@
                 <h3>@Model.TopBooks.Count()</h3>
                 <p>Tống số sách trong thư viện</p>
                 <a href="/books">Quản Lý Sách</a>
