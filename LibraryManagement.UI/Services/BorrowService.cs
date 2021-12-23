@@ -185,6 +185,36 @@ namespace LibraryManagement.UI.Services
             return libraryCard.Rank;
         }
 
+        public async Task<bool> ReturnBookAll(Guid idCard, Guid idBorrow)
+        {
+            //<truy xuất dữ liệu>
+            var borrow = await _context.Borrows.FirstOrDefaultAsync(x => x.Id == idBorrow);
+            if (borrow is null)
+                return false;
+
+
+            var bibs = await _context.BookInBorrows.Where(x => x.IdBorrow == idBorrow).ToListAsync();
+            if (bibs.Count < 1) return false;
+
+            var card = await _context.LibraryCards.FindAsync(idCard);
+            //</truy xuất dữ liệu>
+
+            foreach (var item in bibs) {
+                item.AmountReturn = item.AmountBorrowed;
+                item.TimeRealReturn = DateTime.Now;
+            }
+
+            borrow.AmountReturned = borrow.AmountBorrow;
+            borrow.StatusBorrow = StatusBorrow.Finish;
+
+            card.StatusCard = StatusCard.CanBorrow;
+
+            await _context.SaveChangesAsync();
+
+            return true;
+
+        }
+
         public async Task<bool> ReturnBook(ReturnBookRequest request)
         {
             var borrow = await _context.Borrows.FirstOrDefaultAsync(x => x.Id == request.IdBorrow);

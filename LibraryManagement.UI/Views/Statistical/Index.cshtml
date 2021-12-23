@@ -635,8 +635,15 @@
                                                 </div>
                                             </div>
                                             <div class="box-end">
-                                                <div class="v-avatar is-small">
-                                                </div>
+                                                    <div class="v-avatar is-small">
+                                                        <img class="avatar" src="@item.LibraryCard.Image" alt="@item.LibraryCard.Name">
+                                                    </div>
+                                                    <div class="box-text">
+                                                        <p>
+                                                            <span>@item.LibraryCard.Name - @item.LibraryCard.MSSV</span>
+                                                        </p>
+                                                    </div>
+
                                             </div>
                                         </div>
 
@@ -864,13 +871,13 @@
                                         </div>
                                         <div class="card-item-body-right">
                                             <div class="social-actions">
-                                                <a class="social-action">
+                                                <a class="social-action" href='@($"/LibraryCards/Edit/{item.Id}")'>
                                                     <i class="fas fa-wrench"></i>
                                                 </a>
-                                                <a class="social-action">
+ @*                                               <a class="social-action">
                                                     <i class="fal fa-trash-alt"></i>
-                                                </a>
-                                                <a class="social-action">
+                                                </a>*@
+                                                <a class="social-action" href='@($"/LibraryCards/Details/{item.Id}")'>
                                                     <i class="fas fa-info-circle"></i>
                                                 </a>
                                                 <a class="social-action">
@@ -929,9 +936,9 @@
                                                 <a class="social-action">
                                                     <i class="fas fa-wrench"></i>
                                                 </a>
-                                                <a class="social-action">
+@*                                                <a class="social-action">
                                                     <i class="fal fa-trash-alt"></i>
-                                                </a>
+                                                </a>*@
                                                 <a class="social-action">
                                                     <i class="fas fa-info-circle"></i>
                                                 </a>

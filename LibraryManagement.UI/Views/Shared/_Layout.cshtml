@@ -29,7 +29,19 @@
                 </div>
             </div>
         }
-
+        @if (TempData["error"] != null) {
+            <div class="toast" style="background: red;">
+                <div class="icon-check">
+                    <i class="fas fa-times"></i>
+                </div>
+                <div class="body">
+                    <h4 class="title">@TempData["error"]</h4>
+                </div>
+                <div class="icon-close">
+                    <i class="fas fa-times"></i>
+                </div>
+            </div>
+        }
         <!-- <div class="overplay"></div> -->
         <!-- Navbar Desktop -->
         <div class="main-sidebar">

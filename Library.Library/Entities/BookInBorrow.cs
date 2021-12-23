@@ -23,8 +23,8 @@ namespace Library.Library.Entities
                 ReturnStatus = ReturnStatus,
                 IdBook = IdBook,
                 IdBorrow = IdBorrow,
-                Book = Book,
-                Borrow = Borrow
+                //Book = Book,
+                //Borrow = Borrow
             };
         }
 

@@ -47,7 +47,7 @@ namespace Library.Library.Entities
             };
         }
 
-        public BookVM ToViewModel(BookInBorrowVM bookInBorrow, int statisticalAmount, LibraryCard libraryCard=null)
+        public BookVM ToViewModel(BookInBorrowVM bookInBorrow, int statisticalAmount, LibraryCardVM libraryCard=null)
         {
             return new() {
                 Id = Id,

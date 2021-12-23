@@ -24,27 +24,29 @@ namespace LibraryManagement.UI.Services
                                        join b in _context.Books on bib.IdBook equals b.Id
                                        join br in _context.Borrows on bib.IdBorrow equals br.Id
                                        join lc in _context.LibraryCards on br.IdCard equals lc.Id
-                                       select b.ToViewModel(bib.ToViewModel(), bib.AmountBorrowed, lc)).ToListAsync();
+                                       select b.ToViewModel(bib.ToViewModel(), bib.AmountBorrowed, lc.ToViewModel())).ToListAsync();
 
             var booksBorrowing = await (from br in _context.Borrows
                                         where br.StatusBorrow == StatusBorrow.Borrowing || br.StatusBorrow == StatusBorrow.NotEnough
                                         join bib in _context.BookInBorrows on br.Id equals bib.IdBorrow
                                         join b in _context.Books on bib.IdBook equals b.Id
                                         join lc in _context.LibraryCards on br.IdCard equals lc.Id
-                                        select b.ToViewModel(bib.ToViewModel(), bib.AmountBorrowed, lc)).ToListAsync();
+                                        select b.ToViewModel(bib.ToViewModel(), bib.AmountBorrowed, lc.ToViewModel())).ToListAsync();
 
             var booksReturn = await (from br in _context.Borrows where br.StatusBorrow == StatusBorrow.Finish || br.StatusBorrow == StatusBorrow.NotEnough
                                      join bib in _context.BookInBorrows on br.Id equals bib.IdBorrow
                                      join b in _context.Books on bib.IdBook equals b.Id
                                      join lc in _context.LibraryCards on br.IdCard equals lc.Id
-                                     select b.ToViewModel(bib.ToViewModel(), bib.AmountReturn, lc)).ToListAsync();
+                                     select b.ToViewModel(bib.ToViewModel(), bib.AmountReturn, lc.ToViewModel())).ToListAsync();
 
             //var booksMissing = await _context.Books.Where(x => x.StatusBook == StatusBook.Missing).Select(x => x.ToViewModel()).ToListAsync();
 
             var booksMissing = await (from bib in _context.BookInBorrows
                                       where bib.TimeMissing != null
                                       join b in _context.Books on bib.IdBook equals b.Id
-                                      select b.ToViewModel(bib.ToViewModel(), bib.AmountMissing, null)).ToListAsync();
+                                      join br in _context.Borrows on bib.IdBorrow equals br.Id
+                                      join lc in _context.LibraryCards on br.IdCard equals lc.Id
+                                      select b.ToViewModel(bib.ToViewModel(), bib.AmountMissing, lc.ToViewModel())).ToListAsync();
 
             var booksTop = await _context.Books.OrderByDescending(x => x.TotalBorrow)
                 .Select(x => x.ToViewModel()).ToListAsync();
@@ -54,15 +56,15 @@ namespace LibraryManagement.UI.Services
                                               join bib in _context.BookInBorrows on br.Id equals bib.IdBorrow
                                               join b in _context.Books on bib.IdBook equals b.Id
                                               join lc in _context.LibraryCards on br.IdCard equals lc.Id
-                                              select b.ToViewModel(bib.ToViewModel(), bib.AmountBorrowed - bib.AmountReturn, lc)).ToListAsync();
+                                              select b.ToViewModel(bib.ToViewModel(), bib.AmountBorrowed - bib.AmountReturn, lc.ToViewModel())).ToListAsync();
 
             var cardsTop = await _context.LibraryCards.OrderByDescending(x => x.Exp).ToListAsync();
 
             var cardReturnLate = await (from bib in _context.BookInBorrows
-                                        where bib.TimeReturn < DateTime.Now
+                                        where bib.TimeReturn < bib.TimeRealReturn
                                         join borrow in _context.Borrows on bib.IdBorrow equals borrow.Id
                                         join card in _context.LibraryCards on borrow.IdCard equals card.Id
-                                        select card).ToListAsync();
+                                        select card).Distinct().ToListAsync();
             ;
 
             var cardLock = await _context.LibraryCards.Where(x => x.IsLock).ToListAsync();
@@ -88,26 +90,28 @@ namespace LibraryManagement.UI.Services
                                        join b in _context.Books on bib.IdBook equals b.Id
                                        join br in _context.Borrows on bib.IdBorrow equals br.Id
                                        join lc in _context.LibraryCards on br.IdCard equals lc.Id
-                                       select b.ToViewModel(bib.ToViewModel(), bib.AmountBorrowed, lc)).ToListAsync();
+                                       select b.ToViewModel(bib.ToViewModel(), bib.AmountBorrowed, lc.ToViewModel())).ToListAsync();
 
             var booksBorrowing = await (from br in _context.Borrows
                                         where br.StatusBorrow == StatusBorrow.Borrowing
                                         join bib in _context.BookInBorrows on br.Id equals bib.IdBorrow where bib.TimeBorrowed >= start && bib.TimeBorrowed <= end
                                         join b in _context.Books on bib.IdBook equals b.Id
                                         join lc in _context.LibraryCards on br.IdCard equals lc.Id
-                                        select b.ToViewModel(bib.ToViewModel(), bib.AmountBorrowed, lc)).ToListAsync();
+                                        select b.ToViewModel(bib.ToViewModel(), bib.AmountBorrowed, lc.ToViewModel())).ToListAsync();
 
             var booksReturn = await (from br in _context.Borrows where br.StatusBorrow == StatusBorrow.Finish
                                      join bib in _context.BookInBorrows on br.Id equals bib.IdBorrow where bib.TimeBorrowed >= start && bib.TimeBorrowed <= end
                                      join b in _context.Books on bib.IdBook equals b.Id
                                      join lc in _context.LibraryCards on br.IdCard equals lc.Id
-                                     select b.ToViewModel(bib.ToViewModel(), bib.AmountReturn, lc)).ToListAsync();
+                                     select b.ToViewModel(bib.ToViewModel(), bib.AmountReturn, lc.ToViewModel())).ToListAsync();
 
 
             var booksMissing = await (from bib in _context.BookInBorrows
                                       where bib.TimeMissing == null && (bib.TimeBorrowed >= start && bib.TimeReturn <= end)
                                       join b in _context.Books on bib.IdBook equals b.Id
-                                      select b.ToViewModel(bib.ToViewModel(), bib.AmountMissing, null)).ToListAsync();
+                                      join br in _context.Borrows on bib.IdBorrow equals br.Id
+                                      join lc in _context.LibraryCards on br.IdCard equals lc.Id
+                                      select b.ToViewModel(bib.ToViewModel(), bib.AmountMissing, lc.ToViewModel())).ToListAsync();
 
             var booksReturnNotEnough = await (from br in _context.Borrows
                                               where br.StatusBorrow == StatusBorrow.NotEnough
@@ -115,7 +119,7 @@ namespace LibraryManagement.UI.Services
                                               where bib.TimeReturn >= start & bib.TimeReturn <= end
                                               join b in _context.Books on bib.IdBook equals b.Id
                                               join lc in _context.LibraryCards on br.IdCard equals lc.Id
-                                              select b.ToViewModel(bib.ToViewModel(), bib.AmountBorrowed - bib.AmountReturn, lc)).ToListAsync();
+                                              select b.ToViewModel(bib.ToViewModel(), bib.AmountBorrowed - bib.AmountReturn, lc.ToViewModel())).ToListAsync();
 
             var booksTop = await _context.Books.OrderByDescending(x => x.TotalBorrow)
                 .Select(x => x.ToViewModel()).ToListAsync();
@@ -124,10 +128,10 @@ namespace LibraryManagement.UI.Services
             var cardsTop = await _context.LibraryCards.OrderByDescending(x => x.Exp).ToListAsync();
 
             var cardReturnLate = await (from bib in _context.BookInBorrows
-                                        where bib.TimeReturn < DateTime.Now && (bib.TimeReturn >= start & bib.TimeReturn <= end)
+                                        where bib.TimeReturn < bib.TimeRealReturn && (bib.TimeReturn >= start & bib.TimeReturn <= end)
                                         join borrow in _context.Borrows on bib.IdBorrow equals borrow.Id
                                         join card in _context.LibraryCards on borrow.IdCard equals card.Id
-                                        select card).ToListAsync();
+                                        select card).Distinct().ToListAsync();
             ;
 
             var cardLock = await _context.LibraryCards.Where(x => x.IsLock).ToListAsync();

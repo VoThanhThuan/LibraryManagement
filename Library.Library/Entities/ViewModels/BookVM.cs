@@ -62,7 +62,7 @@ namespace Library.Library.Entities.ViewModels
         public int StatisticalAmount { get; set; } = 0;
 
         public BookInBorrowVM BookInBorrow { get; set; }
-        public LibraryCard LibraryCard { get; set; }
+        public LibraryCardVM LibraryCard { get; set; }
 
     }
 }
