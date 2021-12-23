@@ -35,7 +35,7 @@ namespace LibraryManagement.UI.Services
         public async Task<List<(LibraryCard card, List<BookInBorrow> bibs)>> GetBorrows()
         {
             var listBorrow = await _context.Borrows
-                .Where(x => x.StatusBorrow == StatusBorrow.Borrowing).ToListAsync();
+                .Where(x => x.StatusBorrow == StatusBorrow.Borrowing || x.StatusBorrow == StatusBorrow.NotEnough).ToListAsync();
             //var borrows = new List<BorrowVM>();
             var ListCardAndBorrow = new List<(LibraryCard card, List<BookInBorrow> bibs)>();
             foreach (var borrow in listBorrow)
@@ -43,7 +43,7 @@ namespace LibraryManagement.UI.Services
                 var card = await _context.LibraryCards.FirstOrDefaultAsync(x => x.Id == borrow.IdCard);
                 if (card is null) continue;
                 var bibs = await _context.BookInBorrows
-                    .Where(x => x.IdBorrow == borrow.Id)
+                    .Where(x => x.IdBorrow == borrow.Id && x.AmountReturn < x.AmountBorrowed)
                     .Include(x => x.Book).ToListAsync();
                 //var listBook = bibs.Select(bib => bib.Book).ToList();
 
@@ -86,7 +86,7 @@ namespace LibraryManagement.UI.Services
             if (card is null) return null;
 
             var bibs = await _context.BookInBorrows
-                .Where(x => x.IdBorrow == borrow.Id)
+                .Where(x => x.IdBorrow == borrow.Id && x.AmountReturn < x.AmountBorrowed)
                 .Include(x => x.Book).ToListAsync();
 
             var retuenBook = new ReturnBookVM()
@@ -245,21 +245,24 @@ namespace LibraryManagement.UI.Services
 
         public async Task<bool> MissingBook(ReturnBookRequest request)
         {
-            var book = await _context.BookInBorrows.FirstOrDefaultAsync(x =>
+            var bib = await _context.BookInBorrows.FirstOrDefaultAsync(x =>
                 x.IdBorrow == request.IdBorrow && x.IdBook == request.IdBook);
 
             var borrow = await _context.Borrows.FirstOrDefaultAsync(x => x.Id == request.IdBorrow);
 
-            if (book == null)
+            if (bib == null)
                 return false;
             //Sử dụng chung AmountReturn trên giao diện
-            book.AmountMissing = request.AmountReturn;
+            bib.AmountMissing = request.AmountReturn;
 
-            if (book.AmountBorrowed <= book.AmountMissing)
-                book.AmountMissing = book.AmountBorrowed;
+            bib.TimeMissing=DateTime.Now;
 
-            borrow.AmountReturned = book.AmountMissing;
+            if (bib.AmountBorrowed <= bib.AmountMissing)
+                bib.AmountMissing = bib.AmountBorrowed;
+
+            borrow.AmountReturned = bib.AmountMissing;
             borrow.StatusBorrow = StatusBorrow.NotEnough;
+
 
             await _context.SaveChangesAsync();
             return true;

@@ -1,30 +1,15 @@
-﻿using Library.Library.Entities.ViewModels;
-using Library.Library.Enums;
+﻿using Library.Library.Enums;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace Library.Library.Entities
+namespace Library.Library.Entities.ViewModels
 {
-    public class LibraryCard
+    public class LibraryCardVM
     {
-        public LibraryCardVM ToViewModel()
-        {
-            return new() {
-                Id = Id,
-                MSSV = MSSV,
-                Name = Name,
-                Class = Class,
-                PhoneNumber = PhoneNumber,
-                Karma = Karma,
-                IsLock = IsLock,
-                Rank = Rank,
-                StatusCard = StatusCard,
-                Exp = Exp,
-                ExpLevelUp = ExpLevelUp,
-                Image = Image
-            };
-        }
         public Guid Id { get; set; }
         [Required]
         public string MSSV { get; set; } = "";
@@ -41,7 +26,5 @@ namespace Library.Library.Entities
         public int ExpLevelUp { get; set; } = 30; //Kinh nghiệm cần để lên cấp
         public string Image { get; set; } = ""; //hình thẻ
 
-        /*Khóa ngoại*/
-        public virtual List<Borrow> Borrows { get; set; }
     }
 }
