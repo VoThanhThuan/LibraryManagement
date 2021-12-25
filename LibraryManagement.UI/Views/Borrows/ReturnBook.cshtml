@@ -137,8 +137,18 @@
                                         <th style="width: 10.62%">
                                             <a href="#" class="data-sorter">Số lượng</a>
                                         </th>
+                                        @{
+                                            var amountMissing = Model.BookInBorrows.Select(x => x.AmountMissing).Sum();
+                                            var hidden = "hidden";
+                                            if (amountMissing > 0) {
+                                                hidden = "";
+                                            }
+                                        }
+                                    <th style="width: 10.62%" @hidden>
+                                        <a href="#" class="data-sorter">bị mất</a>
+                                    </th>
                                         <th style="width: 10.62%; text-align:right">
-                                            <a href="#" class="data-sorter">Actions</a>
+                                            <a href="#" class="data-sorter">Actions @(amountMissing)</a>
                                         </th>
                                     </tr>
                                 </thead>
@@ -159,22 +169,29 @@
                                             <td>
                                                 <span>@bib.TimeBorrowed</span>
                                             </td>
+
                                             <td>
                                                 @{ var amount = bib.AmountBorrowed - bib.AmountReturn - bib.AmountMissing;}
                                                 <span>@amount</span>
                                             </td>
+                                            <td @hidden>
+                                                <span>@bib.AmountMissing</span>
+                                            </td>
                                             <td style="text-align:right">
 
                                                 <form class="form" asp-antiforgery="true">
-                                                    <input asp-for="@bib.AmountReturn" type="number" name="AmountReturn" class="input-number" min="0" max="@amount" />
+                                                    <input type="number" name="AmountReturn" class="input-number" min="0" max="@(amount + bib.AmountMissing)" />
 
                                                     <input asp-for="@bib.AmountBorrowed" type="number" name="AmountReturn" class="light-text" min="0" max="@bib.AmountBorrowed" hidden />
                                                     <input asp-for="@bib.IdBook" name="IdBook" class="light-text" value="@bib.IdBook" hidden />
                                                     <input asp-for="@bib.IdBorrow" name="IdBook" class="light-text" value="@bib.IdBook" hidden />
                                                     <input asp-for="@Model.IdCard" name="IdCard" value="@Model.IdCard" hidden />
                                                     <input asp-for="@Model.IdBorrow" name="IdBorrow" value="@Model.IdBorrow" hidden />
-                                                    <button type="button" class="btn-return">Trả</button>
-                                                    <button type="button" class="btn-missing">Báo mất</button>
+                                                    <button type="button" id="btn-return" class="btn-return">Trả</button>
+                                                    <button type="button" id="btn-missing" class="btn-return">Báo mất</button>
+                                                    @if (bib.AmountMissing > 0) {
+                                                        <button type="button" id="btn-return-missing" class="btn-return">Trả sách mất</button>
+                                                    }
                                                 </form>
 
                                             </td>
@@ -204,14 +221,14 @@
     <script>
         $$('.form').forEach(f => {
             console.log(f);
-            f.querySelector('.btn-return').addEventListener('click', e => {
+            f.querySelector('#btn-return').addEventListener('click', e => {
                 const form = new FormData(f)
                 fetch('/Borrows/api/ReturnBook', {
                     method: 'POST',
                     body: form
                 }).then(res => {
                     if (res.status == 200) {
-                        alert('Trả sách thành công')
+                        //alert('Trả sách thành công')
                         window.location.reload()
                     } else {
                         alert('Trả sách thất bại')
@@ -219,7 +236,7 @@
                 }).then(res => res.json())
 
             })
-            f.querySelector('.btn-missing').addEventListener('click', e => {
+            f.querySelector('#btn-missing').addEventListener('click', e => {
                 const form = new FormData(f)
                 fetch('/Borrows/api/MissingBook', {
                     method: 'POST',
@@ -231,6 +248,22 @@
                         window.location.reload()
                     } else {
                         alert('Báo mất sách thất bại')
+                    }
+                }).then(res => res.json())
+
+            })
+            f.querySelector('#btn-return-missing').addEventListener('click', e => {
+                const form = new FormData(f)
+                fetch('/Borrows/api/ReturnMissingBook', {
+                    method: 'POST',
+                    body: form
+                }).then(res => {
+                    console.log(res);
+                    if (res.status == 200) {
+                        alert('Trả sách bị mất thành công')
+                        window.location.reload()
+                    } else {
+                        alert('Trả sách bị mất mất sách thất bại')
                     }
                 }).then(res => res.json())
 

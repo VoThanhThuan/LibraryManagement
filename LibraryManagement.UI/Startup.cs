@@ -54,6 +54,10 @@ namespace LibraryManagement.UI
                 opts.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(10);
                 opts.Lockout.MaxFailedAccessAttempts = 3;
             });
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.ExpireTimeSpan = TimeSpan.FromDays(1);
+            });
 
             services.AddIdentity<User, Role>()
                 .AddEntityFrameworkStores<LibraryDbContext>()

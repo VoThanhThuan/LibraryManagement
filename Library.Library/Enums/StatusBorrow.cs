@@ -10,6 +10,7 @@ namespace Library.Library.Enums
     {
         Borrowing,
         Finish,
-        NotEnough
+        NotEnough,
+        Missing
     }
 }

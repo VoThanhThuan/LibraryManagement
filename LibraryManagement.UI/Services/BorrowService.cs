@@ -230,6 +230,13 @@ namespace LibraryManagement.UI.Services
 
             var card = await _context.LibraryCards.FindAsync(request.IdCard);
 
+            var amount = bib.AmountBorrowed - bib.AmountReturn - bib.AmountMissing;
+
+            if (request.AmountReturn > amount)
+            {
+                request.AmountReturn = amount;
+            }
+
             bib.AmountReturn += request.AmountReturn;
 
             // Xử lý lỗi: nếu số lượng sách đang mượn bé hơn số sách trả thì coi như trả hết.
@@ -238,17 +245,17 @@ namespace LibraryManagement.UI.Services
             }
 
             // Xử lý lỗi: nếu số sách trả cộng với số sách bị mất mà lớn hơn số sách đã mượn thì phải trừ lại số sách trả.
-            if (bib.AmountBorrowed < bib.AmountReturn + bib.AmountMissing)
-            {
-                // Số sách trả trừ cho số sách đã mất
-                bib.AmountReturn -= bib.AmountMissing;
-            }
+            //if (bib.AmountBorrowed < bib.AmountReturn + bib.AmountMissing)
+            //{
+            //    // Số sách trả trừ cho số sách đã mất
+            //    bib.AmountReturn -= bib.AmountMissing;
+            //}
 
             // Cập nhật tổng số sách mất
-            borrow.AmountMissing += bib.AmountMissing;
+            //borrow.AmountMissing += bib.AmountMissing;
 
             // Cập nhật vào tổng số sách trả được
-            borrow.AmountReturned += bib.AmountReturn;
+            borrow.AmountReturned += request.AmountReturn;
 
 
             bib.TimeRealReturn = DateTime.Now;
@@ -285,20 +292,67 @@ namespace LibraryManagement.UI.Services
 
             if (bib == null)
                 return false;
+
+            var amount = bib.AmountBorrowed - bib.AmountReturn - bib.AmountMissing;
+
+            if (request.AmountReturn > amount) {
+                request.AmountReturn = amount;
+            }
+
             //Sử dụng chung AmountReturn trên giao diện
-            bib.AmountMissing = request.AmountReturn;
+            bib.AmountMissing += request.AmountReturn;
 
             bib.TimeMissing=DateTime.Now;
 
             if (bib.AmountBorrowed <= bib.AmountMissing)
                 bib.AmountMissing = bib.AmountBorrowed;
 
-            borrow.AmountReturned = bib.AmountMissing;
-            borrow.StatusBorrow = StatusBorrow.NotEnough;
+            borrow.AmountMissing += request.AmountReturn;
+            borrow.StatusBorrow = StatusBorrow.Missing;
 
 
             await _context.SaveChangesAsync();
             return true;
         }
+
+        public async Task<bool> ReturnMissingBook(ReturnBookRequest request)
+        {
+            var bib = await _context.BookInBorrows.FirstOrDefaultAsync(x =>
+                x.IdBorrow == request.IdBorrow && x.IdBook == request.IdBook);
+
+            var borrow = await _context.Borrows.FirstOrDefaultAsync(x => x.Id == request.IdBorrow);
+
+            if (bib == null)
+                return false;
+            //var amount = bib.AmountBorrowed - bib.AmountReturn - bib.AmountMissing;
+            if (request.AmountReturn > bib.AmountMissing) {
+                request.AmountReturn = bib.AmountMissing;
+            }
+            //Sử dụng chung AmountReturn trên giao diện
+            bib.AmountMissing -= request.AmountReturn;
+
+            if (bib.AmountMissing <= 0)
+            {
+                bib.AmountMissing = 0;
+                bib.TimeMissing = null;
+            }
+
+            bib.AmountReturn += request.AmountReturn;
+
+            bib.TimeMissing = DateTime.Now;
+            
+
+            if (bib.AmountBorrowed <= bib.AmountMissing)
+                bib.AmountMissing = bib.AmountBorrowed;
+
+            borrow.AmountReturned += request.AmountReturn;
+            if (borrow.AmountReturned >= borrow.AmountBorrow)
+                borrow.StatusBorrow = StatusBorrow.Finish;
+            else
+                borrow.StatusBorrow = StatusBorrow.Missing;
+            await _context.SaveChangesAsync();
+            return true;
+        }
+
     }
 }

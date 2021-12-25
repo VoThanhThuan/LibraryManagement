@@ -116,7 +116,7 @@ namespace LibraryManagement.UI.Controllers
                 var result = await _borrow.PostBorrow(borrow, idBooks);
                 if (!result.isSuccess)
                 {
-                    TempData["error"] = $"Thẻ của đã mượn sách rồi , không thể mượn nữa";
+                    TempData["error"] = $"Lỗi mượn";
                     return Redirect("/Borrows");
                 }
                 isSuccess = result.isSuccess;
@@ -226,6 +226,18 @@ namespace LibraryManagement.UI.Controllers
             if (!result)
                 return Conflict("Số lượng báo mất không được bé hơn 1");
             return Ok("Báo mất thành công");
+        }
+
+        [HttpPost("api/ReturnMissingBook")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ReturnMissingBook(ReturnBookRequest request)
+        {
+            if (request.AmountReturn <= 0) return BadRequest("Số lượng trả không được bé hơn 1");
+            var result = await _borrow.ReturnMissingBook(request);
+            if (!result)
+                return Conflict("Số lượng trả không được bé hơn 1");
+            TempData["success"] = $"Đã trả {request.AmountReturn} bị mất thành công";
+            return Ok("Trả sách báo mất thành công thành công");
         }
 
         [HttpGet("Edit")]
