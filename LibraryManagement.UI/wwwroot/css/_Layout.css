@@ -258,6 +258,7 @@ div {
                     min-width: 6.8rem;
                     height: 6.8rem;
                     border-radius: 100%;
+                    object-fit: cover;
                 }
 
             .dropdown-menu .dropdown-content .dropdown-head .v-avatar {

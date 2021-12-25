@@ -81,7 +81,7 @@
                         </div>
                         <div class="section-placeholder">
                             <div class="placeholder-content">
-                                <img class="dark-image" src="/avatar/cart-placeholder.svg" alt="">
+                                <img class="dark-image" src="/public/cart-placeholder.svg" alt="">
                                 <h3 class="dark-inverted">No Items</h3>
                                 <p>Your cart is currently empty. Start adding products.</p>
                             </div>
@@ -168,14 +168,14 @@
                                                         </div>
                                                     </div>
                                                     <div class="flex-table-cell">
-                                                        <span class="light-text"> ${book.amount}</span>
+                                                        <span class="light-text book-amount" id="${book.id}">${book.amount}</span>
                                                     </div>
                                                     <div class="" hidden>
                                                         <span class="light-text">${book.idlibrarycode}</span>
                                                     </div>
                                                     <div class="flex-table-cell cell-end">
                                                         <div>
-                                                            <button type="button" class="button-hint hint--bubble add-book-borrow-search" data-hint="Thêm" value="${book.id}" data-quantity="${book.amount}" data-thumnail="${book.thumbnail}" data-bookname="${book.name}" data-author="${book.author}">
+                                                            <button type="button" class="button-hint hint--bubble add-book" data-amount="${book.amount}"  data-exist="false" data-hint="Thêm" value="${book.id}" data-quantity="${book.amount}" data-thumnail="${book.thumbnail}" data-bookname="${book.name}" data-author="${book.author}">
                                                                 <span class="icon">
                                                                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--feather" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" data-icon="feather:bookmark"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5l-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></g></svg>
                                                                 </span>
@@ -185,15 +185,35 @@
                                                     </div>
                                                 
                                                                  `;
-                        $$('.add-book-borrow-search').forEach(function (button) {
+                        $$('.add-book').forEach(function (button) {
                             button.addEventListener('click',
                                 function () {
+                                   
                                     $('.section-placeholder').classList.add('hidden')
                                     $('.cart-items').classList.remove('hidden')
+
+                                    // Check book-amount
+                                    //var Amount = $(`#${button.value}`)
+                                   
+                                    //if (button.value == Amount.id) {
+                                    //    var dataAmount = button.dataset.amount
+                                    //    button.dataset.amount = parseInt(dataAmount) - 1
+
+                                    //    Amount.innerHTML = button.dataset.amount
+                                    //}
+                                    //else {
+                                    //    console.log('false')
+                                    //}
+                                    
+                                   /* console.log(parseInt(dataAmount) - 1)*/
+
                                     //add element to html dom
-                                    $('#book-choose').innerHTML += `    
-                                                <div class="cart-item">
-                                                    <input name="idBooks" value="${button.value}" hidden>
+                                   
+                                    if (button.dataset.exist == 'false') {
+                                        button.dataset.exist = 'true';
+                                        $('#book-choose').innerHTML += `    
+                                                <div class="cart-item" id="cart-item-${button.value}">
+                                                  
                                                     <div class="cover-book">
                                                         <img src="${button.dataset.thumnail}" alt="">
                                                     </div>
@@ -201,22 +221,81 @@
                                                         <span class="book-name">${button.dataset.bookname}</span>
                                                         <span class="author">${button.dataset.author}</span>
                                                     </div>
-                                                    <a class="remove-item"  id="action-btn">
+                                                    <div id="price-${button.value}" data-p="1">Số Lượng: 1</div>
+                                                    <a class="remove-item" onclick="removeInput('${button.value}')" id="remove-item-${button.value}">
                                                         <i class="fal fa-trash-alt"></i>
                                                     </a>
+                                                    <div class="input-value-${button.value}">
+                                                        <input class="input-${button.value}" value="${button.value}" hidden>
+                                                    </div>  
                                                 </div>
                                              `;
-                                    //const checkQuantity = button.dataset.quantity
-                                    //console.log(checkQuantity)
-                                    //$('.quantity-book-choose').innerHTML = ++quantity;
+                                    }
+                                    else {
+                                        // Thêm thẻ input
+                                        const input = document.createElement('input');
+                                        input.setAttribute('class', `input-${button.value}`);
+                                        input.setAttribute('value', button.value);
+                                        input.setAttribute('hidden', true);
+                                        const inputValue = $(`.input-value-${button.value}`);
+                                        inputValue.appendChild(input);
 
+                                        var price = $(`#price-${button.value}`)
+                                        price.innerHTML = `Số Lượng: ${parseInt(price.dataset.p) + 1}`;
+                                        price.dataset.p = parseInt(price.dataset.p) + 1;
+
+                                    }
+
+                                  
+                                   
                                 });
                         });
 
                     });
-                });
+                })
+            
         }
 
+        function removeInput(parameter) {
+           
+            var cart = $(`#cart-item-${parameter}`);
+            var price = $(`#price-${parameter}`);
+            var inputValues = $$(`.input-${parameter}`);
+
+            //let amount = $(`#${parameter}`)
+            //let number = amount.innerHTML
+            //amount.innerHTML = parseInt(number) + 1
+            //console.log(amount.innerHTML)
+
+            let Price = $(`#price-${parameter}`)
+            console.log(Price.dataset.p)
+
+            //if (parameter == Amount.id) {
+            //    var dataAmount = 
+            //    button.dataset.amount = parseInt(dataAmount) + 1
+
+            //    Amount.innerHTML = button.dataset.amount
+            //}
+            //else {
+            //    console.log('false')
+            //}
+
+
+            if (inputValues.length > 1) {
+                inputValues[0].remove();
+            } else {
+                inputValues[0].remove();
+                cart.remove();
+                $$(".add-book").forEach(function (button) {
+                    if (button.value == parameter) {
+                        button.dataset.exist = 'false';
+                    }
+                });
+            }
+            price.dataset.p = inputValues.length;
+
+            price.innerHTML = `Số Lượng: ${parseInt(price.dataset.p) - 1}`;
+        }
         searchbook("!all");
         //use fetch api to get data from server https://localhost:5001/Books/SearchApi/content, delay 1s for each text append
 
