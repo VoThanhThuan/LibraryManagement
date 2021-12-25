@@ -109,6 +109,9 @@ namespace LibraryManagement.UI.Services
             if (libcrad is null)
                 return (false, null);
 
+            if (libcrad.StatusCard == StatusCard.Borrowed)
+                return (false, null);
+
             var idBorrow = Guid.Empty;
 
             if (libcrad.StatusCard == StatusCard.Borrowed)

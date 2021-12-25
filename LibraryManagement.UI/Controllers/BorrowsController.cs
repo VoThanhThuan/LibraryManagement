@@ -114,9 +114,12 @@ namespace LibraryManagement.UI.Controllers
 
             if (ModelState.IsValid) {
                 var result = await _borrow.PostBorrow(borrow, idBooks);
-
+                if (!result.isSuccess)
+                {
+                    TempData["error"] = $"Thẻ của đã mượn sách rồi , không thể mượn nữa";
+                    return Redirect("/Borrowws");
+                }
                 isSuccess = result.isSuccess;
-
             }
             var libCard = await _context.LibraryCards.FindAsync(idCard);
 
