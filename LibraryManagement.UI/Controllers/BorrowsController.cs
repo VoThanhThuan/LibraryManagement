@@ -32,10 +32,19 @@ namespace LibraryManagement.UI.Controllers
         }
 
         // GET: Borrows
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(Guid? idCard = null)
         {
             //var libraryDbContext = _context.Borrows.Include(b => b.LibraryCard);
-            var ListCardAndBorrow = await _borrow.GetBorrows();
+           var ListCardAndBorrow = new List<(LibraryCard card, (Borrow borrow, List<BookInBorrow> bibs) details)>();
+            if (idCard != null)
+            {
+                ListCardAndBorrow = await _borrow.GetBorrows(idCard);
+                ViewData["borrow-on"] = "On";
+            }
+            else
+            {
+                ListCardAndBorrow = await _borrow.GetBorrows();
+            }
             return View(ListCardAndBorrow);
         }
 
@@ -149,19 +158,27 @@ namespace LibraryManagement.UI.Controllers
             if (card is null)
                 return RedirectToAction(nameof(Index));
 
+            if (idBorrow == Guid.Empty)
+            {
+                var borrows = await _borrow.GetBorrowsWithCard(idCard);
+                if (borrows.Count > 1) {
+                    return Redirect($"/Borrows?idCard={idCard}");
+                }
+            }
+
+
             ViewBag.LibraryCard = card;
-            if (idCard != Guid.Empty) {
+            cardAndBook.IdCard = idCard;
+            if (idBorrow != Guid.Empty) {
+                cardAndBook = await _borrow.GetBorrow(idBorrow);
+                return View(cardAndBook);
+            }else if (idCard != Guid.Empty ) {
                 cardAndBook = await _borrow.GetBorrowWithCard(idCard);
                 if (cardAndBook is null)
                     return RedirectToAction(nameof(Index));
 
-                cardAndBook.IdCard = idCard;
-
                 return View(cardAndBook);
-            } else if (idBorrow != Guid.Empty) {
-                cardAndBook = await _borrow.GetBorrow(idBorrow);
-                return View(cardAndBook);
-            }
+            }  
 
             return RedirectToAction(nameof(Index));
         }

@@ -43,11 +43,11 @@ namespace LibraryManagement.UI.Services
         {
             if (content == "!all")
             {
-                return await _context.Books.Select(x => x.ToViewModel()).ToListAsync();
+                return await _context.Books.Where(x => x.Amount > 0).Select(x => x.ToViewModel()).ToListAsync();
             }
 
             var books = await _context.Books
-                .Where(x => x.Id.ToLower().Contains(content.ToLower()) || x.Name.ToLower().Contains(content.ToLower()))
+                .Where(x => x.Amount > 0 && (x.Id.ToLower().Contains(content.ToLower()) || x.Name.ToLower().Contains(content.ToLower())))
                 .Take(10)
                 .Select(x => x.ToViewModel()).ToListAsync();
 

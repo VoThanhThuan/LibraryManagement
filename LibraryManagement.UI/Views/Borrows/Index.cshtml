@@ -1,5 +1,6 @@
 ﻿@using Library.Library.Entities
-@model List<(LibraryCard card, List<BookInBorrow> bibs)>
+@using Library.Library.Enums
+@model List<(LibraryCard card, (Borrow borrow, List<BookInBorrow> bibs) details)>
 
 @{
     ViewData["Title"] = "Index";
@@ -9,7 +10,7 @@
 <style>
     .collapsible {
         background-color: #222225;
-        color:  white;
+        color: white;
         cursor: pointer;
         padding: 18px;
         width: 100%;
@@ -30,17 +31,36 @@
         overflow: hidden;
         background-color: #39393b;
         border-radius: 5px;
-        margin-top:5px;
+        margin-top: 5px;
     }
 </style>
 
 @foreach (var item in Model) {
     <button type="button" class="collapsible">
         <span>
-            @item.card.Class > @item.card.MSSV > @item.card.Name > 
-            <a href="Borrows/ReturnBook?idCard=@item.card.Id" class="button i-button b-success">
-                <span>Trả Sách</span>
-            </a>
+            @item.card.Class > @item.card.MSSV > @item.card.Name | @item.details.borrow.DateBorrow | @item.details.borrow.AmountBorrow >
+            @switch (item.details.borrow.StatusBorrow) {
+                case StatusBorrow.NotEnough:
+                    <span>Chưa trả đủ</span>
+                    break;
+                case StatusBorrow.Borrowing:
+                    <span>Chưa trả cuốn nào</span>
+                    break;
+                case StatusBorrow.Missing:
+                    <span>Làm mất</span>
+                    break;
+
+            }
+            >
+            @if (ViewData["borrow-on"] != null) {
+                <a href="Borrows/ReturnBook?idCard=@item.card.Id&&idBorrow=@item.details.borrow.Id" class="button i-button b-success">
+                    <span>Trả Sách</span>
+                </a>
+            } else {
+                <a href="Borrows/ReturnBook?idCard=@item.card.Id" class="button i-button b-success">
+                    <span>Trả Sách</span>
+                </a>
+            }
         </span>
     </button>
     <div class="content-collapse">
@@ -56,7 +76,7 @@
                         <span>Thời gian trả</span>
                     </div>
 
-                    @foreach (var bib in item.bibs) {
+                    @foreach (var bib in item.details.bibs) {
                         <div class="flex-list-inner">
                             <div>
                                 <div class="flex-table-item">
@@ -101,20 +121,20 @@
 
 
 @section Scripts{
-<script>
-    var coll = document.getElementsByClassName("collapsible");
-    var i;
+    <script>
+        var coll = document.getElementsByClassName("collapsible");
+        var i;
 
-    for (i = 0; i < coll.length; i++) {
-        coll[i].addEventListener("click", function() {
-            this.classList.toggle("active");
-            var content = this.nextElementSibling;
-            if (content.style.display === "block") {
-                content.style.display = "none";
-            } else {
-                content.style.display = "block";
-            }
-        });
-    }
-</script>
+        for (i = 0; i < coll.length; i++) {
+            coll[i].addEventListener("click", function () {
+                this.classList.toggle("active");
+                var content = this.nextElementSibling;
+                if (content.style.display === "block") {
+                    content.style.display = "none";
+                } else {
+                    content.style.display = "block";
+                }
+            });
+        }
+    </script>
 }

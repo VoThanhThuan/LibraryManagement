@@ -32,12 +32,13 @@ namespace LibraryManagement.UI.Services
         }
 
 
-        public async Task<List<(LibraryCard card, List<BookInBorrow> bibs)>> GetBorrows()
+        public async Task<List<(LibraryCard card, (Borrow borrow, List<BookInBorrow> bibs) details)>> GetBorrows()
         {
+            var ListCardAndBorrow = new List<(LibraryCard card, (Borrow borrow, List<BookInBorrow> bibs) details)>();
+
             var listBorrow = await _context.Borrows
                 .Where(x => x.StatusBorrow == StatusBorrow.Borrowing || x.StatusBorrow == StatusBorrow.NotEnough).ToListAsync();
             //var borrows = new List<BorrowVM>();
-            var ListCardAndBorrow = new List<(LibraryCard card, List<BookInBorrow> bibs)>();
             foreach (var borrow in listBorrow)
             {
                 var card = await _context.LibraryCards.FirstOrDefaultAsync(x => x.Id == borrow.IdCard);
@@ -47,7 +48,26 @@ namespace LibraryManagement.UI.Services
                     .Include(x => x.Book).ToListAsync();
                 //var listBook = bibs.Select(bib => bib.Book).ToList();
 
-                ListCardAndBorrow.Add((card, bibs));
+                ListCardAndBorrow.Add((card, (borrow, bibs)));
+            }
+
+            return ListCardAndBorrow;
+        }
+
+        public async Task<List<(LibraryCard card, (Borrow borrow, List<BookInBorrow> bibs) details )>> GetBorrows(Guid? idCard)
+        {
+            var ListCardAndBorrow = new List<(LibraryCard card, (Borrow borrow, List<BookInBorrow> bibs) details)>();
+
+            var card = await _context.LibraryCards.FirstOrDefaultAsync(x => x.Id == idCard);
+
+            var listBorrow = await _context.Borrows
+                .Where(  x => x.IdCard == idCard && (x.StatusBorrow == StatusBorrow.Borrowing || x.StatusBorrow == StatusBorrow.NotEnough || x.StatusBorrow == StatusBorrow.Missing)).ToListAsync();
+            foreach (var borrow in listBorrow) {
+                var bibs = await _context.BookInBorrows
+                    .Where(x => x.IdBorrow == borrow.Id && x.AmountReturn < x.AmountBorrowed)
+                    .Include(x => x.Book).ToListAsync();
+
+                ListCardAndBorrow.Add((card, (borrow,bibs)));
             }
 
             return ListCardAndBorrow;
@@ -55,7 +75,7 @@ namespace LibraryManagement.UI.Services
 
         public async Task<ReturnBookVM> GetBorrow(Guid idBorrow)
         {
-            var borrow = await _context.Borrows.FirstOrDefaultAsync(x => x.Id == idBorrow && x.StatusBorrow == StatusBorrow.Borrowing);
+            var borrow = await _context.Borrows.FirstOrDefaultAsync(x => x.Id == idBorrow && x.StatusBorrow == StatusBorrow.Borrowing || x.StatusBorrow == StatusBorrow.Missing);
             //var borrows = new List<BorrowVM>();
 
             var card = await _context.LibraryCards.FirstOrDefaultAsync(x => x.Id == borrow.IdCard);
@@ -100,6 +120,40 @@ namespace LibraryManagement.UI.Services
             return retuenBook;
         }
 
+        //public async Task<ReturnBookVM> GetBorrowWithCard(Guid idCard, Guid idBorrow)
+        //{
+        //    Borrow borrow;
+        //    if (idBorrow != Guid.Empty)
+        //        borrow = await _context.Borrows.FirstOrDefaultAsync(x => x.IdCard == idCard && x.Id == idBorrow && x.StatusBorrow != StatusBorrow.Finish);
+        //    else {
+        //        borrow = await _context.Borrows.FirstOrDefaultAsync(x => x.IdCard == idCard && x.StatusBorrow != StatusBorrow.Finish);
+        //    }
+        //    //var borrows = new List<BorrowVM>();
+        //    if (borrow is null)
+        //        return null;
+        //    var card = await _context.LibraryCards.FirstOrDefaultAsync(x => x.Id == borrow.IdCard);
+        //    if (card is null) return null;
+
+        //    var bibs = await _context.BookInBorrows
+        //        .Where(x => x.IdBorrow == borrow.Id && x.AmountReturn < x.AmountBorrowed)
+        //        .Include(x => x.Book).ToListAsync();
+
+        //    var retuenBook = new ReturnBookVM() {
+        //        IdCard = card.Id,
+        //        IdBorrow = borrow.Id,
+        //        BookInBorrows = bibs,
+        //        LibraryCard = card
+        //    };
+
+        //    return retuenBook;
+        //}
+
+        public async Task<List<Borrow>> GetBorrowsWithCard(Guid idCard)
+        {
+            var borrow = await _context.Borrows.Where(x => x.IdCard == idCard && x.StatusBorrow != StatusBorrow.Finish).ToListAsync();
+            return borrow;
+
+        }
         public async Task<(bool isSuccess, BorrowVM borrow)> PostBorrow(Borrow request, List<string> idBooks)
         {
             var user = await _context.Users.FirstOrDefaultAsync(x => x.Id == request.IdUser);
@@ -137,7 +191,7 @@ namespace LibraryManagement.UI.Services
 
             foreach (var idBook in idBooks)
             {
-                var book = await _context.Books.FindAsync(idBook);
+                var book = await _context.Books.FirstOrDefaultAsync(x => x.Id == idBook && x.Amount > 0);
                 if (book is null) continue;
                 book.TotalBorrow += 1;
                 var bib = await _context.BookInBorrows.FirstOrDefaultAsync(x => x.IdBook == idBook && x.IdBorrow == idBorrow);
@@ -197,13 +251,14 @@ namespace LibraryManagement.UI.Services
 
 
             var bibs = await _context.BookInBorrows.Where(x => x.IdBorrow == idBorrow).ToListAsync();
-            if (bibs.Count < 1) return false;
 
             var card = await _context.LibraryCards.FindAsync(idCard);
             //</truy xuất dữ liệu>
-
+            
             foreach (var item in bibs) {
-                item.AmountReturn = item.AmountBorrowed;
+                var amount = item.AmountBorrowed - item.AmountReturn - item.AmountMissing;
+
+                item.AmountReturn = amount;
                 item.TimeRealReturn = DateTime.Now;
             }
 
@@ -285,6 +340,8 @@ namespace LibraryManagement.UI.Services
 
         public async Task<bool> MissingBook(ReturnBookRequest request)
         {
+            var card = await _context.LibraryCards.FindAsync(request.IdCard);
+
             var bib = await _context.BookInBorrows.FirstOrDefaultAsync(x =>
                 x.IdBorrow == request.IdBorrow && x.IdBook == request.IdBook);
 
@@ -308,8 +365,12 @@ namespace LibraryManagement.UI.Services
                 bib.AmountMissing = bib.AmountBorrowed;
 
             borrow.AmountMissing += request.AmountReturn;
+            var amountBorrow = borrow.AmountBorrow - borrow.AmountReturned - borrow.AmountMissing ;
+            if (amountBorrow <= 0)
+            {
+                card.StatusCard = StatusCard.CanBorrow;
+            }
             borrow.StatusBorrow = StatusBorrow.Missing;
-
 
             await _context.SaveChangesAsync();
             return true;
@@ -317,6 +378,9 @@ namespace LibraryManagement.UI.Services
 
         public async Task<bool> ReturnMissingBook(ReturnBookRequest request)
         {
+            var card = await _context.LibraryCards.FindAsync(request.IdCard);
+
+
             var bib = await _context.BookInBorrows.FirstOrDefaultAsync(x =>
                 x.IdBorrow == request.IdBorrow && x.IdBook == request.IdBook);
 
@@ -346,9 +410,13 @@ namespace LibraryManagement.UI.Services
                 bib.AmountMissing = bib.AmountBorrowed;
 
             borrow.AmountReturned += request.AmountReturn;
+            borrow.AmountMissing -= request.AmountReturn;
+
             if (borrow.AmountReturned >= borrow.AmountBorrow)
+            {
+                card.StatusCard = StatusCard.CanBorrow;
                 borrow.StatusBorrow = StatusBorrow.Finish;
-            else
+            } else
                 borrow.StatusBorrow = StatusBorrow.Missing;
             await _context.SaveChangesAsync();
             return true;
