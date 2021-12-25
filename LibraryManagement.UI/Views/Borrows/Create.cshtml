@@ -144,10 +144,8 @@
                     //clear html dom
                     $('#book-search').innerHTML = '';
                     //append data to html dom
-                    //
-
                     data.forEach(function (book) {
-
+                        let bookName = book.name.toUpperCase()
                         $('#book-search').innerHTML += `
 
                                                         <div class="flex-table-cell" hidden>
@@ -159,7 +157,7 @@
                                                                     <img class="medium" src="${book.thumbnail}" alt="">
                                                                 </div>
                                                                 <div>
-                                                                    <span class="item-name">${book.name}</span>
+                                                                    <span class="item-name">${bookName}</span>
                                                                     <span class="item-meta text-name">
                                                                         <span>Tác giả: ${book.author}</span>
                                                                     </span>
@@ -190,23 +188,10 @@
 
                                     $('.section-placeholder').classList.add('hidden')
                                     $('.cart-items').classList.remove('hidden')
+                                    // Check if parseInt($(this).data('quantity')) < parseInt($(this).data('amount'))
 
-                                    // Check book-amount
-                                    //var Amount = $(`#${button.value}`)
 
-                                    //if (button.value == Amount.id) {
-                                    //    var dataAmount = button.dataset.amount
-                                    //    button.dataset.amount = parseInt(dataAmount) - 1
-
-                                    //    Amount.innerHTML = button.dataset.amount
-                                    //}
-                                    //else {
-                                    //    console.log('false')
-                                    //}
-
-                                    /* console.log(parseInt(dataAmount) - 1)*/
-
-                                    //add element to html dom
+                                    // Check book-amount > 
 
                                     if (button.dataset.exist == 'false') {
                                         button.dataset.exist = 'true';
@@ -231,21 +216,28 @@
                                                      `;
                                     }
                                     else {
-                                        // Thêm thẻ input
-                                        const input = document.createElement('input');
-                                        input.setAttribute('class', `input-${button.value}`);
-                                        input.setAttribute('value', button.value);
-                                        input.setAttribute('name', 'idBooks')
-                                        input.setAttribute('hidden', true);
-                                        const inputValue = $(`.input-value-${button.value}`);
-                                        inputValue.appendChild(input);
-
                                         var price = $(`#price-${button.value}`)
-                                        price.innerHTML = `Số Lượng: ${parseInt(price.dataset.p) + 1}`;
-                                        price.dataset.p = parseInt(price.dataset.p) + 1;
+                                        let quantity = parseInt(button.dataset.quantity)
+                                        let amount = parseInt(price.dataset.p)
+                                        let name = button.dataset.bookname.toUpperCase();
+                                        // Thêm thẻ input
+                                        if (quantity <= amount) {
+                                            alert(`Sách ${name} đã hết!`)
+                                        }
+                                        else{
+                                            const input = document.createElement('input');
+                                            input.setAttribute('class', `input-${button.value}`);
+                                            input.setAttribute('value', button.value);
+                                            input.setAttribute('name', 'idBooks')
+                                            input.setAttribute('hidden', true);
+                                            const inputValue = $(`.input-value-${button.value}`);
+                                            inputValue.appendChild(input);
 
+                                          
+                                            price.innerHTML = `Số Lượng: ${amount + 1}`;
+                                            price.dataset.p = amount + 1;
+                                        }
                                     }
-
 
 
                                 });
@@ -257,6 +249,9 @@
         }
 
         function removeInput(parameter) {
+
+            $('.section-placeholder').classList.remove('hidden')
+            $('.cart-items').classList.add('hidden')
 
             var cart = $(`#cart-item-${parameter}`);
             var price = $(`#price-${parameter}`);
@@ -274,9 +269,8 @@
                     }
                 });
             }
-            price.dataset.p = inputValues.length;
-
             price.innerHTML = `Số Lượng: ${parseInt(price.dataset.p) - 1}`;
+            price.dataset.p = parseInt(price.dataset.p) - 1; 
         }
 
 
