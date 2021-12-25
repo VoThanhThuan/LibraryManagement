@@ -26,10 +26,10 @@ namespace Library.Library.Entities.ViewModels
 
         /* Khóa */
         public string IdBook { get; set; }
-        public Book Book { get; set; }
+        //public Book Book { get; set; }
 
         public Guid IdBorrow { get; set; }
-        public Borrow Borrow { get; set; }
+        //public Borrow Borrow { get; set; }
         /* Khóa */
     }
 }

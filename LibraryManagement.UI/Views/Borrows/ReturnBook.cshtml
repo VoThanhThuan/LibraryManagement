@@ -90,7 +90,7 @@
                         <div class="right">
                             <div class="buttons">
                                 <div>
-                                    <form>
+                                    <form action="/Borrows/ReturnBookAll" method="post">
                                         <input asp-for="@Model.IdBorrow" name="IdBorrow" value="@Model.IdBorrow" hidden />
                                         <input asp-for="@Model.IdCard" name="IdCard" value="@Model.IdCard" hidden />
                                         @*<select asp-for="@Model.LibraryCard.Id" name="IdCard" class="form-control" asp-items="ViewBag.IdCard"></select>*@

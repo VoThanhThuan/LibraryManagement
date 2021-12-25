@@ -58,8 +58,11 @@ namespace Library.Library.Entities.ViewModels
         public DateTime? TimeMissing { get; set; } = null;
         public DateTime TimeBorrowed { get; set; }
         public DateTime TimeReturn { get; set; }
+
         public int StatisticalAmount { get; set; } = 0;
 
+        public BookInBorrowVM BookInBorrow { get; set; }
+        public LibraryCardVM LibraryCard { get; set; }
 
     }
 }

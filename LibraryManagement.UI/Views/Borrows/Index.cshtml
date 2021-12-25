@@ -8,8 +8,8 @@
 
 <style>
     .collapsible {
-        background-color: #777;
-        color: white;
+        background-color: #222225;
+        color:  white;
         cursor: pointer;
         padding: 18px;
         width: 100%;
@@ -17,6 +17,7 @@
         text-align: left;
         outline: none;
         font-size: 15px;
+        border-radius: 5px;
     }
 
         .active, .collapsible:hover {
@@ -27,15 +28,11 @@
         padding: 0 18px;
         display: none;
         overflow: hidden;
-        background-color: #f1f1f1;
+        background-color: #39393b;
+        border-radius: 5px;
+        margin-top:5px;
     }
 </style>
-
-<h1>Index</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
 
 @foreach (var item in Model) {
     <button type="button" class="collapsible">
@@ -54,7 +51,7 @@
                     <div class="flex-table-header">
                         <span class="is-grow-2">Ảnh bìa</span>
                         <span>Số lượng mượn</span>
-                        <span>Tình trạng</span>
+                        <span>Số lượng đã trả</span>
                         <span>Thời gian mượn</span>
                         <span>Thời gian trả</span>
                     </div>
@@ -79,7 +76,7 @@
                                     </div>
 
                                     <div class="flex-table-cell">
-                                        <span class="light-text">@bib.Book.StatusBook</span>
+                                        <span class="light-text">@bib.AmountReturn</span>
                                     </div>
                                     <div class="flex-table-cell">
                                         <span class="light-text">@bib.TimeBorrowed</span>

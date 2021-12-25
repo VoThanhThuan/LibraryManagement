@@ -47,7 +47,7 @@ namespace Library.Library.Entities
             };
         }
 
-        public BookVM ToViewModel(BookInBorrow bookInBorrow, int statisticalAmount)
+        public BookVM ToViewModel(BookInBorrowVM bookInBorrow, int statisticalAmount, LibraryCardVM libraryCard=null)
         {
             return new() {
                 Id = Id,
@@ -65,7 +65,9 @@ namespace Library.Library.Entities
                 Thumbnail = Thumbnail,
                 TimeBorrowed = bookInBorrow.TimeBorrowed,
                 TimeReturn = bookInBorrow.TimeReturn,
-                StatisticalAmount = statisticalAmount
+                StatisticalAmount = statisticalAmount,
+                BookInBorrow = bookInBorrow,
+                LibraryCard = libraryCard
             };
         }
 

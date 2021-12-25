@@ -18,12 +18,13 @@ namespace Library.Library.Entities
                 TimeRealReturn = TimeRealReturn,
                 AmountBorrowed = AmountBorrowed,
                 AmountReturn = AmountReturn,
+                AmountMissing = AmountMissing,
                 BorrowStatus = BorrowStatus,
                 ReturnStatus = ReturnStatus,
                 IdBook = IdBook,
                 IdBorrow = IdBorrow,
-                Book = Book,
-                Borrow = Borrow
+                //Book = Book,
+                //Borrow = Borrow
             };
         }
 

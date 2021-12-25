@@ -43,6 +43,8 @@ namespace LibraryManagement.UI.Controllers
         {
             if (string.IsNullOrEmpty(content)) return Redirect("Index");
             var books = await _book.SearchBook(content);
+            ViewData["Content Search"] = content;
+
             return View("Index", books);
         }
 

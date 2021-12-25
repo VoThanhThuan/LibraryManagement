@@ -5,14 +5,17 @@
     .report {
         display: none;
     }
-    .card-pane{
+
+    .card-pane {
         display: none;
     }
+
     .is-choose-card {
         display: block;
         -webkit-animation: fadeInLeft 1s ease;
         animation: fadeInLeft 1s ease;
     }
+
     .is-choose {
         display: block;
         -webkit-animation: fadeInLeft 1s ease;
@@ -21,7 +24,7 @@
 
     .title-choose-report {
         /*max-width: 980px;
-        margin: 0 auto;*/
+                            margin: 0 auto;*/
         margin-top: 10px;
         padding-bottom: 10px;
         margin-bottom: 10px;
@@ -173,7 +176,6 @@
         display: flex;
         -ms-flex-wrap: wrap;
         flex-wrap: wrap;
-       
         margin: 0 auto;
     }
 
@@ -277,8 +279,38 @@
                 -webkit-transition: color 0.3s;
                 transition: color 0.3s;
                 font-family: "Roboto", sans-serif;
-               
             }
+
+    .box-end {
+        display: flex;
+    }
+
+    .avatar {
+        width: 50px;
+        min-width: 50px;
+        height: 50px;
+        -o-object-fit: cover;
+        object-fit: cover;
+        display: block;
+        border-radius: 100%;
+    }
+
+    .box-text {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: flex-start!important;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: center!important;
+    margin-left: 12px;
+    -webkit-box-flex: 2;
+    -ms-flex-positive: 2;
+    flex-grow: 2;
+    flex-direction: column;
+    }
 </style>
 
 <div class="page-title text-center">
@@ -467,9 +499,30 @@
                                                 </div>
                                             </div>
                                             <div class="box-end">
-                                                <div class="v-avatar is-small">
-                                                    <img class="avatar" src="" alt="">
-                                                </div>
+                                                @if (@item.BookInBorrow.AmountReturn + @item.BookInBorrow.AmountMissing < @item.BookInBorrow.AmountBorrowed) {
+                                                    <a class="box-end" href="/Borrows/ReturnBook?idCard=@item.LibraryCard.Id">
+                                                        <div class="v-avatar is-small">
+                                                            <img class="avatar" src="@item.LibraryCard.Image" alt="@item.LibraryCard.Name">
+                                                        </div>
+                                                        <div class="box-text">
+                                                            <p>
+                                                                <span >@item.LibraryCard.Name - @item.LibraryCard.MSSV</span>
+                                                            </p>
+                                                            <span style="color: #10cb8a">(Ấn để trả sách)</span>
+
+                                                        </div>
+                                                    </a>
+
+                                                } else {
+                                                    <div class="v-avatar is-small">
+                                                            <img class="avatar" src="@item.LibraryCard.Image" alt="@item.LibraryCard.Name">
+                                                        </div>
+                                                        <div class="box-text">
+                                                            <p>
+                                                                <span>@item.LibraryCard.Name - @item.LibraryCard.MSSV</span>
+                                                            </p>
+                                                        </div>
+                                                }
                                             </div>
                                         </div>
 
@@ -516,9 +569,19 @@
                                                 </div>
                                             </div>
                                             <div class="box-end">
-                                                <div class="v-avatar is-small">
-                                                    <img class="avatar" src="" alt="">
-                                                </div>
+                                                <a class="box-end" href="/Borrows/ReturnBook?idCard=@item.LibraryCard.Id">
+                                                    <div class="v-avatar is-small">
+                                                        <img class="avatar" src="@item.LibraryCard.Image" alt="@item.LibraryCard.Name">
+                                                    </div>
+                                                    <div class="box-text">
+                                                        <p>
+                                                            <span>@item.LibraryCard.Name - @item.LibraryCard.MSSV</span>
+                                                        </p>
+                                                        <span>(Ấn để trả sách)</span>
+
+                                                    </div>
+                                                </a>
+
                                             </div>
                                         </div>
 
@@ -548,7 +611,9 @@
 
                                 <div class="timeline-item" data-v-5c9a314b="">
                                     <div class="date">
-                                        @{ var dateMissing = item.TimeMissing == null ? "" : ((DateTime) item.TimeMissing).ToShortDateString();}
+                                        @{
+                                            var dateMissing = item.TimeMissing == null ? "" : ((DateTime)item.TimeMissing).ToShortDateString();
+                                        }
                                         <span>@dateMissing</span>
                                     </div>
                                     <div class="dot is-info"></div>
@@ -563,14 +628,22 @@
                                                     <p>
                                                         <span>@item.Name | Số Lượng: @item.StatisticalAmount</span>@*<span style="color: #00ff90">&nbsp;Tác giả: @item.Author</span>*@
                                                     </p>
-                                                    @{ var timeMissing = item.TimeMissing == null ? "" : ((DateTime) item.TimeMissing).ToShortTimeString();}
+                                                    @{
+                                                        var timeMissing = item.TimeMissing == null ? "" : ((DateTime)item.TimeMissing).ToShortTimeString();
+                                                    }
                                                     <span>@timeMissing</span>
                                                 </div>
                                             </div>
                                             <div class="box-end">
-                                                <div class="v-avatar is-small">
-                                                    <img class="avatar" src="" alt="">
-                                                </div>
+                                                    <div class="v-avatar is-small">
+                                                        <img class="avatar" src="@item.LibraryCard.Image" alt="@item.LibraryCard.Name">
+                                                    </div>
+                                                    <div class="box-text">
+                                                        <p>
+                                                            <span>@item.LibraryCard.Name - @item.LibraryCard.MSSV</span>
+                                                        </p>
+                                                    </div>
+
                                             </div>
                                         </div>
 
@@ -612,15 +685,37 @@
                                             <div class="box-text">
                                                 <div class="meta-text">
                                                     <p>
-                                                        <span>@item.Name | Số Lượng: @item.StatisticalAmount</span>@*<span style="color: #00ff90">&nbsp;Tác giả: @item.Author</span>*@
+                                                        <span>@item.Name | Đã trả: @item.StatisticalAmount / @item.BookInBorrow.AmountBorrowed | Mất: @item.BookInBorrow.AmountMissing</span>@*<span style="color: #00ff90">&nbsp;Tác giả: @item.Author</span>*@
                                                     </p>
                                                     <span>@item.TimeReturn.ToShortTimeString().ToLower()</span>
                                                 </div>
                                             </div>
                                             <div class="box-end">
-                                                <div class="v-avatar is-small">
-                                                    <img class="avatar" src="" alt="">
-                                                </div>
+                                                @if (@item.BookInBorrow.AmountReturn + @item.BookInBorrow.AmountMissing < @item.BookInBorrow.AmountBorrowed) {
+                                                    <a class="box-end" href="/Borrows/ReturnBook?idCard=@item.LibraryCard.Id">
+                                                        <div class="v-avatar is-small">
+                                                            <img class="avatar" src="@item.LibraryCard.Image" alt="@item.LibraryCard.Name">
+                                                        </div>
+                                                        <div class="box-text">
+                                                            <p>
+                                                                <span >@item.LibraryCard.Name - @item.LibraryCard.MSSV</span>
+                                                            </p>
+                                                            <span style="color: #10cb8a">(Ấn để trả sách)</span>
+
+                                                        </div>
+                                                    </a>
+
+                                                } else {
+                                                    <div class="v-avatar is-small">
+                                                            <img class="avatar" src="@item.LibraryCard.Image" alt="@item.LibraryCard.Name">
+                                                        </div>
+                                                        <div class="box-text">
+                                                            <p>
+                                                                <span>@item.LibraryCard.Name - @item.LibraryCard.MSSV</span>
+                                                            </p>
+                                                        </div>
+                                                }
+
                                             </div>
                                         </div>
 
@@ -661,15 +756,40 @@
                                             <div class="box-text">
                                                 <div class="meta-text">
                                                     <p>
-                                                        <span>@item.Name | Số Lượng: @item.StatisticalAmount</span>
+                                                        <span>@item.Name | Cần trả: @item.StatisticalAmount | Đã trả: @item.BookInBorrow.AmountReturn / @item.BookInBorrow.AmountBorrowed</span>
                                                     </p>
                                                     <span>@item.TimeReturn.ToShortTimeString().ToLower()</span>
                                                 </div>
                                             </div>
                                             <div class="box-end">
-                                                <div class="v-avatar is-small">
-                                                    <img class="avatar" src="" alt="">
-                                                </div>
+                                                @if (@item.BookInBorrow.AmountReturn + @item.BookInBorrow.AmountMissing < @item.BookInBorrow.AmountBorrowed) {
+                                                    <a class="box-end" href="/Borrows/ReturnBook?idCard=@item.LibraryCard.Id">
+                                                        <div class="v-avatar is-small">
+                                                            <img class="avatar" src="@item.LibraryCard.Image" alt="@item.LibraryCard.Name">
+                                                        </div>
+                                                        <div class="box-text">
+                                                            <p>
+                                                                <span >@item.LibraryCard.Name - @item.LibraryCard.MSSV</span>
+                                                            </p>
+                                                            <span style="color: #10cb8a">(Ấn để trả sách)</span>
+
+                                                        </div>
+                                                    </a>
+
+                                                } else {
+                                                    <div class="v-avatar is-small">
+                                                            <img class="avatar" src="@item.LibraryCard.Image" alt="@item.LibraryCard.Name">
+                                                        </div>
+                                                        <div class="box-text">
+                                                            <p>
+                                                                <span>@item.LibraryCard.Name - @item.LibraryCard.MSSV</span>
+                                                            </p>
+
+
+                                                        </div>
+
+                                                }
+
                                             </div>
                                         </div>
 
@@ -730,16 +850,12 @@
         <div class="card-pane is-choose-card">
             <div class="card-grid">
                 <div class="columns is-multiline">
-                    @if (Model.TopLibraryCards.Count() <= 0)
-                    {
-                    <div style="display: flex; align-items: center; justify-content:center ;max-width: 94rem; margin: 0 auto;"">
+                    @if (Model.TopLibraryCards.Count() <= 0) {
+                        <div style="display: flex; align-items: center; justify-content:center ;max-width: 94rem; margin: 0 auto;" ">
                         <img style="width: 500px; height: 500px;" src="/public/search-7-dark.21d246ce.svg">
-                    </div>
-                    }
-                    else
-                    {
-                        @foreach (var item in Model.TopLibraryCards)
-                        {
+                        </div>
+                    } else {
+                        @foreach (var item in Model.TopLibraryCards) {
                             <div class="column is-6">
                                 <div class="card-item">
 
@@ -755,13 +871,13 @@
                                         </div>
                                         <div class="card-item-body-right">
                                             <div class="social-actions">
-                                                <a class="social-action">
+                                                <a class="social-action" href='@($"/LibraryCards/Edit/{item.Id}")'>
                                                     <i class="fas fa-wrench"></i>
                                                 </a>
-                                                <a class="social-action">
+ @*                                               <a class="social-action">
                                                     <i class="fal fa-trash-alt"></i>
-                                                </a>
-                                                <a class="social-action">
+                                                </a>*@
+                                                <a class="social-action" href='@($"/LibraryCards/Details/{item.Id}")'>
                                                     <i class="fas fa-info-circle"></i>
                                                 </a>
                                                 <a class="social-action">
@@ -796,16 +912,12 @@
         <div class="card-pane">
             <div class="card-grid">
                 <div class="columns is-multiline">
-                    @if (Model.CardsLock.Count() <= 0)
-                    {
+                    @if (Model.CardsLock.Count() <= 0) {
                         <div style="display: flex; align-items: center; justify-content:center ;max-width: 94rem; margin: 0 auto;" ">
-                            <img style="width: 500px; height: 500px;" src="/public/search-7-dark.21d246ce.svg">
+                        <img style="width: 500px; height: 500px;" src="/public/search-7-dark.21d246ce.svg">
                         </div>
-                    }
-                    else
-                    {
-                        @foreach (var item in Model.CardsLock)
-                        {
+                    } else {
+                        @foreach (var item in Model.CardsLock) {
                             <div class="column is-6">
                                 <div class="card-item">
 
@@ -824,9 +936,9 @@
                                                 <a class="social-action">
                                                     <i class="fas fa-wrench"></i>
                                                 </a>
-                                                <a class="social-action">
+@*                                                <a class="social-action">
                                                     <i class="fal fa-trash-alt"></i>
-                                                </a>
+                                                </a>*@
                                                 <a class="social-action">
                                                     <i class="fas fa-info-circle"></i>
                                                 </a>
@@ -862,16 +974,12 @@
         <div class="card-pane">
             <div class="card-grid">
                 <div class="columns is-multiline">
-                    @if (Model.CardReturnLate.Count() <= 0)
-                    {
+                    @if (Model.CardReturnLate.Count() <= 0) {
                         <div style="display: flex; align-items: center; justify-content:center ;max-width: 94rem; margin: 0 auto;" ">
-                            <img style="width: 500px; height: 500px;" src="/public/search-7-dark.21d246ce.svg">
+                        <img style="width: 500px; height: 500px;" src="/public/search-7-dark.21d246ce.svg">
                         </div>
-                    }
-                    else
-                    {
-                        @foreach (var item in Model.CardReturnLate)
-                        {
+                    } else {
+                        @foreach (var item in Model.CardReturnLate) {
                             <div class="column is-6">
                                 <div class="card-item">
 

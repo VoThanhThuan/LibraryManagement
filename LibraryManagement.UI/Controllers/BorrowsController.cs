@@ -163,6 +163,32 @@ namespace LibraryManagement.UI.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        [HttpPost("ReturnBookAll")]
+        public async Task<IActionResult> ReturnBookAll(Guid idCard, Guid idBorrow)
+        {
+
+            if (idCard != Guid.Empty) {
+                var resultGet = await _borrow.GetBorrowWithCard(idCard);
+
+                resultGet.IdCard = idCard;
+                //cardAndBook = resultGet;
+            }
+            //else if (request.IdBorrow != Guid.Empty)
+            //{
+            //    cardAndBook = await _borrow.GetBorrow(request.IdBorrow);
+            //}
+
+            var result = await _borrow.ReturnBookAll(idCard, idBorrow);
+            if (result == false) {
+                TempData["error"] = $"Đã trả toàn bộ sách thất bại";
+                return View("ReturnBook");
+
+            }
+            TempData["success"] = $"Đã trả toàn bộ sách thành công";
+            return Redirect("/Borrows");
+
+        }
+
         [HttpPost("api/ReturnBook")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ReturnBook(ReturnBookRequest request)
@@ -177,10 +203,6 @@ namespace LibraryManagement.UI.Controllers
                 resultGet.IdCard = request.IdCard;
                 //cardAndBook = resultGet;
             }
-            //else if (request.IdBorrow != Guid.Empty)
-            //{
-            //    cardAndBook = await _borrow.GetBorrow(request.IdBorrow);
-            //}
 
             var result = await _borrow.ReturnBook(request);
             if (result == false) {
