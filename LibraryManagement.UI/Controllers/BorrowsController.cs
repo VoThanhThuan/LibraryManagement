@@ -117,7 +117,7 @@ namespace LibraryManagement.UI.Controllers
                 if (!result.isSuccess)
                 {
                     TempData["error"] = $"Thẻ của đã mượn sách rồi , không thể mượn nữa";
-                    return Redirect("/Borrowws");
+                    return Redirect("/Borrows");
                 }
                 isSuccess = result.isSuccess;
             }
