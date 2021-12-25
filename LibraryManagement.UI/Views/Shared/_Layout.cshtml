@@ -55,13 +55,13 @@
                 <ul class="icon-menu">
                     @if (Context.User.IsInRole("Admin")) {
                         <li class="li-menu">
-                            <a class="tab-icon" href="/Users"><i class="far fa-user-circle"></i></a>
+                            <a class="tab-icon" data-hint="Tài Khoản" href="/Users"><i class="far fa-user-circle"></i></a>
                         </li>
                         <li class="li-menu">
-                            <a class="tab-icon" href="/LibraryCards"><i class="far fa-address-card"></i></a>
+                            <a class="tab-icon" data-hint="Thẻ Thư Viện" data-child="2" href="/LibraryCards"><i class="far fa-address-card"></i></a>
                         </li>
                         <li class="li-menu">
-                            <a class="tab-icon" href="/Books"><i class="fal fa-book"></i></a>
+                            <a class="tab-icon" data-hint="Sách" data-child="3" href="/Books"><i class="fal fa-book"></i></a>
                         </li>
                         <li class="li-menu">
                             <a class="tab-icon" href="/Borrows"><i class="fal fa-books"></i></a>
@@ -70,7 +70,7 @@
                             <a class="tab-icon" href="/Genres"><i class="fal fa-undo-alt"></i></a>
                         </li>
                         <li class="li-menu">
-                            <a class="tab-icon" href="/Statistical"><i class="fal fa-chart-bar"></i></a>
+                            <a class="tab-icon" data-hint="Thống Kê" href="/Statistical"><i class="fal fa-chart-bar"></i></a>
                         </li>
                     } else {
                         <li class="li-menu">
