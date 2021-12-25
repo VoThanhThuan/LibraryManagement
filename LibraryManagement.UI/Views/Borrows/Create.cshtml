@@ -188,10 +188,6 @@
 
                                     $('.section-placeholder').classList.add('hidden')
                                     $('.cart-items').classList.remove('hidden')
-                                    // Check if parseInt($(this).data('quantity')) < parseInt($(this).data('amount'))
-
-
-                                    // Check book-amount > 
 
                                     if (button.dataset.exist == 'false') {
                                         button.dataset.exist = 'true';
@@ -250,9 +246,7 @@
 
         function removeInput(parameter) {
 
-            $('.section-placeholder').classList.remove('hidden')
-            $('.cart-items').classList.add('hidden')
-
+        
             var cart = $(`#cart-item-${parameter}`);
             var price = $(`#price-${parameter}`);
             var inputValues = $$(`.input-${parameter}`);
@@ -269,6 +263,7 @@
                     }
                 });
             }
+         
             price.innerHTML = `Số Lượng: ${parseInt(price.dataset.p) - 1}`;
             price.dataset.p = parseInt(price.dataset.p) - 1; 
         }
