@@ -40,7 +40,7 @@
                             <div class="field">
                                 <div>
                                     <div class="search">
-                                        <input  id="search" type="text" class="input" placeholder="Search...">
+                                        <input id="search" type="text" class="input" placeholder="Search...">
                                         <button class="search-button">
                                             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--feather" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" data-icon="feather:search"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><path d="M21 21l-4.35-4.35"></path></g></svg>
                                         </button>
@@ -87,40 +87,40 @@
                             </div>
                         </div>
                         <form asp-action="Create">
-                            
-                                <div class="cart-items has-slimscroll hidden" id="book-choose">
-                                    <!--JS render-->
-                                </div>
 
-                                <div class="card-button">
-                                    <div class="total">
-                                        <span class="label">Số Lượng </span>
-                                        <span class="quantity-book-choose">0</span>
-                                    </div>
-                                    <button class="button v-button btn-save" type="submit">
-                                        <span>Lưu</span>
-                                    </button>
+                            <div class="cart-items has-slimscroll hidden" id="book-choose">
+                                <!--JS render-->
+                            </div>
+
+                            <div class="card-button">
+                                <div class="total">
+                                    <span class="label">Số Lượng </span>
+                                    <span class="quantity-book-choose">0</span>
                                 </div>
-                            
-                                <div asp-validation-summary="ModelOnly" class="text-danger" hidden></div>
-                                <div class="form-group" hidden>
-                                    <label asp-for="Note" class="control-label"></label>
-                                    <input asp-for="Note" name="Note" class="form-control" />
-                                    <span asp-validation-for="Note" class="text-danger"></span>
-                                </div>
-                                <div class="form-group" hidden>
-                                    <label asp-for="IdUser" class="control-label"></label>
-                                    <input asp-for="IdUser" name="IdUser" class="form-control" value="@ViewData["Id-User"]" />
-                                    <span asp-validation-for="IdUser" class="text-danger"></span>
-                                </div>
-                                <div class="form-group" hidden>
-                                    <label asp-for="UserName" class="control-label"></label>
-                                    <input asp-for="UserName" name="UserName" class="form-control" value="@ViewData["Name-User"]" />
-                                    <span asp-validation-for="UserName" class="text-danger"></span>
-                                </div>  
+                                <button class="button v-button btn-save" type="submit">
+                                    <span>Lưu</span>
+                                </button>
+                            </div>
+
+                            <div asp-validation-summary="ModelOnly" class="text-danger" hidden></div>
+                            <div class="form-group" hidden>
+                                <label asp-for="Note" class="control-label"></label>
+                                <input asp-for="Note" name="Note" class="form-control" />
+                                <span asp-validation-for="Note" class="text-danger"></span>
+                            </div>
+                            <div class="form-group" hidden>
+                                <label asp-for="IdUser" class="control-label"></label>
+                                <input asp-for="IdUser" name="IdUser" class="form-control" value="@ViewData["Id-User"]" />
+                                <span asp-validation-for="IdUser" class="text-danger"></span>
+                            </div>
+                            <div class="form-group" hidden>
+                                <label asp-for="UserName" class="control-label"></label>
+                                <input asp-for="UserName" name="UserName" class="form-control" value="@ViewData["Name-User"]" />
+                                <span asp-validation-for="UserName" class="text-danger"></span>
+                            </div>
                         </form>
 
-                        
+
                     </div>
                 </div>
             </div>
@@ -149,94 +149,86 @@
                     data.forEach(function (book) {
 
                         $('#book-search').innerHTML += `
-                                            
-                                                <div class="flex-table-cell" hidden>
-                                                    <span class="light-text">${book.id}</span>
-                                                </div>
-                                                <div class="flex-table-item">
-                                                    <div class="flex-table-cell is-media is-grow-lg">
-                                                        <div class="is-avatar is-medium">
-                                                            <img class="medium" src="${book.thumbnail}" alt="">
+
+                                                        <div class="flex-table-cell" hidden>
+                                                            <span class="light-text">${book.id}</span>
                                                         </div>
-                                                        <div>
-                                                            <span class="item-name">${book.name}</span>
-                                                            <span class="item-meta text-name">
-                                                                <span>Tác giả: ${book.author}</span>
-                                                            </span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="flex-table-cell">
-                                                        <span class="light-text book-amount" id="${book.id}">${book.amount}</span>
-                                                    </div>
-                                                    <div class="" hidden>
-                                                        <span class="light-text">${book.idlibrarycode}</span>
-                                                    </div>
-                                                    <div class="flex-table-cell cell-end">
-                                                        <div>
-                                                            <button type="button" class="button-hint hint--bubble add-book" data-amount="${book.amount}"  data-exist="false" data-hint="Thêm" value="${book.id}" data-quantity="${book.amount}" data-thumnail="${book.thumbnail}" data-bookname="${book.name}" data-author="${book.author}">
-                                                                <span class="icon">
-                                                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--feather" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" data-icon="feather:bookmark"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5l-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></g></svg>
-                                                                </span>
-                                                            </button>
-                                                         </div>
-                                                        </div>
-                                                    </div>
-                                                
-                                                                 `;
-                       var listBook = [];
+                                                        <div class="flex-table-item">
+                                                            <div class="flex-table-cell is-media is-grow-lg">
+                                                                <div class="is-avatar is-medium">
+                                                                    <img class="medium" src="${book.thumbnail}" alt="">
+                                                                </div>
+                                                                <div>
+                                                                    <span class="item-name">${book.name}</span>
+                                                                    <span class="item-meta text-name">
+                                                                        <span>Tác giả: ${book.author}</span>
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="flex-table-cell">
+                                                                <span class="light-text book-amount" id="${book.id}">${book.amount}</span>
+                                                            </div>
+                                                            <div class="" hidden>
+                                                                <span class="light-text">${book.idlibrarycode}</span>
+                                                            </div>
+                                                            <div class="flex-table-cell cell-end">
+                                                                <div>
+                                                                    <button type="button" class="button-hint hint--bubble add-book" data-amount="${book.amount}"  data-exist="false" data-hint="Thêm" value="${book.id}" data-quantity="${book.amount}" data-thumnail="${book.thumbnail}" data-bookname="${book.name}" data-author="${book.author}">
+                                                                        <span class="icon">
+                                                                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--feather" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" data-icon="feather:bookmark"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5l-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></g></svg>
+                                                                        </span>
+                                                                    </button>
+                                                                 </div>
+                                                                </div>
+                                                            </div>
+
+                                                                         `;
+
                         $$('.add-book').forEach(function (button) {
                             button.addEventListener('click',
                                 function () {
-
-                                    var id = {
-                                        _id: button.value
-                                    }
-
-                                    listBook.push(id)
-
-                                    console.log(listBook)
 
                                     $('.section-placeholder').classList.add('hidden')
                                     $('.cart-items').classList.remove('hidden')
 
                                     // Check book-amount
-                                    var Amount = $(`#${button.value}`)
-                                   
-                                    if (button.value == Amount.id) {
-                                        var dataAmount = button.dataset.amount
-                                        button.dataset.amount = parseInt(dataAmount) - 1
+                                    //var Amount = $(`#${button.value}`)
 
-                                        Amount.innerHTML = button.dataset.amount
-                                    }
-                                    else {
-                                        console.log('false')
-                                    }
-                                    
-                                   /* console.log(parseInt(dataAmount) - 1)*/
+                                    //if (button.value == Amount.id) {
+                                    //    var dataAmount = button.dataset.amount
+                                    //    button.dataset.amount = parseInt(dataAmount) - 1
+
+                                    //    Amount.innerHTML = button.dataset.amount
+                                    //}
+                                    //else {
+                                    //    console.log('false')
+                                    //}
+
+                                    /* console.log(parseInt(dataAmount) - 1)*/
 
                                     //add element to html dom
-                                   
+
                                     if (button.dataset.exist == 'false') {
                                         button.dataset.exist = 'true';
-                                        $('#book-choose').innerHTML += `    
-                                                <div class="cart-item" id="cart-item-${button.value}">
-                                                  
-                                                    <div class="cover-book">
-                                                        <img src="${button.dataset.thumnail}" alt="">
-                                                    </div>
-                                                    <div class="meta">
-                                                        <span class="book-name">${button.dataset.bookname}</span>
-                                                        <span class="author">${button.dataset.author}</span>
-                                                    </div>
-                                                    <div id="price-${button.value}" data-p="1">Số Lượng: 1</div>
-                                                    <a class="remove-item" onclick="removeInput('${button.value}')" id="remove-item-${button.value}">
-                                                        <i class="fal fa-trash-alt"></i>
-                                                    </a>
-                                                    <div class="input-value-${button.value}">
-                                                        <input class="input-${button.value}" name="idBooks" value="${button.value}" hidden>
-                                                    </div>  
-                                                </div>
-                                             `;
+                                        $('#book-choose').innerHTML += `
+                                                        <div class="cart-item" id="cart-item-${button.value}">
+
+                                                            <div class="cover-book">
+                                                                <img src="${button.dataset.thumnail}" alt="">
+                                                            </div>
+                                                            <div class="meta">
+                                                                <span class="book-name">${button.dataset.bookname}</span>
+                                                                <span class="author">${button.dataset.author}</span>
+                                                            </div>
+                                                            <div id="price-${button.value}" data-p="1">Số Lượng: 1</div>
+                                                            <a class="remove-item" onclick="removeInput('${button.value}')" id="remove-item-${button.value}">
+                                                                <i class="fal fa-trash-alt"></i>
+                                                            </a>
+                                                            <div class="input-value-${button.value}">
+                                                                <input class="input-${button.value}" name="idBooks" value="${button.value}" hidden>
+                                                            </div>
+                                                        </div>
+                                                     `;
                                     }
                                     else {
                                         // Thêm thẻ input
@@ -254,18 +246,18 @@
 
                                     }
 
-                                  
-                                   
+
+
                                 });
                         });
 
                     });
                 })
-              
+
         }
 
         function removeInput(parameter) {
-           
+
             var cart = $(`#cart-item-${parameter}`);
             var price = $(`#price-${parameter}`);
             var inputValues = $$(`.input-${parameter}`);
