@@ -54,7 +54,6 @@
                             <div class="flex-table">
                                 <div class="flex-table-header">
                                     <span class="flex-grow-4">Ảnh bìa</span>
-                                    <span>Số lượng</span>
                                     <span class="call-end">actions</span>
                                 </div>
                                 <div class="flex-list-inner" id="book-search">
@@ -76,7 +75,7 @@
                                 <h3 class="is-bigger">My Order</h3>
                             </div>
                             <div class="right">
-                                <span class="tag is-curved">0 items</span>
+                                <!-- <span class="tag is-curved">0 items</span> -->
                             </div>
                         </div>
                         <div class="section-placeholder">
@@ -95,7 +94,7 @@
                             <div class="card-button">
                                 <div class="total">
                                     <span class="label">Số Lượng </span>
-                                    <span class="quantity-book-choose">0</span>
+                                    <span class="quantity-book-choose">0 Quyển</span>
                                 </div>
                                 <button class="button v-button btn-save" type="submit">
                                     <span>Lưu</span>
@@ -134,7 +133,6 @@
     <script>
 
         const url = window.location.origin;
-
         function searchbook(content) {
             fetch(`${url}/Books/SearchApi?content=${content}`)
                 .then(function (response) {
@@ -163,9 +161,7 @@
                                                                     </span>
                                                                 </div>
                                                             </div>
-                                                            <div class="flex-table-cell">
-                                                                <span class="light-text book-amount" id="${book.id}">${book.amount}</span>
-                                                            </div>
+                                                            
                                                             <div class="" hidden>
                                                                 <span class="light-text">${book.idlibrarycode}</span>
                                                             </div>
@@ -173,7 +169,7 @@
                                                                 <div>
                                                                     <button type="button" class="button-hint hint--bubble add-book" data-amount="${book.amount}"  data-exist="false" data-hint="Thêm" value="${book.id}" data-quantity="${book.amount}" data-thumnail="${book.thumbnail}" data-bookname="${book.name}" data-author="${book.author}">
                                                                         <span class="icon">
-                                                                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--feather" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" data-icon="feather:bookmark"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5l-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></g></svg>
+                                                                            <i class="far fa-plus"></i>
                                                                         </span>
                                                                     </button>
                                                                  </div>
@@ -185,7 +181,7 @@
                         $$('.add-book').forEach(function (button) {
                             button.addEventListener('click',
                                 function () {
-
+                                   
                                     $('.section-placeholder').classList.add('hidden')
                                     $('.cart-items').classList.remove('hidden')
 
@@ -198,18 +194,22 @@
                                                                 <img src="${button.dataset.thumnail}" alt="">
                                                             </div>
                                                             <div class="meta">
-                                                                <span class="book-name">${button.dataset.bookname}</span>
-                                                                <span class="author">${button.dataset.author}</span>
+                                                                <span class="book-name">Tên Sách : moojt casi teen that laf dai ${button.dataset.bookname}</span>
+                                                                <span style="margin-top: 2px;" id="price-${button.value}" data-p="1">Số Lượng: 1</span>
                                                             </div>
-                                                            <div id="price-${button.value}" data-p="1">Số Lượng: 1</div>
-                                                            <a class="remove-item" onclick="removeInput('${button.value}')" id="remove-item-${button.value}">
-                                                                <i class="fal fa-trash-alt"></i>
-                                                            </a>
+                                                           
+                                                           
+                                                             <button type="button" class="button-hint hint--bubble remove-item" data-hint="Xóa" onclick="removeInput('${button.value}')" id="remove-item-${button.value}">
+                                                                <span class="icon">
+                                                                    <i style="font-size: 15px;" class="fal fa-trash-alt"></i>
+                                                                </span>
+                                                            </button>
                                                             <div class="input-value-${button.value}">
-                                                                <input class="input-${button.value}" name="idBooks" value="${button.value}" hidden>
+                                                                <input class="input-${button.value} input-book" name="idBooks" value="${button.value}" hidden>
                                                             </div>
                                                         </div>
                                                      `;
+                                     
                                     }
                                     else {
                                         var price = $(`#price-${button.value}`)
@@ -222,7 +222,7 @@
                                         }
                                         else{
                                             const input = document.createElement('input');
-                                            input.setAttribute('class', `input-${button.value}`);
+                                            input.setAttribute('class', `input-${button.value} input-book`);
                                             input.setAttribute('value', button.value);
                                             input.setAttribute('name', 'idBooks')
                                             input.setAttribute('hidden', true);
@@ -232,10 +232,13 @@
                                           
                                             price.innerHTML = `Số Lượng: ${amount + 1}`;
                                             price.dataset.p = amount + 1;
+
                                         }
                                     }
 
-
+                                    let sumBook =  $('.quantity-book-choose') 
+                                    let sum = $$('.input-book').length;
+                                    sumBook.innerHTML = sum + ' QUYỂN';
                                 });
                         });
 
@@ -245,12 +248,10 @@
         }
 
         function removeInput(parameter) {
-
-        
+ 
             var cart = $(`#cart-item-${parameter}`);
             var price = $(`#price-${parameter}`);
             var inputValues = $$(`.input-${parameter}`);
-
 
             if (inputValues.length > 1) {
                 inputValues[0].remove();
@@ -263,9 +264,13 @@
                     }
                 });
             }
-         
+
             price.innerHTML = `Số Lượng: ${parseInt(price.dataset.p) - 1}`;
             price.dataset.p = parseInt(price.dataset.p) - 1; 
+
+            let sumBook =  $('.quantity-book-choose') 
+            let sum = $$('.input-book').length;
+            sumBook.innerHTML = sum + ' QUYỂN';
         }
 
 
@@ -274,7 +279,6 @@
 
         var is_search = true;
         let quantity = 0;
-        console.log(url);
         $('#search').addEventListener('keyup',
             function () {
                 const content = this.value;
