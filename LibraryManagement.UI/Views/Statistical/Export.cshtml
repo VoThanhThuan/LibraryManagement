@@ -1,80 +1,179 @@
-﻿
+﻿<style>
+    .smart-table {
+        width: 800px;
+        height: 600px;
+    }
+
+    .smart-button {
+        cursor: pointer;
+        margin-top: 15px;
+    }
+
+    .smart-button img {
+        width: 50px;
+        height: 50px;
+
+    }
+
+    .options {
+        width: 50px;
+        position: fixed;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        right: 10px;
+    }
+
+    .button-hint-export {
+        position: relative;
+        display: inline-block;
+        cursor: pointer;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        justify-content: center;
+        text-align: center;
+        white-space: nowrap;
+        -webkit-transition: all 0.3s;
+        transition: all 0.3s;
+    }
+
+    .button-hint-export:hover {
+        border-color: #10cb8a;
+        color: #10cb8a;
+    }
+
+    .button-hint-export::after {
+        border-radius: 100px !important;
+        font-size: 1rem !important;
+        text-transform: uppercase !important;
+        line-height: 12px;
+        white-space: nowrap;
+        background: #383838;
+        color: white;
+        padding: 8px 10px;
+        font-weight: 600 !important;
+        -webkit-transition: all 0.2s ease;
+        transition: all 0.2s ease;
+        opacity: 0;
+    }
+
+    .button-hint-export[data-hint]::after {
+        content: attr(data-hint);
+        position: absolute;
+        -webkit-transform: translateX(-50%) translateY(15px);
+        transform: translateX(-50%) translateY(15px);
+
+        @*bottom:100%;left:50%;*@
+    }
+
+    .button-hint-export:hover::after {
+        @*-webkit-transform:translateX(-100%)translateY(0px);*@transform: translateX(-155%) translateY(15px);
+        -webkit-transition-delay: 100ms;
+        transition-delay: 100ms;
+        visibility: visible;
+        opacity: 1;
+        background: #10cb8a;
+    }
+
+    .export-header {
+        padding: 20px 0;
+    }
+</style>
+<link rel="stylesheet" href="/css/smart.default.css">
 
 
-    <style>
-        .smart-table {
-            width: 800px;
-            height: 600px;
-        }
-    </style>
-    <link rel="stylesheet" href="/css/smart.default.css">
-    <smart-table id="e-table" class="table-hover" auto-load-state auto-save-state column-resize column-reorder
-                 auto-save-state>
-        <table>
-            <thead>
-                <tr>
-                    <th data-field="id">Country</th>
-                    <th data-field="productName">Area</th>
-                    <th data-field="quantity">Population_Rural</th>
-                    <th data-field="price">Population_Total</th>
-                    <th data-field="date">GDP_Total</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td data-field="id">Brazil</td>
-                    <td data-field="productName">8515767</td>
-                    <td data-field="quantity">0.15</td>
-                    <td data-field="price">205809000</td>
-                    <td data-field="date">2353025</td>
-                </tr>
+<div class="export-header">
+    <label for="choose">Chọn</label>
+    <select name="choose" id="type_export">
+        <option value="">1</option>
+        <option value="">2</option>
+        <option value="">3</option>
+        <option value="">4</option>
+    </select>
+    <input type="date" name="" id="date-start">
+    <input type="date" name="" id="date-end">
+    <button>Lọc</button>
+</div>
+<smart-table id="e-table" class="table-hover" auto-load-state auto-save-state column-resize column-reorder
+    auto-save-state>
+    <table>
+        <thead>
+            <tr>
+                <th data-field="id">Country</th>
+                <th data-field="productName">Area</th>
+                <th data-field="quantity">Population_Rural</th>
+                <th data-field="price">Population_Total</th>
+                <th data-field="date">GDP_Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td data-field="id">Brazil</td>
+                <td data-field="productName">8515767</td>
+                <td data-field="quantity">0.15</td>
+                <td data-field="price">205809000</td>
+                <td data-field="date">2353025</td>
+            </tr>
 
-            </tbody>
-        </table>
-    </smart-table>
-    <div class="options">
-        <smart-button id="csv">Export to CSV</smart-button>
-        <smart-button id="html">Export to HTML</smart-button>
-        <smart-button id="json">Export to JSON</smart-button>
-        <smart-button id="pdf">Export to PDF</smart-button>
-        <smart-button id="tsv">Export to TSV</smart-button>
-        <smart-button id="xlsx">Export to XLSX</smart-button>
-        <smart-button id="xml">Export to XML</smart-button>
+        </tbody>
+    </table>
+</smart-table>
+<div class="options">
+    <div class="smart-button button-hint-export" data-hint="Xuất File CSV" id="csv">
+        <img src="/public/csv-file.svg">
     </div>
 
+    <div class="smart-button button-hint-export" data-hint="Xuất File HTML" id="html">
+        <img src="/public/html-file.svg">
+    </div>
 
-    <script src="/js/export/jszip.min.js"></script>
-    <script src="/js/export/pdfmake.min.js"></script>
-    <script src="/js/export/smart.table.js"></script>
-    <script src="/js/export/vfs_fonts.js"></script>
+    <div class="smart-button button-hint-export" data-hint="Xuất File JSON" id="json">
+        <img src="/public/json-file.svg">
+    </div>
 
-    <script>
-        //const table = document.querySelector('smart-table');
-        //table.autoSaveState = true;
+    <div class="smart-button button-hint-export" data-hint="Xuất File PDF" id="pdf">
+        <img src="/public/pdf-file.svg">
+    </div>
 
-        const table = document.getElementById('e-table');
-            document.getElementById('csv').addEventListener('click', function () {
-                table.exportData('csv', 'table');
-            });
-            document.getElementById('html').addEventListener('click', function () {
-                table.exportData('html', 'table');
-            });
-            document.getElementById('json').addEventListener('click', function () {
-                table.exportData('json', 'table');
-            });
-            document.getElementById('pdf').addEventListener('click', function () {
-                table.exportData('pdf', 'table');
-            });
-            document.getElementById('tsv').addEventListener('click', function () {
-                table.exportData('tsv', 'table');
-            });
-            document.getElementById('xlsx').addEventListener('click', function () {
-                table.exportData('xlsx', 'table');
-            });
-            document.getElementById('xml').addEventListener('click', function () {
-                table.exportData('xml', 'table');
-            });
-       
-    </script>
+    <div class="smart-button button-hint-export" data-hint="Xuất File EXCEL" id="xlsx">
+        <img src="/public/xlsx-file.svg">
+    </div>
+
+    <div class="smart-button button-hint-export" data-hint="Xuất File XML" id="xml">
+        <img src="/public/xml-file.svg">
+    </div>
+</div>
 
 
+<script src="/js/export/jszip.min.js"></script>
+<script src="/js/export/pdfmake.min.js"></script>
+<script src="/js/export/smart.table.js"></script>
+<script src="/js/export/vfs_fonts.js"></script>
+
+<script>
+    //const table = document.querySelector('smart-table');
+    //table.autoSaveState = true;
+
+    const table = document.getElementById('e-table');
+    document.getElementById('csv').addEventListener('click', function () {
+        table.exportData('csv', 'table');
+    });
+    document.getElementById('html').addEventListener('click', function () {
+        table.exportData('html', 'table');
+    });
+    document.getElementById('json').addEventListener('click', function () {
+        table.exportData('json', 'table');
+    });
+    document.getElementById('pdf').addEventListener('click', function () {
+        table.exportData('pdf', 'table');
+    });
+
+    document.getElementById('xlsx').addEventListener('click', function () {
+        table.exportData('xlsx', 'table');
+    });
+    document.getElementById('xml').addEventListener('click', function () {
+        table.exportData('xml', 'table');
+    });
+
+</script>
