@@ -265,8 +265,13 @@
 <!--End [Sách bị mất]-->
 <!--Top thẻ mượn-->
 <span>Top thẻ mượn</span>
+<<<<<<< HEAD
 <smart-table id="e-table-borrowing" class="table-hover" auto-load-state auto-save-state column-resize column-reorder
     auto-save-state>
+=======
+<smart-table id="e-table-libraryCard" class="table-hover" auto-load-state auto-save-state column-resize column-reorder
+             auto-save-state>
+>>>>>>> 7f6af05b21c614dc98b4b585023527d1d01e7066
     <table>
         <thead>
             <tr>
@@ -327,6 +332,7 @@
 <script src="/js/export/vfs_fonts.js"></script>
 @section Scripts{
 
+<<<<<<< HEAD
 <script>
     //const table = document.querySelector('smart-table');
     //table.autoSaveState = true;
@@ -352,6 +358,60 @@
                 default:
                     isTable = "e-table-borrowed";
             }
+=======
+    <script>
+        //const table = document.querySelector('smart-table');
+        //table.autoSaveState = true;
+        var isTable = "e-table-borrowed";
+        $("#type_export").addEventListener("change",
+            (e) => {
+                switch (e.target.value) {
+                    case "borrowed":
+                        isTable = "e-table-borrowed";
+                        break;
+                    case "borrowing":
+                        isTable = "e-table-borrowing";
+                        break;
+                    case "return":
+                        isTable = "e-table-return";
+                        break;
+                    case "missing":
+                        isTable = "e-table-missing";
+                        break;
+                    case "libraryCard":
+                        isTable = "e-table-libraryCard";
+                        break;
+                    default:
+                        isTable = "e-table-borrowed";
+                }
+            });
+
+        function whatTable(format, name) {
+            console.log(isTable);
+            var table = document.getElementById(isTable);
+            console.log(table);
+
+            table.exportData(format, name);
+        }
+        document.getElementById('csv').addEventListener('click', function () {
+            whatTable('csv', isTable);
+        });
+        document.getElementById('html').addEventListener('click', function () {
+            whatTable('html', isTable);
+        });
+        document.getElementById('json').addEventListener('click', function () {
+            whatTable('json', isTable);
+        });
+        document.getElementById('pdf').addEventListener('click', function () {
+            whatTable('pdf', isTable);
+        });
+
+        document.getElementById('xlsx').addEventListener('click', function () {
+            whatTable('xlsx', isTable);
+        });
+        document.getElementById('xml').addEventListener('click', function () {
+            whatTable('xml', isTable);
+>>>>>>> 7f6af05b21c614dc98b4b585023527d1d01e7066
         });
 
     function whatTable(format, name) {
