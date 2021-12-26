@@ -261,7 +261,7 @@
 <!--End [Sách bị mất]-->
 <!--Top thẻ mượn-->
 <span>Top thẻ mượn</span>
-<smart-table id="e-table-borrowing" class="table-hover" auto-load-state auto-save-state column-resize column-reorder
+<smart-table id="e-table-libraryCard" class="table-hover" auto-load-state auto-save-state column-resize column-reorder
              auto-save-state>
     <table>
         <thead>
@@ -350,27 +350,30 @@
             });
 
         function whatTable(format, name) {
+            console.log(isTable);
             var table = document.getElementById(isTable);
+            console.log(table);
+
             table.exportData(format, name);
         }
         document.getElementById('csv').addEventListener('click', function () {
-            whatTable('csv', 'table');
+            whatTable('csv', isTable);
         });
         document.getElementById('html').addEventListener('click', function () {
-            whatTable('html', 'table');
+            whatTable('html', isTable);
         });
         document.getElementById('json').addEventListener('click', function () {
-            whatTable('json', 'table');
+            whatTable('json', isTable);
         });
         document.getElementById('pdf').addEventListener('click', function () {
-            whatTable('pdf', 'table');
+            whatTable('pdf', isTable);
         });
 
         document.getElementById('xlsx').addEventListener('click', function () {
-            whatTable('xlsx', 'table');
+            whatTable('xlsx', isTable);
         });
         document.getElementById('xml').addEventListener('click', function () {
-            whatTable('xml', 'table');
+            whatTable('xml', isTable);
         });
 
     </script>
