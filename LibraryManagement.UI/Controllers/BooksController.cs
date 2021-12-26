@@ -129,7 +129,9 @@ namespace LibraryManagement.UI.Controllers
                 return NotFound();
             }
 
-            if (!ModelState.IsValid) return RedirectToAction(nameof(Index));
+
+            ModelState.Remove("Thumbnail");
+            if (!ModelState.IsValid) return View(request);
 
             var book = await _book.PutBook(request);
             await _genre.PostBookInGenre(book.Id, request.idGenres);

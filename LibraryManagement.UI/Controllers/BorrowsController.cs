@@ -118,6 +118,15 @@ namespace LibraryManagement.UI.Controllers
 
             ViewData["Id-User"] = User.FindFirstValue(ClaimTypes.NameIdentifier);
             ViewData["Name-User"] = (User.FindFirstValue(ClaimTypes.Name));
+            var libCard = await _context.LibraryCards.FindAsync(idCard);
+            ViewBag.LibraryCard = libCard;
+
+            var check = await _borrow.CheckRankBorrow(borrow, idBooks);
+            if (!check.result)
+            {
+                TempData["error"] = check.mess;
+                return View(borrow);
+            }
 
             var isSuccess = false;
 
@@ -130,14 +139,12 @@ namespace LibraryManagement.UI.Controllers
                 }
                 isSuccess = result.isSuccess;
             }
-            var libCard = await _context.LibraryCards.FindAsync(idCard);
 
             if (libCard.IsLock) {
                 TempData["success"] = $"Thẻ của {libCard.Name} đã bị khóa";
                 return Redirect("/LibraryCards");
             }
 
-            ViewBag.LibraryCard = libCard;
             //ViewData["IdCard"] = new SelectList(_context.LibraryCards, "Id", "Id", borrow.IdCard);
             var books = await _book.GetBooks();
             if (isSuccess) {

@@ -36,9 +36,31 @@ namespace LibraryManagement.UI.Controllers
             return Ok(statistical);
         }
 
-        public async Task<IActionResult> Export()
+        public async Task<IActionResult> Export(DateTime? start = null, DateTime? end = null)
         {
-            return View();
+            if (start != null && end != null)
+            {
+                if (start < end)
+                {
+                    TempData["error"] = "<Ngày bắt đầu> không thể nhỏ hơn <ngày kết thúc>";
+                    ViewData["start"] = ((DateTime)start).ToString("yyyy-MM-dd");
+                    ViewData["end"] = ((DateTime)start).AddDays(1).ToString("yyyy-MM-dd");
+
+                } else
+                {
+                    ViewData["start"] = ((DateTime)start).ToString("yyyy-MM-dd");
+                    ViewData["end"] = ((DateTime)end).ToString("yyyy-MM-dd");
+                }
+            }
+            else
+            {
+                ViewData["start"] = DateTime.Now.ToString("yyyy-MM-dd");
+                ViewData["end"] = DateTime.Now.ToString("yyyy-MM-dd");
+
+            }
+
+            var statistical = await _statistical.GetStatiscals(start, end);
+            return View(statistical);
         }
 
     }

@@ -1,4 +1,7 @@
-﻿<style>
+﻿@using Library.Library.Entities.ViewModels
+@model StatisticalVM
+
+<style>
     .smart-table {
         width: 800px;
         height: 600px;
@@ -23,6 +26,7 @@
         align-items: center;
         justify-content: center;
         right: 10px;
+        top: 10px;
     }
 
     .button-hint-export {
@@ -110,44 +114,181 @@
 <div class="export-header">
     <label for="choose">Chọn Loại Thống Kê</label>
     <select name="choose" id="type_export">
-        <option value="">---Chọn Loại Thống Kê---</option>
-        <option value="">Thẻ Thư Viện</option>
-        <option value="">Sách Đã Mượn</option>
-        <option value="">Sách Đã Trả</option>
-        <option value="">Sách Mất</option>
-        <option value="">Sách Đang Mượn</option>
+        <option value="borrowed">Sách Đã Mượn</option>
+        <option value="borrowing">Sách Đang Mượn</option>
+        <option value="return">Sách Đã Trả</option>
+        <option value="missing">Sách Mất</option>
+        <option value="libraryCard">Thẻ Thư Viện</option>
+
 
     </select>
-    <label for="date-start">Ngày Bắt Đầu</label>
-    <input type="date" name="date-start" id="date-start">
-    <label for="date-end">Ngày Kết Thúc</label>
-    <input type="date" name="date-end" id="date-end">
-    <button class="btn-export">Lọc</button>
+    <form action="/Statistical/export" method="get">
+        <label for="date-start">Ngày Bắt Đầu</label>
+        <input type="date" name="date-start" id="date-start" value="@ViewData["start"]">
+        <label for="date-end">Ngày Kết Thúc</label>
+        <input type="date" name="date-end" id="date-end" value="@ViewData["end"]">
+        <button class="btn-export">Lọc</button>
+    </form>
+
 </div>
-<smart-table id="e-table" class="table-hover" auto-load-state auto-save-state column-resize column-reorder
-    auto-save-state>
+
+<!--Sách đã mượn-->
+<span>Sách đã mượn</span>
+
+<smart-table id="e-table-borrowed" class="table-hover" auto-load-state auto-save-state column-resize column-reorder
+             auto-save-state>
     <table>
         <thead>
             <tr>
-                <th data-field="id">Country</th>
-                <th data-field="productName">Area</th>
-                <th data-field="quantity">Population_Rural</th>
-                <th data-field="price">Population_Total</th>
-                <th data-field="date">GDP_Total</th>
+                <th>ID</th>
+                <th>Tên</th>
+                <th>Số lượng đã mượn</th>
+                <th>Thời gian mượn</th>
+                <th>Thời gian trả</th>
+                <th>Người mượn</th>
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td data-field="id">Brazil</td>
-                <td data-field="productName">8515767</td>
-                <td data-field="quantity">0.15</td>
-                <td data-field="price">205809000</td>
-                <td data-field="date">2353025</td>
-            </tr>
+            @foreach (var item in Model.BooksBorrowed) {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.Name</td>
+                    <td>@item.StatisticalAmount</td>
+                    <td>@item.TimeBorrowed</td>
+                    <td>@item.TimeReturn</td>
+                    <td>@item.LibraryCard.Name</td>
+                </tr>
+            }
 
         </tbody>
     </table>
 </smart-table>
+<!--End [Sách đã mượn]-->
+<!--Sách đã đang mượn-->
+<span>Sách đã đang mượn</span>
+
+<smart-table id="e-table-borrowing" class="table-hover" auto-load-state auto-save-state column-resize column-reorder
+             auto-save-state>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Tên</th>
+                <th>Số lượng đã mượn</th>
+                <th>Thời gian mượn</th>
+                <th>Thời gian trả</th>
+                <th>Người mượn</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.BooksBorrowing) {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.Name</td>
+                    <td>@item.StatisticalAmount</td>
+                    <td>@item.TimeBorrowed</td>
+                    <td>@item.TimeReturn</td>
+                    <td>@item.LibraryCard.Name</td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+</smart-table>
+<!--End [Sách đang mượn]-->
+<!--Sách đã trả-->
+<span>Sách đã trả</span>
+
+<smart-table id="e-table-borrowing" class="table-hover" auto-load-state auto-save-state column-resize column-reorder
+             auto-save-state>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Tên</th>
+                <th>Số lượng đã mượn</th>
+                <th>Thời gian mượn</th>
+                <th>Thời gian trả</th>
+                <th>Người mượn</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.BooksReturn) {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.Name</td>
+                    <td>@item.StatisticalAmount</td>
+                    <td>@item.TimeBorrowed</td>
+                    <td>@item.TimeReturn</td>
+                    <td>@item.LibraryCard.Name</td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+</smart-table>
+<!--End [Sách đã trả]-->
+<!--Sách bị mất-->
+<span>Sách bị mất</span>
+<smart-table id="e-table-borrowing" class="table-hover" auto-load-state auto-save-state column-resize column-reorder
+             auto-save-state>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Tên</th>
+                <th>Số lượng đã mượn</th>
+                <th>Thời gian mượn</th>
+                <th>Thời gian trả</th>
+                <th>Người mượn</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.BooksMissing) {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.Name</td>
+                    <td>@item.StatisticalAmount</td>
+                    <td>@item.TimeBorrowed</td>
+                    <td>@item.TimeReturn</td>
+                    <td>@item.LibraryCard.Name</td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+</smart-table>
+<!--End [Sách bị mất]-->
+<!--Top thẻ mượn-->
+<span>Top thẻ mượn</span>
+<smart-table id="e-table-borrowing" class="table-hover" auto-load-state auto-save-state column-resize column-reorder
+             auto-save-state>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Tên</th>
+                <th>MSSV</th>
+                <th>Lớp</th>
+                <th>Đẳng cấp</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.TopLibraryCards) {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.Name</td>
+                    <td>@item.MSSV</td>
+                    <td>@item.Class</td>
+                    <td>@item.Rank</td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+</smart-table>
+<!--End [Top thẻ mượn]-->
+
 <div class="options">
     <div class="smart-button button-hint-export" data-hint="Xuất File CSV" id="csv">
         <img src="/public/csv-file.svg">
@@ -179,30 +320,59 @@
 <script src="/js/export/pdfmake.min.js"></script>
 <script src="/js/export/smart.table.js"></script>
 <script src="/js/export/vfs_fonts.js"></script>
+@section Scripts{
 
-<script>
-    //const table = document.querySelector('smart-table');
-    //table.autoSaveState = true;
+    <script>
+        //const table = document.querySelector('smart-table');
+        //table.autoSaveState = true;
+        var isTable = "e-table-borrowed";
+        $("#type_export").addEventListener("change",
+            (e) => {
+                switch (e.target.value) {
+                    case "borrowed":
+                        isTable = "e-table-borrowed";
+                        break;
+                    case "borrowing":
+                        isTable = "e-table-borrowing";
+                        break;
+                    case "return":
+                        isTable = "e-table-return";
+                        break;
+                    case "missing":
+                        isTable = "e-table-missing";
+                        break;
+                    case "libraryCard":
+                        isTable = "e-table-libraryCard";
+                        break;
+                    default:
+                        isTable = "e-table-borrowed";
+                }
+            });
 
-    const table = document.getElementById('e-table');
-    document.getElementById('csv').addEventListener('click', function () {
-        table.exportData('csv', 'table');
-    });
-    document.getElementById('html').addEventListener('click', function () {
-        table.exportData('html', 'table');
-    });
-    document.getElementById('json').addEventListener('click', function () {
-        table.exportData('json', 'table');
-    });
-    document.getElementById('pdf').addEventListener('click', function () {
-        table.exportData('pdf', 'table');
-    });
+        function whatTable(format, name) {
+            var table = document.getElementById(isTable);
+            table.exportData(format, name);
+        }
+        document.getElementById('csv').addEventListener('click', function () {
+            whatTable('csv', 'table');
+        });
+        document.getElementById('html').addEventListener('click', function () {
+            whatTable('html', 'table');
+        });
+        document.getElementById('json').addEventListener('click', function () {
+            whatTable('json', 'table');
+        });
+        document.getElementById('pdf').addEventListener('click', function () {
+            whatTable('pdf', 'table');
+        });
 
-    document.getElementById('xlsx').addEventListener('click', function () {
-        table.exportData('xlsx', 'table');
-    });
-    document.getElementById('xml').addEventListener('click', function () {
-        table.exportData('xml', 'table');
-    });
+        document.getElementById('xlsx').addEventListener('click', function () {
+            whatTable('xlsx', 'table');
+        });
+        document.getElementById('xml').addEventListener('click', function () {
+            whatTable('xml', 'table');
+        });
 
-</script>
+    </script>
+
+}

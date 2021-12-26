@@ -75,7 +75,7 @@ namespace LibraryManagement.UI.Services
 
         public async Task<ReturnBookVM> GetBorrow(Guid idBorrow)
         {
-            var borrow = await _context.Borrows.FirstOrDefaultAsync(x => x.Id == idBorrow && x.StatusBorrow == StatusBorrow.Borrowing || x.StatusBorrow == StatusBorrow.Missing);
+            var borrow = await _context.Borrows.FirstOrDefaultAsync(x => x.Id == idBorrow && (x.StatusBorrow == StatusBorrow.Borrowing || x.StatusBorrow == StatusBorrow.Missing));
             //var borrows = new List<BorrowVM>();
 
             var card = await _context.LibraryCards.FirstOrDefaultAsync(x => x.Id == borrow.IdCard);
@@ -154,6 +154,22 @@ namespace LibraryManagement.UI.Services
             return borrow;
 
         }
+
+        public async Task<(bool result, string mess)> CheckRankBorrow(Borrow request, List<string> idBooks)
+        {
+            var libcrad = await _context.LibraryCards.FirstOrDefaultAsync(x => x.Id == request.IdCard);
+            if (libcrad is null)
+                return (false, "Thẻ mượn không tìm thấy");
+            foreach (var idBook in idBooks)
+            {
+                var book = await _context.Books.FirstOrDefaultAsync(x => x.Id == idBook && x.Amount > 0);
+                if(book.Rank > libcrad.Rank)
+                    return (false, $"Thẻ không đủ đẳng cấp để mượn sách <{book.Name}>");
+            }
+
+            return (true, "");
+        }
+
         public async Task<(bool isSuccess, BorrowVM borrow)> PostBorrow(Borrow request, List<string> idBooks)
         {
             var user = await _context.Users.FirstOrDefaultAsync(x => x.Id == request.IdUser);
@@ -258,6 +274,12 @@ namespace LibraryManagement.UI.Services
             foreach (var item in bibs) {
                 var amount = item.AmountBorrowed - item.AmountReturn - item.AmountMissing;
 
+                //Cộng lại số lượng sách tồn kho
+                var book = await _context.Books.FindAsync((item.IdBook));
+                if (book != null) {
+                    book.Amount += amount;
+                }
+
                 item.AmountReturn = amount;
                 item.TimeRealReturn = DateTime.Now;
             }
@@ -291,6 +313,14 @@ namespace LibraryManagement.UI.Services
             {
                 request.AmountReturn = amount;
             }
+
+            //Cộng lại số lượng sách tồn kho
+            var book = await _context.Books.FindAsync((bib.IdBook));
+            if (book != null)
+            {
+                book.Amount += request.AmountReturn;
+            }
+
 
             bib.AmountReturn += request.AmountReturn;
 
@@ -392,6 +422,13 @@ namespace LibraryManagement.UI.Services
             if (request.AmountReturn > bib.AmountMissing) {
                 request.AmountReturn = bib.AmountMissing;
             }
+
+            //Cộng lại số lượng sách tồn kho
+            var book = await _context.Books.FindAsync((bib.IdBook));
+            if (book != null) {
+                book.Amount += request.AmountReturn;
+            }
+
             //Sử dụng chung AmountReturn trên giao diện
             bib.AmountMissing -= request.AmountReturn;
 
