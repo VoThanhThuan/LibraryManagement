@@ -136,7 +136,7 @@
 <span>Sách đã mượn</span>
 
 <smart-table id="e-table-borrowed" class="table-hover" auto-load-state auto-save-state column-resize column-reorder
-             auto-save-state>
+    auto-save-state>
     <table>
         <thead>
             <tr>
@@ -149,7 +149,8 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in Model.BooksBorrowed) {
+            @foreach (var item in Model.BooksBorrowed)
+            {
                 <tr>
                     <td>@item.Id</td>
                     <td>@item.Name</td>
@@ -168,7 +169,7 @@
 <span>Sách đã đang mượn</span>
 
 <smart-table id="e-table-borrowing" class="table-hover" auto-load-state auto-save-state column-resize column-reorder
-             auto-save-state>
+    auto-save-state>
     <table>
         <thead>
             <tr>
@@ -181,7 +182,8 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in Model.BooksBorrowing) {
+            @foreach (var item in Model.BooksBorrowing)
+            {
                 <tr>
                     <td>@item.Id</td>
                     <td>@item.Name</td>
@@ -200,7 +202,7 @@
 <span>Sách đã trả</span>
 
 <smart-table id="e-table-borrowing" class="table-hover" auto-load-state auto-save-state column-resize column-reorder
-             auto-save-state>
+    auto-save-state>
     <table>
         <thead>
             <tr>
@@ -213,7 +215,8 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in Model.BooksReturn) {
+            @foreach (var item in Model.BooksReturn)
+            {
                 <tr>
                     <td>@item.Id</td>
                     <td>@item.Name</td>
@@ -231,7 +234,7 @@
 <!--Sách bị mất-->
 <span>Sách bị mất</span>
 <smart-table id="e-table-borrowing" class="table-hover" auto-load-state auto-save-state column-resize column-reorder
-             auto-save-state>
+    auto-save-state>
     <table>
         <thead>
             <tr>
@@ -244,7 +247,8 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in Model.BooksMissing) {
+            @foreach (var item in Model.BooksMissing)
+            {
                 <tr>
                     <td>@item.Id</td>
                     <td>@item.Name</td>
@@ -262,7 +266,7 @@
 <!--Top thẻ mượn-->
 <span>Top thẻ mượn</span>
 <smart-table id="e-table-borrowing" class="table-hover" auto-load-state auto-save-state column-resize column-reorder
-             auto-save-state>
+    auto-save-state>
     <table>
         <thead>
             <tr>
@@ -274,7 +278,8 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in Model.TopLibraryCards) {
+            @foreach (var item in Model.TopLibraryCards)
+            {
                 <tr>
                     <td>@item.Id</td>
                     <td>@item.Name</td>
@@ -322,57 +327,57 @@
 <script src="/js/export/vfs_fonts.js"></script>
 @section Scripts{
 
-    <script>
-        //const table = document.querySelector('smart-table');
-        //table.autoSaveState = true;
-        var isTable = "e-table-borrowed";
-        $("#type_export").addEventListener("change",
-            (e) => {
-                switch (e.target.value) {
-                    case "borrowed":
-                        isTable = "e-table-borrowed";
-                        break;
-                    case "borrowing":
-                        isTable = "e-table-borrowing";
-                        break;
-                    case "return":
-                        isTable = "e-table-return";
-                        break;
-                    case "missing":
-                        isTable = "e-table-missing";
-                        break;
-                    case "libraryCard":
-                        isTable = "e-table-libraryCard";
-                        break;
-                    default:
-                        isTable = "e-table-borrowed";
-                }
-            });
-
-        function whatTable(format, name) {
-            var table = document.getElementById(isTable);
-            table.exportData(format, name);
-        }
-        document.getElementById('csv').addEventListener('click', function () {
-            whatTable('csv', 'table');
-        });
-        document.getElementById('html').addEventListener('click', function () {
-            whatTable('html', 'table');
-        });
-        document.getElementById('json').addEventListener('click', function () {
-            whatTable('json', 'table');
-        });
-        document.getElementById('pdf').addEventListener('click', function () {
-            whatTable('pdf', 'table');
+<script>
+    //const table = document.querySelector('smart-table');
+    //table.autoSaveState = true;
+    var isTable = "e-table-borrowed";
+    $("#type_export").addEventListener("change",
+        (e) => {
+            switch (e.target.value) {
+                case "borrowed":
+                    isTable = "e-table-borrowed";
+                    break;
+                case "borrowing":
+                    isTable = "e-table-borrowing";
+                    break;
+                case "return":
+                    isTable = "e-table-return";
+                    break;
+                case "missing":
+                    isTable = "e-table-missing";
+                    break;
+                case "libraryCard":
+                    isTable = "e-table-libraryCard";
+                    break;
+                default:
+                    isTable = "e-table-borrowed";
+            }
         });
 
-        document.getElementById('xlsx').addEventListener('click', function () {
-            whatTable('xlsx', 'table');
-        });
-        document.getElementById('xml').addEventListener('click', function () {
-            whatTable('xml', 'table');
-        });
+    function whatTable(format, name) {
+        var table = document.getElementById(isTable);
+        table.exportData(format, name);
+    }
+    document.getElementById('csv').addEventListener('click', function () {
+        whatTable('csv', 'table');
+    });
+    document.getElementById('html').addEventListener('click', function () {
+        whatTable('html', 'table');
+    });
+    document.getElementById('json').addEventListener('click', function () {
+        whatTable('json', 'table');
+    });
+    document.getElementById('pdf').addEventListener('click', function () {
+        whatTable('pdf', 'table');
+    });
 
-    </script>
+    document.getElementById('xlsx').addEventListener('click', function () {
+        whatTable('xlsx', 'table');
+    });
+    document.getElementById('xml').addEventListener('click', function () {
+        whatTable('xml', 'table');
+    });
+
+</script>
 
 }
