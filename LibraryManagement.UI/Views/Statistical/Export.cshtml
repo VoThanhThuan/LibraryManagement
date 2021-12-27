@@ -68,11 +68,10 @@
         -webkit-transform: translateX(-50%) translateY(15px);
         transform: translateX(-50%) translateY(15px);
 
-        @*bottom:100%;left:50%;*@
     }
 
     .button-hint-export:hover::after {
-        @*-webkit-transform:translateX(-100%)translateY(0px);*@transform: translateX(-155%) translateY(15px);
+        transform: translateX(-155%) translateY(15px);
         -webkit-transition-delay: 100ms;
         transition-delay: 100ms;
         visibility: visible;
@@ -422,7 +421,7 @@
 
     function whatTable(format, name) {
         var table = document.getElementById(isTable);
-        table.exportData(format, name);
+        table.exportData(format, `${name}-${dateStartFormat}_${dateEndFormat}`);
     }
 
     document.getElementById('csv').addEventListener('click', function () {

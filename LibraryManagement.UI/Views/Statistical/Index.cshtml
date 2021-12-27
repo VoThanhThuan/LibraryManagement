@@ -354,13 +354,7 @@
     </div>
 
 </div>
-<form action="/Statistical" method="get">
-    <label for="date-start">Ngày Bắt Đầu</label>
-    <input type="date" name="start" id="date-start" value="@ViewData["start"]">
-    <label for="date-end">Ngày Kết Thúc</label>
-    <input type="date" name="end" id="date-end" value="@ViewData["end"]">
-    <button class="btn-export">Lọc</button>
-</form>
+
 <div class="company-header is-bg-6">
     <div class="header-time">
         <div class="item-inner">
@@ -424,6 +418,13 @@
     </div>
 </div>
 
+<form action="/Statistical" method="get">
+    <label for="date-start">Ngày Bắt Đầu</label>
+    <input type="date" name="start" id="date-start" value="@ViewData["start"]">
+    <label for="date-end">Ngày Kết Thúc</label>
+    <input type="date" name="end" id="date-end" value="@ViewData["end"]">
+    <button class="btn-export">Lọc</button>
+</form>
 
 
 <div class="title-choose-report">
@@ -514,7 +515,7 @@
 
                                 <div class="timeline-item" data-v-5c9a314b="">
                                     <div class="date">
-                                        <span>@item.TimeBorrowed.ToShortDateString()</span>
+                                        <span>@item.TimeBorrowed.ToString("dd/MM/yyyy")</span>
                                     </div>
                                     <div class="dot is-info"></div>
                                     <div class="content-wrap">
