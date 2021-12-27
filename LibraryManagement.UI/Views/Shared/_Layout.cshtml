@@ -3,6 +3,7 @@
 @using Microsoft.AspNetCore.Http
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -13,10 +14,12 @@
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.2.0/css/all.css">
 
 </head>
+
 <body>
     <div id="root" class="modal">
         <!-- Navbar Mobile -->
-        @if (TempData["success"] != null) {
+        @if (TempData["success"] != null)
+        {
             <div class="toast">
                 <div class="icon-check">
                     <i class="fas fa-check-circle"></i>
@@ -29,7 +32,8 @@
                 </div>
             </div>
         }
-        @if (TempData["error"] != null) {
+        @if (TempData["error"] != null)
+        {
             <div class="toast" style="background: red; color: white">
                 <div class="icon-check">
                     <i class="fas fa-times"></i>
@@ -47,32 +51,63 @@
         <div class="main-sidebar">
             <div class="sidebar-brand">
                 <a href="/">
-                    <svg id="OBJECTS" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 160 160" xml:space="preserve" class="" width="36px" data-v-47361cec=""><g class="" data-v-47361cec=""><g data-v-47361cec=""><path class="right" d="M67.3,55.7L75.6,70l3.7,6.4l22.1,38.3l35.9-0.1L78.2,14.1L61.2,45L67.3,55.7z M130.1,114.5l-21.3,0.1" data-v-47361cec=""></path><path class="left" d="M39.1,145.9l11.7-20.3l2.7-4.7l3.7-6.4l22.1-38.3L61.2,45L3.6,145.9H39.1z M64.8,51.5l2.5,4.2l8.3,14.2V70
-                        L64.8,51.5z" data-v-47361cec=""></path><path class="bottom" d="M39,145.9h117.4l-19.1-31.4l-80.1,0.1L39,145.9z M53.4,121l-10.6,18.5l7.9-13.9L53.4,121z" data-v-47361cec=""></path></g></g></svg>
+                    <svg id="OBJECTS" version="1.1" xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 160 160"
+                        xml:space="preserve" class="" width="36px" data-v-47361cec="">
+                        <g class="" data-v-47361cec="">
+                            <g data-v-47361cec="">
+                                <path class="right"
+                                    d="M67.3,55.7L75.6,70l3.7,6.4l22.1,38.3l35.9-0.1L78.2,14.1L61.2,45L67.3,55.7z M130.1,114.5l-21.3,0.1"
+                                    data-v-47361cec=""></path>
+                                <path class="left" d="M39.1,145.9l11.7-20.3l2.7-4.7l3.7-6.4l22.1-38.3L61.2,45L3.6,145.9H39.1z M64.8,51.5l2.5,4.2l8.3,14.2V70
+                        L64.8,51.5z" data-v-47361cec=""></path>
+                                <path class="bottom"
+                                    d="M39,145.9h117.4l-19.1-31.4l-80.1,0.1L39,145.9z M53.4,121l-10.6,18.5l7.9-13.9L53.4,121z"
+                                    data-v-47361cec=""></path>
+                            </g>
+                        </g>
+                    </svg>
                 </a>
             </div>
             <div class="sidebar-inner">
                 <ul class="icon-menu">
-                    @if (Context.User.IsInRole("Admin")) {
+                    @if (Context.User.IsInRole("Admin"))
+                    {
                         <li class="li-menu">
                             <a class="tab-icon" data-hint="Tài Khoản" href="/Users"><i class="far fa-user-circle"></i></a>
                         </li>
                         <li class="li-menu">
-                            <a class="tab-icon" data-hint="Thẻ Thư Viện" data-child="2" href="/LibraryCards"><i class="far fa-address-card"></i></a>
+                            <a class="tab-icon" data-hint="Thẻ Thư Viện" data-child="2" href="/LibraryCards"><i
+                                class="far fa-address-card"></i></a>
                         </li>
                         <li class="li-menu">
-                            <a class="tab-icon" data-hint="Sách" data-child="3" href="/Books"><i class="fal fa-book"></i></a>
+                            <a class="tab-icon" data-hint="Sách" data-child="3" href="/Books"><i
+                                class="fal fa-book"></i></a>
                         </li>
                         <li class="li-menu">
-                            <a class="tab-icon" href="/Borrows"><i class="fal fa-books"></i></a>
+                            <a class="tab-icon" data-hint="Sách Mượn" href="/Borrows"><i class="fal fa-books"></i></a>
                         </li>
                         <li class="li-menu">
-                            <a class="tab-icon" href="/Genres"><i class="fal fa-undo-alt"></i></a>
+                            <a class="tab-icon" data-hint="Thể Loại" href="/Genres"><i class="fas fa-swatchbook"></i></a>
                         </li>
                         <li class="li-menu">
-                            <a class="tab-icon" data-hint="Thống Kê" href="/Statistical"><i class="fal fa-chart-bar"></i></a>
+                            <a class="tab-icon" data-hint="Mã Thư Viện" href="/LibraryCodes">
+                                <i class="fas fa-qrcode"></i>
+                            </a>
                         </li>
-                    } else {
+                        <li class="li-menu">
+                            <a class="tab-icon" data-hint="Thống Kê" href="/Statistical">
+                                <i class="fal fa-chart-bar"></i>
+                            </a>
+                        </li>
+                        <li class="li-menu">
+                            <a class="tab-icon" data-hint="Xuất Excel" href="/Statistical/Export">
+                                <i class="fas fa-file-export"></i>
+                            </a>
+                        </li>
+                    }
+                    else
+                    {
                         <li class="li-menu">
                             <a class="tab-icon" href="/LibraryCards"><i class="far fa-address-card"></i></a>
                         </li>
@@ -80,8 +115,11 @@
                             <a class="tab-icon" href="/Borrows"><i class="fal fa-books"></i></a>
                         </li>
                         <li class="li-menu">
-                            <a class="tab-icon" href="/Genres"><i class="fal fa-undo-alt"></i></a>
+                            <a class="tab-icon" href="/Genres">
+                                <i class="fas fa-swatchbook"></i>
+                            </a>
                         </li>
+
                         <li class="li-menu">
                             <a class="tab-icon" href="/Statistical"><i class="fal fa-chart-bar"></i></a>
                         </li>
@@ -92,7 +130,8 @@
                     @{
                         var json = Context.Request.Cookies["User"];
                         var user = new UserVM();
-                        if (!string.IsNullOrEmpty(json)) {
+                        if (!string.IsNullOrEmpty(json))
+                        {
                             user = JsonSerializer.Deserialize<UserVM>(json);
                         }
                     }
@@ -114,7 +153,7 @@
                                 </div>
                             </div>
 
-                            <a class="dropdown-item is-media li-menu" href="#">
+                            @* <a class="dropdown-item is-media li-menu" href="#">
                                 <div class="icon">
                                     <i class="fal fa-user"></i>
                                 </div>
@@ -133,7 +172,7 @@
                                     <span>Profile</span>
                                     <span>View your profile</span>
                                 </div>
-                            </a>
+                            </a> *@
                             <hr class="dropdown-divider">
 
                             <a class="dropdown-item is-media li-menu" href="#">
@@ -185,14 +224,14 @@
 
     <script src="/js/_Layout.js"></script>
 
-        <script>
+    <script>
         var tab = []
         $$(".tab-icon").forEach((item) => {
             tab.push(item);
         })
-        window.onload = () =>{
+        window.onload = () => {
             tab.forEach((item) => {
-                if(location.href.indexOf(item.href) >= 0){
+                if (location.href.indexOf(item.href) >= 0) {
                     item.classList.add("active");
                 }
             })
@@ -200,5 +239,5 @@
     </script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
-</html>
 
+</html>

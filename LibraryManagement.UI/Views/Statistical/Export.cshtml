@@ -107,6 +107,14 @@
         font-size: 1.5rem;
         margin: 0 10px;
     }
+
+    .tab-export {
+        display: none !important;
+    }
+
+    .tab-active {
+        display: block !important;
+    }
 </style>
 <link rel="stylesheet" href="/css/smart.default.css">
 
@@ -135,7 +143,8 @@
 <!--Sách đã mượn-->
 <span>Sách đã mượn</span>
 
-<smart-table id="e-table-borrowed" class="table-hover" auto-load-state auto-save-state column-resize column-reorder auto-save-state>
+<smart-table id="e-table-borrowed" class="table-hover tab-export tab-active" auto-load-state auto-save-state
+    column-resize column-reorder auto-save-state>
     <table>
         <thead>
             <tr>
@@ -167,7 +176,8 @@
 <!--Sách đã đang mượn-->
 <span>Sách đã đang mượn</span>
 
-<smart-table id="e-table-borrowing" class="table-hover" auto-load-state auto-save-state column-resize column-reorder auto-save-state>
+<smart-table id="e-table-borrowing" class="table-hover tab-export" auto-load-state auto-save-state column-resize
+    column-reorder auto-save-state>
     <table>
         <thead>
             <tr>
@@ -199,7 +209,8 @@
 <!--Sách đã trả-->
 <span>Sách đã trả</span>
 
-<smart-table id="e-table-return" class="table-hover" auto-load-state auto-save-state column-resize column-reorder auto-save-state>
+<smart-table id="e-table-return" class="table-hover tab-export" auto-load-state auto-save-state column-resize
+    column-reorder auto-save-state>
     <table>
         <thead>
             <tr>
@@ -230,7 +241,8 @@
 <!--End [Sách đã trả]-->
 <!--Sách bị mất-->
 <span>Sách bị mất</span>
-<smart-table id="e-table-missing" class="table-hover" auto-load-state auto-save-state column-resize column-reorder auto-save-state>
+<smart-table id="e-table-missing" class="table-hover tab-export" auto-load-state auto-save-state column-resize
+    column-reorder auto-save-state>
     <table>
         <thead>
             <tr>
@@ -261,7 +273,8 @@
 <!--End [Sách bị mất]-->
 <!--Top thẻ mượn-->
 <span>Top thẻ mượn</span>
-<smart-table id="e-table-libraryCard" class="table-hover" auto-load-state auto-save-state column-resize column-reorder auto-save-state>
+<smart-table id="e-table-libraryCard" class="table-hover tab-export" auto-load-state auto-save-state column-resize
+    column-reorder auto-save-state>
     <table>
         <thead>
             <tr>
@@ -322,58 +335,86 @@
 <script src="/js/export/vfs_fonts.js"></script>
 @section Scripts{
 
-    <script>
-        //const table = document.querySelector('smart-table');
-        //table.autoSaveState = true;
-        var isTable = "e-table-borrowed";
-        $("#type_export").addEventListener("change",
-            (e) => {
-                switch (e.target.value) {
-                    case "borrowed":
-                        isTable = "e-table-borrowed";
-                        break;
-                    case "borrowing":
-                        isTable = "e-table-borrowing";
-                        break;
-                    case "return":
-                        isTable = "e-table-return";
-                        break;
-                    case "missing":
-                        isTable = "e-table-missing";
-                        break;
-                    case "libraryCard":
-                        isTable = "e-table-libraryCard";
-                        break;
-                    default:
-                        isTable = "e-table-borrowed";
-                }
-            });
+<script>
 
-        function whatTable(format, name) {
-            console.log(isTable);
-            var table = document.getElementById(isTable);
-            console.log(table);
 
-            table.exportData(format, name);
-        }
-        document.getElementById('csv').addEventListener('click', function () {
-            whatTable('csv', isTable);
+    let dateStart = document.getElementById('date-start').value;
+    let dateEnd = document.getElementById('date-end').value;
+
+    let dateStartFormat = dateStart.split('-').reverse().join('-');
+    let dateEndFormat = dateEnd.split('-').reverse().join('-');
+
+
+    var isTable = "e-table-borrowed";
+    nameExport = "Sach_Da_Muon";
+    const tabExport = $$('.tab-export')
+    function changeTabExport(tab) {
+        tabExport.forEach(element => {
+            element.classList.remove("tab-active");
+            if (element.id == tab) {
+                element.classList.add("tab-active");
+            }
+
         });
-        document.getElementById('html').addEventListener('click', function () {
-            whatTable('html', isTable);
+    }
+    $("#type_export").addEventListener("change",
+        (e) => {
+            switch (e.target.value) {
+                case "borrowed":
+                    isTable = "e-table-borrowed";
+                    nameExport = "sach-da-muon";
+                    changeTabExport(isTable);
+                    break;
+                case "borrowing":
+                    isTable = "e-table-borrowing";
+                    nameExport = "sach-dang-muon";
+                    changeTabExport(isTable);
+                    break;
+                case "return":
+                    isTable = "e-table-return";
+                    nameExport = "sach-da-tra";
+                    changeTabExport(isTable);
+                    break;
+                case "missing":
+                    isTable = "e-table-missing";
+                    nameExport = "sach-bi-mat";
+                    changeTabExport(isTable);
+                    break;
+                case "libraryCard":
+                    isTable = "e-table-libraryCard";
+                    nameExport = `Top_The_Muon`;
+                    changeTabExport(isTable);
+                    break;
+                default:
+                    isTable = "e-table-borrowed";
+                    nameExport = `Sach_Da_Muon`;
+                    changeTabExport(isTable);
+            }
         });
-        document.getElementById('json').addEventListener('click', function () {
-            whatTable('json', isTable);
-        });
-        document.getElementById('pdf').addEventListener('click', function () {
-            whatTable('pdf', isTable);
-        });
-        document.getElementById('xlsx').addEventListener('click', function () {
-            whatTable('xlsx', isTable);
-        });
-        document.getElementById('xml').addEventListener('click', function () {
-            whatTable('xml', isTable);
-        });
+
+    function whatTable(format, name) {
+        var table = document.getElementById(isTable);
+        table.exportData(format, name);
+    }
+
+    document.getElementById('csv').addEventListener('click', function () {
+        whatTable('csv', nameExport);
+    });
+    document.getElementById('html').addEventListener('click', function () {
+        whatTable('html', nameExport);
+    });
+    document.getElementById('json').addEventListener('click', function () {
+        whatTable('json', nameExport);
+    });
+    document.getElementById('pdf').addEventListener('click', function () {
+        whatTable('pdf', nameExport);
+    });
+    document.getElementById('xlsx').addEventListener('click', function () {
+        whatTable('xlsx', nameExport);
+    });
+    document.getElementById('xml').addEventListener('click', function () {
+        whatTable('xml', nameExport);
+    });
 
 </script>
 
