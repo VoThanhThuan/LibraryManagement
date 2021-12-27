@@ -61,7 +61,7 @@ namespace LibraryManagement.UI.Services
             var cardsTop = await _context.LibraryCards.OrderByDescending(x => x.Exp).ToListAsync();
 
             var cardReturnLate = await (from bib in _context.BookInBorrows
-                                        where bib.TimeReturn < bib.TimeRealReturn
+                                        where bib.TimeReturn < DateTime.Now
                                         join borrow in _context.Borrows on bib.IdBorrow equals borrow.Id
                                         join card in _context.LibraryCards on borrow.IdCard equals card.Id
                                         select card).Distinct().ToListAsync();
@@ -128,7 +128,7 @@ namespace LibraryManagement.UI.Services
             var cardsTop = await _context.LibraryCards.OrderByDescending(x => x.Exp).ToListAsync();
 
             var cardReturnLate = await (from bib in _context.BookInBorrows
-                                        where bib.TimeReturn < bib.TimeRealReturn && (bib.TimeReturn >= start & bib.TimeReturn <= end)
+                                        where bib.TimeReturn < DateTime.Now && (bib.TimeReturn >= start & bib.TimeReturn <= end)
                                         join borrow in _context.Borrows on bib.IdBorrow equals borrow.Id
                                         join card in _context.LibraryCards on borrow.IdCard equals card.Id
                                         select card).Distinct().ToListAsync();
