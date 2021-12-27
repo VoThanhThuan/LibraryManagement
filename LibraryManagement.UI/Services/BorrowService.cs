@@ -73,6 +73,28 @@ namespace LibraryManagement.UI.Services
             return ListCardAndBorrow;
         }
 
+        public async Task<List<(LibraryCard card, (Borrow borrow, List<BookInBorrow> bibs) details)>> GetBorrowsWithStudentCode(string content)
+        {
+            var ListCardAndBorrow = new List<(LibraryCard card, (Borrow borrow, List<BookInBorrow> bibs) details)>();
+
+            var card = await _context.LibraryCards.FirstOrDefaultAsync(x => x.MSSV.Contains(content) || x.Name.Contains(content) );
+            if (card == null)
+            {
+                return ListCardAndBorrow;
+            }
+            var listBorrow = await _context.Borrows
+                .Where(x => x.IdCard == card.Id && (x.StatusBorrow == StatusBorrow.Borrowing || x.StatusBorrow == StatusBorrow.NotEnough || x.StatusBorrow == StatusBorrow.Missing)).ToListAsync();
+            foreach (var borrow in listBorrow) {
+                var bibs = await _context.BookInBorrows
+                    .Where(x => x.IdBorrow == borrow.Id && x.AmountReturn < x.AmountBorrowed)
+                    .Include(x => x.Book).ToListAsync();
+
+                ListCardAndBorrow.Add((card, (borrow, bibs)));
+            }
+
+            return ListCardAndBorrow;
+        }
+
         public async Task<ReturnBookVM> GetBorrow(Guid idBorrow)
         {
             var borrow = await _context.Borrows.FirstOrDefaultAsync(x => x.Id == idBorrow && (x.StatusBorrow == StatusBorrow.Borrowing || x.StatusBorrow == StatusBorrow.Missing));

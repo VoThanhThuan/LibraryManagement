@@ -120,25 +120,25 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var book in Model.TopBooks)
+                        @for(var i = 0; i < 5 && i < Model.TopBooks.Count; i++)
                         {
                             <tr>
                                 <td>
                                     <div class="thumbnail">
-                                        <img src="@book.Thumbnail" alt="">
+                                        <img src="@Model.TopBooks[i].Thumbnail" alt="">
                                     </div>
                                 </td>
                                 <td>
-                                    <span>@book.Name</span>
+                                    <span>@Model.TopBooks[i].Name</span>
                                 </td>
                                 <td>
-                                    <span>@book.Author</span>
+                                    <span>@Model.TopBooks[i].Author</span>
                                 </td>
                                 <td>
-                                    <span>@book.TotalBorrow</span>
+                                    <span>@Model.TopBooks[i].TotalBorrow</span>
                                 </td>
                                 <td>
-                                    <span>@book.PublishingCompany</span>
+                                    <span>@Model.TopBooks[i].PublishingCompany</span>
                                 </td>
 
                             </tr>

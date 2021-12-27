@@ -35,17 +35,26 @@ namespace LibraryManagement.UI.Controllers
         public async Task<IActionResult> Index(Guid? idCard = null)
         {
             //var libraryDbContext = _context.Borrows.Include(b => b.LibraryCard);
-           var ListCardAndBorrow = new List<(LibraryCard card, (Borrow borrow, List<BookInBorrow> bibs) details)>();
-            if (idCard != null)
-            {
+            var ListCardAndBorrow = new List<(LibraryCard card, (Borrow borrow, List<BookInBorrow> bibs) details)>();
+            if (idCard != null) {
                 ListCardAndBorrow = await _borrow.GetBorrows(idCard);
                 ViewData["borrow-on"] = "On";
-            }
-            else
-            {
+            } else {
                 ListCardAndBorrow = await _borrow.GetBorrows();
             }
             return View(ListCardAndBorrow);
+        }
+
+        [HttpGet("Search")]
+        // GET: Borrows
+        public async Task<IActionResult> Search(string content)
+        {
+            //var libraryDbContext = _context.Borrows.Include(b => b.LibraryCard);
+            var ListCardAndBorrow = new List<(LibraryCard card, (Borrow borrow, List<BookInBorrow> bibs) details)>();
+            ListCardAndBorrow = await _borrow.GetBorrowsWithStudentCode(content);
+            ViewData["borrow-on"] = "On";
+
+            return View("Index", ListCardAndBorrow);
         }
 
         [HttpGet("Details")]
@@ -122,8 +131,7 @@ namespace LibraryManagement.UI.Controllers
             ViewBag.LibraryCard = libCard;
 
             var check = await _borrow.CheckRankBorrow(borrow, idBooks);
-            if (!check.result)
-            {
+            if (!check.result) {
                 TempData["error"] = check.mess;
                 return View(borrow);
             }
@@ -132,8 +140,7 @@ namespace LibraryManagement.UI.Controllers
 
             if (ModelState.IsValid) {
                 var result = await _borrow.PostBorrow(borrow, idBooks);
-                if (!result.isSuccess)
-                {
+                if (!result.isSuccess) {
                     TempData["error"] = $"Lỗi mượn";
                     return Redirect("/Borrows");
                 }
@@ -165,8 +172,7 @@ namespace LibraryManagement.UI.Controllers
             if (card is null)
                 return RedirectToAction(nameof(Index));
 
-            if (idBorrow == Guid.Empty)
-            {
+            if (idBorrow == Guid.Empty) {
                 var borrows = await _borrow.GetBorrowsWithCard(idCard);
                 if (borrows.Count > 1) {
                     return Redirect($"/Borrows?idCard={idCard}");
@@ -179,13 +185,13 @@ namespace LibraryManagement.UI.Controllers
             if (idBorrow != Guid.Empty) {
                 cardAndBook = await _borrow.GetBorrow(idBorrow);
                 return View(cardAndBook);
-            }else if (idCard != Guid.Empty ) {
+            } else if (idCard != Guid.Empty) {
                 cardAndBook = await _borrow.GetBorrowWithCard(idCard);
                 if (cardAndBook is null)
                     return RedirectToAction(nameof(Index));
 
                 return View(cardAndBook);
-            }  
+            }
 
             return RedirectToAction(nameof(Index));
         }

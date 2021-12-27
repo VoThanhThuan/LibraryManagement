@@ -21,10 +21,10 @@
         border-radius: 5px;
     }
 
-    .active,
-    .collapsible:hover {
-        background-color: #555;
-    }
+        .active,
+        .collapsible:hover {
+            background-color: #555;
+        }
 
     .content-collapse {
         padding: 0 18px;
@@ -48,21 +48,33 @@
         margin-left: 10px;
     }
 
-    .btn-export:hover {
-        border-color: #10cb8a;
-        color: #10cb8a;
-    }
+        .btn-export:hover {
+            border-color: #10cb8a;
+            color: #10cb8a;
+        }
 </style>
 
-@foreach (var item in Model)
-{
+<div class="page-content-inner">
+    <div>
+        <div class="list-flex-toolbar">
+            <div class="search">
+                <div class="control">
+                    <form action="/Borrows/Search" method="get">
+                        <input class="input" type="text" placeholder="Tìm Kiếm..." name="content" value="@ViewData["Content Search"]">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@foreach (var item in Model) {
     <button type="button" class="collapsible">
         <span>
             @item.card.Name | Lớp: @item.card.Class | Mssv: @item.card.MSSV | Thời gian mượn:
             @item.details.borrow.DateBorrow |
             Số Lượng: @item.details.borrow.AmountBorrow |
-            @switch (item.details.borrow.StatusBorrow)
-            {
+            @switch (item.details.borrow.StatusBorrow) {
                 case StatusBorrow.NotEnough:
                     <span>Chưa trả đủ</span>
                     break;
@@ -75,15 +87,12 @@
 
             }
 
-            @if (ViewData["borrow-on"] != null)
-            {
-                <a href="Borrows/ReturnBook?idCard=@item.card.Id&&idBorrow=@item.details.borrow.Id" class="btn-export">
+            @if (ViewData["borrow-on"] != null) {
+                <a href="/Borrows/ReturnBook?idCard=@item.card.Id&&idBorrow=@item.details.borrow.Id" class="btn-export">
                     <span>Trả Sách</span>
                 </a>
-            }
-            else
-            {
-                <a href="Borrows/ReturnBook?idCard=@item.card.Id" class="btn-export">
+            } else {
+                <a href="/Borrows/ReturnBook?idCard=@item.card.Id" class="btn-export">
                     <span>Trả Sách</span>
                 </a>
             }
@@ -102,8 +111,7 @@
                         <span>Thời gian trả</span>
                     </div>
 
-                    @foreach (var bib in item.details.bibs)
-                    {
+                    @foreach (var bib in item.details.bibs) {
                         <div class="flex-list-inner">
                             <div>
                                 <div class="flex-table-item">
@@ -148,20 +156,20 @@
 
 
 @section Scripts{
-<script>
-    var coll = document.getElementsByClassName("collapsible");
-    var i;
+    <script>
+        var coll = document.getElementsByClassName("collapsible");
+        var i;
 
-    for (i = 0; i < coll.length; i++) {
-        coll[i].addEventListener("click", function () {
-            this.classList.toggle("active");
-            var content = this.nextElementSibling;
-            if (content.style.display === "block") {
-                content.style.display = "none";
-            } else {
-                content.style.display = "block";
-            }
-        });
-    }
-</script>
+        for (i = 0; i < coll.length; i++) {
+            coll[i].addEventListener("click", function () {
+                this.classList.toggle("active");
+                var content = this.nextElementSibling;
+                if (content.style.display === "block") {
+                    content.style.display = "none";
+                } else {
+                    content.style.display = "block";
+                }
+            });
+        }
+    </script>
 }
