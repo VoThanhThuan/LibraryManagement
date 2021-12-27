@@ -97,9 +97,10 @@ namespace LibraryManagement.UI.Services
 
         public async Task<ReturnBookVM> GetBorrow(Guid idBorrow)
         {
-            var borrow = await _context.Borrows.FirstOrDefaultAsync(x => x.Id == idBorrow && (x.StatusBorrow == StatusBorrow.Borrowing || x.StatusBorrow == StatusBorrow.Missing));
+            var borrow = await _context.Borrows.FirstOrDefaultAsync(x => x.Id == idBorrow && (x.StatusBorrow != StatusBorrow.Finish));
             //var borrows = new List<BorrowVM>();
-
+            if (borrow is null)
+                return null;
             var card = await _context.LibraryCards.FirstOrDefaultAsync(x => x.Id == borrow.IdCard);
             if (card is null) return null;
 
@@ -266,7 +267,7 @@ namespace LibraryManagement.UI.Services
         RankLibrary UpRank(LibraryCard libraryCard)
         {
 
-            var expUp = new List<int> {10, 21, 32, 43, 54, 65};
+            var expUp = new List<int> {10, 21, 32, 43, 54, 65, 85};
 
             var currentRank = (int) libraryCard.Rank;
 
@@ -275,6 +276,7 @@ namespace LibraryManagement.UI.Services
             if (libraryCard.Exp > expNeedUp && currentRank < 5)
             {
                 libraryCard.Rank = (RankLibrary) (currentRank + 1);
+                libraryCard.ExpLevelUp = expUp[currentRank + 1];
             }
 
             return libraryCard.Rank;

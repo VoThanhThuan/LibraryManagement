@@ -240,11 +240,11 @@ namespace LibraryManagement.UI.Controllers
             var result = await _borrow.ReturnBook(request);
             if (result == false) {
                 //return View(cardAndBook);
-                return Ok("Trả thất bại");
+                return View($"/Borrows/ReturnBook?idCard={request.IdCard}&&idBorrow={request.IdBook}");
 
             }
             TempData["success"] = $"Đã trả {request.AmountReturn} cuốn sách thành công";
-            return Ok("Trả thành công");
+            return Redirect("/Borrows");
         }
 
         [HttpPost("api/MissingBook")]

@@ -24,7 +24,7 @@
 
     .title-choose-report {
         /*max-width: 980px;
-                            margin: 0 auto;*/
+                                margin: 0 auto;*/
         margin-top: 10px;
         padding-bottom: 10px;
         margin-bottom: 10px;
@@ -296,20 +296,20 @@
     }
 
     .box-text {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: flex-start!important;
-    -webkit-box-pack: justify;
-    -ms-flex-pack: justify;
-    justify-content: center!important;
-    margin-left: 12px;
-    -webkit-box-flex: 2;
-    -ms-flex-positive: 2;
-    flex-grow: 2;
-    flex-direction: column;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: flex-start !important;
+        -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+        justify-content: center !important;
+        margin-left: 12px;
+        -webkit-box-flex: 2;
+        -ms-flex-positive: 2;
+        flex-grow: 2;
+        flex-direction: column;
     }
 </style>
 
@@ -326,8 +326,15 @@
     <div class="title-wrap">
         <h1 class="title">Thống Kê</h1>
     </div>
-</div>
 
+</div>
+<form action="/Statistical" method="get">
+    <label for="date-start">Ngày Bắt Đầu</label>
+    <input type="date" name="start" id="date-start" value="@ViewData["start"]">
+    <label for="date-end">Ngày Kết Thúc</label>
+    <input type="date" name="end" id="date-end" value="@ViewData["end"]">
+    <button class="btn-export">Lọc</button>
+</form>
 <div class="company-header is-bg-6">
     <div class="header-time">
         <div class="item-inner">
@@ -506,7 +513,7 @@
                                                         </div>
                                                         <div class="box-text">
                                                             <p>
-                                                                <span >@item.LibraryCard.Name - @item.LibraryCard.MSSV</span>
+                                                                <span>@item.LibraryCard.Name - @item.LibraryCard.MSSV</span>
                                                             </p>
                                                             <span style="color: #10cb8a">(Ấn để trả sách)</span>
 
@@ -515,13 +522,13 @@
 
                                                 } else {
                                                     <div class="v-avatar is-small">
-                                                            <img class="avatar" src="@item.LibraryCard.Image" alt="@item.LibraryCard.Name">
-                                                        </div>
-                                                        <div class="box-text">
-                                                            <p>
-                                                                <span>@item.LibraryCard.Name - @item.LibraryCard.MSSV</span>
-                                                            </p>
-                                                        </div>
+                                                        <img class="avatar" src="@item.LibraryCard.Image" alt="@item.LibraryCard.Name">
+                                                    </div>
+                                                    <div class="box-text">
+                                                        <p>
+                                                            <span>@item.LibraryCard.Name - @item.LibraryCard.MSSV</span>
+                                                        </p>
+                                                    </div>
                                                 }
                                             </div>
                                         </div>
@@ -703,7 +710,7 @@
                                                         </div>
                                                         <div class="box-text">
                                                             <p>
-                                                                <span >@item.LibraryCard.Name - @item.LibraryCard.MSSV</span>
+                                                                <span>@item.LibraryCard.Name - @item.LibraryCard.MSSV</span>
                                                             </p>
                                                             <span style="color: #10cb8a">(Ấn để trả sách)</span>
 
@@ -712,13 +719,13 @@
 
                                                 } else {
                                                     <div class="v-avatar is-small">
-                                                            <img class="avatar" src="@item.LibraryCard.Image" alt="@item.LibraryCard.Name">
-                                                        </div>
-                                                        <div class="box-text">
-                                                            <p>
-                                                                <span>@item.LibraryCard.Name - @item.LibraryCard.MSSV</span>
-                                                            </p>
-                                                        </div>
+                                                        <img class="avatar" src="@item.LibraryCard.Image" alt="@item.LibraryCard.Name">
+                                                    </div>
+                                                    <div class="box-text">
+                                                        <p>
+                                                            <span>@item.LibraryCard.Name - @item.LibraryCard.MSSV</span>
+                                                        </p>
+                                                    </div>
                                                 }
 
                                             </div>
@@ -774,7 +781,7 @@
                                                         </div>
                                                         <div class="box-text">
                                                             <p>
-                                                                <span >@item.LibraryCard.Name - @item.LibraryCard.MSSV</span>
+                                                                <span>@item.LibraryCard.Name - @item.LibraryCard.MSSV</span>
                                                             </p>
                                                             <span style="color: #10cb8a">(Ấn để trả sách)</span>
 
@@ -783,15 +790,15 @@
 
                                                 } else {
                                                     <div class="v-avatar is-small">
-                                                            <img class="avatar" src="@item.LibraryCard.Image" alt="@item.LibraryCard.Name">
-                                                        </div>
-                                                        <div class="box-text">
-                                                            <p>
-                                                                <span>@item.LibraryCard.Name - @item.LibraryCard.MSSV</span>
-                                                            </p>
+                                                        <img class="avatar" src="@item.LibraryCard.Image" alt="@item.LibraryCard.Name">
+                                                    </div>
+                                                    <div class="box-text">
+                                                        <p>
+                                                            <span>@item.LibraryCard.Name - @item.LibraryCard.MSSV</span>
+                                                        </p>
 
 
-                                                        </div>
+                                                    </div>
 
                                                 }
 
@@ -879,9 +886,9 @@
                                                 <a class="social-action" href='@($"/LibraryCards/Edit/{item.Id}")'>
                                                     <i class="fas fa-wrench"></i>
                                                 </a>
- @*                                               <a class="social-action">
+                                                @*                                               <a class="social-action">
                                                     <i class="fal fa-trash-alt"></i>
-                                                </a>*@
+                                                    </a>*@
                                                 <a class="social-action" href='@($"/LibraryCards/Details/{item.Id}")'>
                                                     <i class="fas fa-info-circle"></i>
                                                 </a>
@@ -941,9 +948,9 @@
                                                 <a class="social-action">
                                                     <i class="fas fa-wrench"></i>
                                                 </a>
-@*                                                <a class="social-action">
+                                                @*                                                <a class="social-action">
                                                     <i class="fal fa-trash-alt"></i>
-                                                </a>*@
+                                                    </a>*@
                                                 <a class="social-action">
                                                     <i class="fas fa-info-circle"></i>
                                                 </a>
