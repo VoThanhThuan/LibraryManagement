@@ -26,9 +26,20 @@
             <div class="search">
                 <div class="control">
                     <form action="/Books/Search" method="post">
-                        <input class="input" type="text" placeholder="Tìm Kiếm..." name="content" value="@ViewData["Content Search"]">
+                        <input class="input" type="text" placeholder="Tìm Kiếm..." name="content"
+                            value="@ViewData["Content Search"]">
                     </form>
-                    <div class="form-icon" data-v-aad2da70=""><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--feather" width="1.1em" height="1.1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" data-icon="feather:search" data-v-aad2da70=""><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><path d="M21 21l-4.35-4.35"></path></g></svg></div>
+                    <div class="form-icon" data-v-aad2da70=""><svg xmlns="http://www.w3.org/2000/svg"
+                            xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img"
+                            class="iconify iconify--feather" width="1.1em" height="1.1em"
+                            preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" data-icon="feather:search"
+                            data-v-aad2da70="">
+                            <g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <circle cx="11" cy="11" r="8"></circle>
+                                <path d="M21 21l-4.35-4.35"></path>
+                            </g>
+                        </svg></div>
                 </div>
             </div>
             <div class="button">
@@ -50,7 +61,8 @@
                 <span class="call-end">Hành động</span>
             </div>
 
-            @foreach (var item in Model) {
+            @foreach (var item in Model)
+            {
                 <div class="flex-list-inner">
                     <div>
                         <div class="flex-table-item">
@@ -70,7 +82,7 @@
                             </div>
 
                             <div class="flex-table-cell">
-                                <span class="light-text">@item.Amount</span>
+                                <span class="light-text">@item.Amount QUYỂN</span>
                             </div>
                             <div class="flex-table-cell">
                                 <span class="light-text">@item.IdLibraryCode</span>

@@ -115,21 +115,21 @@
     .tab-active {
         display: block !important;
     }
+
+    table {
+        color: black !important;
+    }
+
+    th .wrapper .label {
+        color: #000 !important;
+        text-transform: uppercase
+    }
 </style>
 <link rel="stylesheet" href="/css/smart.default.css">
 
 
 <div class="export-header">
-    <label for="choose">Chọn Loại Thống Kê</label>
-    <select name="choose" id="type_export">
-        <option value="borrowed">Sách Đã Mượn</option>
-        <option value="borrowing">Sách Đang Mượn</option>
-        <option value="return">Sách Đã Trả</option>
-        <option value="missing">Sách Mất</option>
-        <option value="libraryCard">Thẻ Thư Viện</option>
 
-
-    </select>
     <form action="/Statistical/export" method="get">
         <label for="date-start">Ngày Bắt Đầu</label>
         <input type="date" name="start" id="date-start" value="@ViewData["start"]">
@@ -138,10 +138,19 @@
         <button class="btn-export">Lọc</button>
     </form>
 
+    <label for="choose">Chọn Loại Thống Kê</label>
+    <select name="choose" id="type_export" style="margin-top: 10px;">
+        <option value="borrowed">Sách Đã Mượn</option>
+        <option value="borrowing">Sách Đang Mượn</option>
+        <option value="return">Sách Đã Trả</option>
+        <option value="missing">Sách Mất</option>
+        <option value="libraryCard">Thẻ Thư Viện</option>
+
+    </select>
 </div>
 
 <!--Sách đã mượn-->
-<span>Sách đã mượn</span>
+
 
 <smart-table id="e-table-borrowed" class="table-hover tab-export tab-active" auto-load-state auto-save-state
     column-resize column-reorder auto-save-state>
@@ -174,7 +183,7 @@
 </smart-table>
 <!--End [Sách đã mượn]-->
 <!--Sách đã đang mượn-->
-<span>Sách đã đang mượn</span>
+
 
 <smart-table id="e-table-borrowing" class="table-hover tab-export" auto-load-state auto-save-state column-resize
     column-reorder auto-save-state>
@@ -207,7 +216,7 @@
 </smart-table>
 <!--End [Sách đang mượn]-->
 <!--Sách đã trả-->
-<span>Sách đã trả</span>
+
 
 <smart-table id="e-table-return" class="table-hover tab-export" auto-load-state auto-save-state column-resize
     column-reorder auto-save-state>
@@ -240,7 +249,7 @@
 </smart-table>
 <!--End [Sách đã trả]-->
 <!--Sách bị mất-->
-<span>Sách bị mất</span>
+
 <smart-table id="e-table-missing" class="table-hover tab-export" auto-load-state auto-save-state column-resize
     column-reorder auto-save-state>
     <table>
@@ -272,7 +281,7 @@
 </smart-table>
 <!--End [Sách bị mất]-->
 <!--Top thẻ mượn-->
-<span>Top thẻ mượn</span>
+
 <smart-table id="e-table-libraryCard" class="table-hover tab-export" auto-load-state auto-save-state column-resize
     column-reorder auto-save-state>
     <table>
