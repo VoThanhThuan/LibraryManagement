@@ -46,6 +46,11 @@
                 <p>Tống số sách trong thư viện</p>
                 <a href="/books">Quản Lý Sách</a>
             </div>
+            <div class="sum-books">
+                <h3>@Model.TopBooks.Select(x => x.Amount).Sum()</h3>
+                <p>Tống số lượng sách trong thư viện</p>
+                <a href="/books">Quản Lý Sách</a>
+            </div>
             <div class="cta">
                 <div class="inverted-text">
                     <i class="far fa-chart-bar"></i>
