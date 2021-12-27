@@ -58,6 +58,7 @@ namespace Library.Library.Entities.ViewModels
         public DateTime? TimeMissing { get; set; } = null;
         public DateTime TimeBorrowed { get; set; }
         public DateTime TimeReturn { get; set; }
+        public DateTime? TimeRealReturn { get; set; }
 
         public int StatisticalAmount { get; set; } = 0;
 

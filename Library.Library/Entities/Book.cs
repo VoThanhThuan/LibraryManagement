@@ -65,6 +65,8 @@ namespace Library.Library.Entities
                 Thumbnail = Thumbnail,
                 TimeBorrowed = bookInBorrow.TimeBorrowed,
                 TimeReturn = bookInBorrow.TimeReturn,
+                TimeMissing = bookInBorrow.TimeMissing,
+                TimeRealReturn = bookInBorrow.TimeRealReturn,
                 StatisticalAmount = statisticalAmount,
                 BookInBorrow = bookInBorrow,
                 LibraryCard = libraryCard
