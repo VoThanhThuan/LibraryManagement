@@ -38,22 +38,18 @@ namespace LibraryManagement.UI.Controllers
 
         public async Task<IActionResult> Export(DateTime? start = null, DateTime? end = null)
         {
-            if (start != null && end != null)
-            {
-                if (start < end)
-                {
-                    TempData["error"] = "<Ngày bắt đầu> không thể nhỏ hơn <ngày kết thúc>";
+            if (start != null && end != null) {
+                if (start < end) {
+                    ViewData["start"] = ((DateTime)start).ToString("yyyy-MM-dd");
+                    ViewData["end"] = ((DateTime)end).ToString("yyyy-MM-dd");
+
+                } else {
+                    TempData["error"] = "<Ngày bắt kết thúc> không thể nhỏ hơn <ngày bắt đầu>";
                     ViewData["start"] = ((DateTime)start).ToString("yyyy-MM-dd");
                     ViewData["end"] = ((DateTime)start).AddDays(1).ToString("yyyy-MM-dd");
 
-                } else
-                {
-                    ViewData["start"] = ((DateTime)start).ToString("yyyy-MM-dd");
-                    ViewData["end"] = ((DateTime)end).ToString("yyyy-MM-dd");
                 }
-            }
-            else
-            {
+            } else {
                 ViewData["start"] = DateTime.Now.ToString("yyyy-MM-dd");
                 ViewData["end"] = DateTime.Now.ToString("yyyy-MM-dd");
 
