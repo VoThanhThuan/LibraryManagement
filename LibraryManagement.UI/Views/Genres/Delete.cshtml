@@ -16,7 +16,7 @@
         </span>
     </span>
     <div class="title-wrap">
-        <h1 class="title">Details Genres</h1>
+        <h1 class="title">Xóa Thể Loại Sách</h1>
     </div>
 </div>
 
@@ -27,7 +27,7 @@
             <div class="form-header">
                 <div class="form-header-inner">
                     <div class="left">
-                        <h3>Details Genres</h3>
+                        <h3></h3>
                     </div>
                     <div class="right">
                         <div class="buttons">
@@ -35,11 +35,11 @@
                                 <div class="icon">
                                     <i class="far fa-long-arrow-alt-left"></i>
                                 </div>
-                                <span>Cancel</span>
+                                <span>Quay Lại</span>
                             </a>
                             <form asp-action="Delete">
                                 <input type="hidden" asp-for="Id" />
-                                <input type="submit" value="Delete"class="button v-button is-primary" />
+                                <input type="submit" value="Xóa" class="button v-button is-primary" />
                             </form>
                         </div>
                     </div>
@@ -48,7 +48,7 @@
             <div class="form-body">
                 <div class="form-fieldset">
                     <div class="fieldset-heading">
-                        <h4>Personal Genres</h4>
+                        <h4>Thông Tin Thể Loại</h4>
                     </div>
                     <div class="columns is-multiline">
                         <div class="column is-12">
@@ -57,7 +57,17 @@
                                 <div class="control has-icon">
                                     <input asp-for="Name" class="input" readonly>
                                     <div class="form-icon" data-v-aad2da70="">
-                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--feather" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" data-icon="feather:user" data-v-aad2da70=""><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></g></svg>
+                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                            xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img"
+                                            class="iconify iconify--feather" width="1em" height="1em"
+                                            preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"
+                                            data-icon="feather:user" data-v-aad2da70="">
+                                            <g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                stroke-linejoin="round">
+                                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                                <circle cx="12" cy="7" r="4"></circle>
+                                            </g>
+                                        </svg>
                                     </div>
                                 </div>
                             </div>
@@ -66,7 +76,8 @@
                             <div class="field">
                                 <label>Mô tả</label>
                                 <div class="control">
-                                    <textarea asp-for="Description" class="textarea" rows="4" autocomplete="off" autocapitalize="off" spellcheck="true" readonly></textarea>
+                                    <textarea asp-for="Description" class="textarea" rows="4" autocomplete="off"
+                                        autocapitalize="off" spellcheck="true" readonly></textarea>
                                 </div>
                             </div>
                         </div>
@@ -84,26 +95,26 @@
 
     <h3>Are you sure you want to delete this?</h3>
     <div>
-        <h4>Genre</h4>
-        <hr />
-        <dl class="row">
-            <dt class = "col-sm-2">
-                @Html.DisplayNameFor(model => model.Name)
-            </dt>
-            <dd class = "col-sm-10">
-                @Html.DisplayFor(model => model.Name)
-            </dd>
-            <dt class = "col-sm-2">
-                @Html.DisplayNameFor(model => model.Description)
-            </dt>
-            <dd class = "col-sm-10">
-                @Html.DisplayFor(model => model.Description)
-            </dd>
-        </dl>
+    <h4>Genre</h4>
+    <hr />
+    <dl class="row">
+    <dt class = "col-sm-2">
+    @Html.DisplayNameFor(model => model.Name)
+    </dt>
+    <dd class = "col-sm-10">
+    @Html.DisplayFor(model => model.Name)
+    </dd>
+    <dt class = "col-sm-2">
+    @Html.DisplayNameFor(model => model.Description)
+    </dt>
+    <dd class = "col-sm-10">
+    @Html.DisplayFor(model => model.Description)
+    </dd>
+    </dl>
 
-        <form asp-action="Delete">
-            <input type="hidden" asp-for="Id" />
-            <input type="submit" value="Delete" class="btn btn-danger" /> |
-            <a asp-action="Index">Back to List</a>
-        </form>
+    <form asp-action="Delete">
+    <input type="hidden" asp-for="Id" />
+    <input type="submit" value="Delete" class="btn btn-danger" /> |
+    <a asp-action="Index">Back to List</a>
+    </form>
     </div>*@
