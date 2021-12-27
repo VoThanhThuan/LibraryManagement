@@ -23,6 +23,7 @@
 <div class="page-content-inner">
     <div>
         <div class="list-flex-toolbar">
+            <!--
             <div class="search">
                 <div class="control">
                     <input class="input" type="text" placeholder="Search...">
@@ -39,6 +40,8 @@
                         </svg></div>
                 </div>
             </div>
+
+            -->
             <div class="button">
                 <a asp-action="Create" class="v-button is-primary is-elevated">
                     <span class="icon">
@@ -56,8 +59,7 @@
                 <span class="call-end">actions</span>
             </div>
 
-            @foreach (var item in Model)
-            {
+            @foreach (var item in Model) {
                 <div class="flex-list-inner">
                     <div>
                         <div class="flex-table-item">
