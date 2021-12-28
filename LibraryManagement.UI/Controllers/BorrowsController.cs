@@ -215,7 +215,7 @@ namespace LibraryManagement.UI.Controllers
             var result = await _borrow.ReturnBookAll(idCard, idBorrow);
             if (result == false) {
                 TempData["error"] = $"Đã trả toàn bộ sách thất bại";
-                return View("ReturnBook");
+                return RedirectToAction(nameof(ReturnBook));
 
             }
             TempData["success"] = $"Đã trả toàn bộ sách thành công";

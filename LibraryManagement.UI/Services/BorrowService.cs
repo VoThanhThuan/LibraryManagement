@@ -375,7 +375,7 @@ namespace LibraryManagement.UI.Services
                 borrow.AmountReturned = borrow.AmountBorrow;
             }
 
-            if (borrow.AmountReturned == borrow.AmountBorrow)
+            if (amount <= 0)
             {
                 borrow.StatusBorrow = StatusBorrow.Finish;
                 card.StatusCard = StatusCard.CanBorrow;
