@@ -72,14 +72,16 @@ namespace LibraryManagement.UI.Controllers {
 
         // GET: Users/Edit/5
         public async Task<IActionResult> Edit(Guid id) {
+            ViewData["Roles"] = await _role.GetRoles();
+
             if (id == Guid.Empty) {
-                return NotFound();
+                TempData["error"] = "Không tìm thầy User";
+                return Redirect("/Users");
             }
 
             //var user = await _context.Users.FindAsync(id);
             var user = await _user.GetUser(id);
             //var roles = await _role.GetRoles();
-            ViewData["Roles"] = await _role.GetRoles();
 
             if (user == null) {
                 return NotFound();
@@ -95,8 +97,11 @@ namespace LibraryManagement.UI.Controllers {
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid id, UserRequest user) {
             if (id != user.Id) {
-                return NotFound();
+                TempData["error"] = "Không tìm thầy User";
+                return Redirect("/Users");
             }
+            ViewData["Roles"] = await _role.GetRoles();
+
             ModelState.Remove("Password");
             ModelState.Remove("ConfirmPassword");
 
@@ -106,7 +111,6 @@ namespace LibraryManagement.UI.Controllers {
                 if (!result)
                     return Conflict();
             }
-            ViewData["Roles"] = await _role.GetRoles();
 
             return View(user);
         }
