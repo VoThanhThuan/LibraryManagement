@@ -30,7 +30,7 @@ namespace Library.Library.Entities
 
         public BookVM ToViewModel()
         {
-            return new() {
+            var bookVM = new BookVM() {
                 Id = Id,
                 Name = Name,
                 PublishingCompany = PublishingCompany,
@@ -45,6 +45,10 @@ namespace Library.Library.Entities
                 IdLibraryCode = IdLibraryCode,
                 Thumbnail = Thumbnail,
             };
+            if(LibraryCode != null) {
+                bookVM.AbbreviationLibraryCode = LibraryCode.Abbreviation;
+            }
+            return bookVM;
         }
 
         public BookVM ToViewModel(BookInBorrowVM bookInBorrow, int statisticalAmount, LibraryCardVM libraryCard=null)

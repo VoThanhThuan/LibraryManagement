@@ -28,7 +28,7 @@ namespace LibraryManagement.UI.Services
 
         public async Task<List<BookVM>> GetBooks()
         {
-            var books = await _context.Books.Select(x => x.ToViewModel()).ToListAsync();
+            var books = await _context.Books.Include(x => x.LibraryCode).Select(x => x.ToViewModel()).ToListAsync();
             return books;
         }
 

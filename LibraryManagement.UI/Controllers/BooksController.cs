@@ -78,7 +78,7 @@ namespace LibraryManagement.UI.Controllers
         public IActionResult Create()
         {
             ViewData["Genre"] = new SelectList(_context.Genres, "Id", "Name");
-            ViewData["IdLibraryCode"] = new SelectList(_context.LibraryCodes, "Id", "Id");
+            ViewData["IdLibraryCode"] = new SelectList(_context.LibraryCodes, "Id", "Abbreviation");
             return View();
         }
 
@@ -90,7 +90,7 @@ namespace LibraryManagement.UI.Controllers
         public async Task<IActionResult> Create(BookRequest request, List<int> idGenres)
         {
             ViewData["Genre"] = new SelectList(_context.Genres, "Id", "Name");
-            ViewData["IdLibraryCode"] = new SelectList(_context.LibraryCodes, "Id", "Id");
+            ViewData["IdLibraryCode"] = new SelectList(_context.LibraryCodes, "Id", "Abbreviation");
 
             if (!ModelState.IsValid) return View(request);
 
@@ -119,7 +119,7 @@ namespace LibraryManagement.UI.Controllers
             bookRequest.idGenres = await _genre.GetIdBookInGenre(book.Id);
 
             ViewData["Genre"] = new SelectList(_context.Genres, "Id", "Name");
-            ViewData["IdLibraryCode"] = new SelectList(_context.LibraryCodes, "Id", "Id", book.IdLibraryCode);
+            ViewData["IdLibraryCode"] = new SelectList(_context.LibraryCodes, "Id", "Abbreviation", book.IdLibraryCode);
             return View(bookRequest);
         }
 
@@ -145,7 +145,7 @@ namespace LibraryManagement.UI.Controllers
             bookRequest.idGenres = await _genre.GetIdBookInGenre(book.Id);
 
             ViewData["Genre"] = new SelectList(_context.Genres, "Id", "Name");
-            ViewData["IdLibraryCode"] = new SelectList(_context.LibraryCodes, "Id", "Id", book.IdLibraryCode);
+            ViewData["IdLibraryCode"] = new SelectList(_context.LibraryCodes, "Id", "Abbreviation", book.IdLibraryCode);
             TempData["success"] = $"Đã sửa {book.Name} thành công";
             return View(bookRequest);
         }

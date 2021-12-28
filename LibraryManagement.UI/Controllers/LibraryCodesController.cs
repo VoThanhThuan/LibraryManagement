@@ -103,7 +103,7 @@ namespace LibraryManagement.UI.Controllers
                     await _context.SaveChangesAsync();
                 } catch (DbUpdateConcurrencyException) {
                     if (!LibraryCodeExists(libraryCode.Id)) {
-                        TempData["error"] = "Không tìm thấy mã thư viện";
+                        TempData["error"] = "Cập nhật thất bại";
                         return RedirectToAction(nameof(Index));
                     } else {
                         throw;

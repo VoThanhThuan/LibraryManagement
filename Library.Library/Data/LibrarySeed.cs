@@ -178,7 +178,7 @@ namespace Library.Library.Data
                 {
                     Id = "TITH0001",
                     Name = "Tiểu Thuyết",
-                    Abbreviation = "TT",
+                    Abbreviation = "TITH",
                     Description =
                         "Tiểu thuyết là một thể loại văn xuôi có hư cấu, thông qua nhân vật, hoàn cảnh, sự việc để phản ánh bức tranh xã hội rộng lớn và những vấn đề của cuộc sống con người, biểu hiện tính chất tường thuật, tính chất kể chuyện bằng ngôn ngữ văn xuôi theo những chủ đề xác định."
                 };
@@ -188,7 +188,7 @@ namespace Library.Library.Data
                 {
                     Id = "TRTR0001",
                     Name = "Truyện Tranh",
-                    Abbreviation = "TT",
+                    Abbreviation = "TRTR",
                     Description =
                         "Ghé thăm website truyện tranh của [Võ Thành Thuận] để đọc những trang truyện tuyển chọn hay nhất."
                 };

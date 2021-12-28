@@ -54,6 +54,7 @@ namespace Library.Library.Entities.ViewModels
         [Display(Name = "Mã Thư Viện")]
         [Required]
         public string IdLibraryCode { get; set; } = "";
+        public string AbbreviationLibraryCode { get; set; } = "";
 
         public DateTime? TimeMissing { get; set; } = null;
         public DateTime TimeBorrowed { get; set; }
