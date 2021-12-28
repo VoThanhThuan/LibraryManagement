@@ -375,13 +375,13 @@ namespace LibraryManagement.UI.Services
                 borrow.AmountReturned = borrow.AmountBorrow;
             }
 
-            if (amount <= 0)
+            if (borrow.AmountReturned >= borrow.AmountBorrow)
             {
                 borrow.StatusBorrow = StatusBorrow.Finish;
                 card.StatusCard = StatusCard.CanBorrow;
             }
 
-            else if (borrow.AmountReturned < borrow.AmountBorrow)
+            if (borrow.AmountReturned < borrow.AmountBorrow)
             {
                 borrow.StatusBorrow = StatusBorrow.NotEnough;
             }

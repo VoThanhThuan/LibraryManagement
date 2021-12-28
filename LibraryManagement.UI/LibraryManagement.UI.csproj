@@ -27,6 +27,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="wwwroot\avatar\" />
     <Folder Include="wwwroot\books\" />
     <Folder Include="wwwroot\lib\" />
     <Folder Include="wwwroot\libraryCard\" />
