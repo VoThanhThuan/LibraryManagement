@@ -93,7 +93,7 @@ namespace LibraryManagement.UI.Services
                                        select b.ToViewModel(bib.ToViewModel(), bib.AmountBorrowed, lc.ToViewModel())).ToListAsync();
 
             var booksBorrowing = await (from br in _context.Borrows
-                                        where br.StatusBorrow == StatusBorrow.Borrowing
+                                        where br.StatusBorrow == StatusBorrow.Borrowing || br.StatusBorrow == StatusBorrow.NotEnough
                                         join bib in _context.BookInBorrows on br.Id equals bib.IdBorrow where bib.TimeBorrowed >= start && bib.TimeBorrowed <= end
                                         join b in _context.Books on bib.IdBook equals b.Id
                                         join lc in _context.LibraryCards on br.IdCard equals lc.Id
