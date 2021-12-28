@@ -64,6 +64,12 @@ div {
     transition: all linear .3s;
     animation: slideInLeft ease .7s, fadeOut linear 2s 3s forwards;
 }
+.error{
+    border-left: 4px solid #ff5252 !important;
+}
+.icon-error{
+    color: #ff5252 !important;
+}
 
 @keyframes slideInLeft {
     from {
