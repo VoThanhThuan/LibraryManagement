@@ -267,7 +267,7 @@ namespace LibraryManagement.UI.Services
         RankLibrary UpRank(LibraryCard libraryCard)
         {
 
-            var expUp = new List<int> {10, 21, 32, 43, 54, 65, 85};
+            var expUp = new List<int> {10, 21, 34, 50, 68, 78, 90};
 
             var currentRank = (int) libraryCard.Rank;
 

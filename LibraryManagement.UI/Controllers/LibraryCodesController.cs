@@ -103,7 +103,8 @@ namespace LibraryManagement.UI.Controllers
                     await _context.SaveChangesAsync();
                 } catch (DbUpdateConcurrencyException) {
                     if (!LibraryCodeExists(libraryCode.Id)) {
-                        return NotFound();
+                        TempData["error"] = "Không tìm thấy mã thư viện";
+                        return RedirectToAction(nameof(Index));
                     } else {
                         throw;
                     }
@@ -117,7 +118,8 @@ namespace LibraryManagement.UI.Controllers
         public async Task<IActionResult> Delete(string id)
         {
             if (id == null) {
-                return NotFound();
+                TempData["error"] = "Không tìm thấy mã thư viện";
+                return RedirectToAction(nameof(Index));
             }
 
             var libraryCode = await _context.LibraryCodes
