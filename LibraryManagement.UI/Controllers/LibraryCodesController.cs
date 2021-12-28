@@ -34,13 +34,15 @@ namespace LibraryManagement.UI.Controllers
         public async Task<IActionResult> Details(string id)
         {
             if (id == null) {
-                return NotFound();
+                TempData["error"] = "Không tìm thấy mã thư viện";
+                return RedirectToAction(nameof(Index));
             }
 
             var libraryCode = await _context.LibraryCodes
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (libraryCode == null) {
-                return NotFound();
+                TempData["error"] = "Không tìm thấy mã thư viện";
+                return RedirectToAction(nameof(Index));
             }
 
             return View(libraryCode);
@@ -71,12 +73,14 @@ namespace LibraryManagement.UI.Controllers
         public async Task<IActionResult> Edit(string id)
         {
             if (id == null) {
-                return NotFound();
+                TempData["error"] = "Không tìm thấy mã thư viện";
+                return RedirectToAction(nameof(Index));
             }
 
             var libraryCode = await _context.LibraryCodes.FindAsync(id);
             if (libraryCode == null) {
-                return NotFound();
+                TempData["error"] = "Không tìm thấy mã thư viện";
+                return RedirectToAction(nameof(Index));
             }
             return View(libraryCode);
         }
@@ -89,7 +93,8 @@ namespace LibraryManagement.UI.Controllers
         public async Task<IActionResult> Edit(string id, [Bind("Id,Name,Abbreviation,Description")] LibraryCode libraryCode)
         {
             if (id != libraryCode.Id) {
-                return NotFound();
+                TempData["error"] = "Không tìm thấy mã thư viện";
+                return RedirectToAction(nameof(Index));
             }
 
             if (ModelState.IsValid) {
@@ -118,7 +123,8 @@ namespace LibraryManagement.UI.Controllers
             var libraryCode = await _context.LibraryCodes
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (libraryCode == null) {
-                return NotFound();
+                TempData["error"] = "Không tìm thấy mã thư viện";
+                return RedirectToAction(nameof(Index));
             }
 
             return View(libraryCode);

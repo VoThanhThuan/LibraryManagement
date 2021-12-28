@@ -34,14 +34,16 @@ namespace LibraryManagement.UI.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                TempData["error"] = "id Không được null";
+                return RedirectToAction(nameof(Index));
             }
 
             var genre = await _context.Genres
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (genre == null)
             {
-                return NotFound();
+                TempData["error"] = "Không tìm thấy thể loại";
+                return RedirectToAction(nameof(Index));
             }
 
             return View(genre);
@@ -74,13 +76,15 @@ namespace LibraryManagement.UI.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                TempData["error"] = "Không tìm thấy thể loại";
+                return RedirectToAction(nameof(Index));
             }
 
             var genre = await _context.Genres.FindAsync(id);
             if (genre == null)
             {
-                return NotFound();
+                TempData["error"] = "Không tìm thấy thể loại";
+                return RedirectToAction(nameof(Index));
             }
             return View(genre);
         }
@@ -94,7 +98,8 @@ namespace LibraryManagement.UI.Controllers
         {
             if (id != genre.Id)
             {
-                return NotFound();
+                TempData["error"] = "Không tìm thấy thể loại";
+                return RedirectToAction(nameof(Index));
             }
 
             if (ModelState.IsValid)
@@ -108,9 +113,9 @@ namespace LibraryManagement.UI.Controllers
                 {
                     if (!GenreExists(genre.Id))
                     {
-                        return NotFound();
-                    }
-                    else
+                        TempData["error"] = "Không tìm thấy thể loại";
+                        return RedirectToAction(nameof(Index));
+                    } else
                     {
                         throw;
                     }
@@ -125,14 +130,16 @@ namespace LibraryManagement.UI.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                TempData["error"] = "Không tìm thấy thể loại";
+                return RedirectToAction(nameof(Index));
             }
 
             var genre = await _context.Genres
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (genre == null)
             {
-                return NotFound();
+                TempData["error"] = "Không tìm thấy thể loại";
+                return RedirectToAction(nameof(Index));
             }
 
             return View(genre);

@@ -62,14 +62,15 @@ namespace LibraryManagement.UI.Controllers
         public async Task<IActionResult> Details(Guid id)
         {
             if (id == Guid.Empty) {
-                return NotFound();
+                return RedirectToAction(nameof(Index));
             }
 
             var borrow = await _context.Borrows
                 .Include(b => b.LibraryCard)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (borrow == null) {
-                return NotFound();
+                return RedirectToAction(nameof(Index));
+
             }
 
             return View(borrow);
@@ -275,12 +276,14 @@ namespace LibraryManagement.UI.Controllers
         public async Task<IActionResult> Edit(Guid? id)
         {
             if (id == null) {
-                return NotFound();
+                TempData["error"] = " không tìm thấy <id>";
+                return RedirectToAction(nameof(Index));
             }
 
             var borrow = await _context.Borrows.FindAsync(id);
             if (borrow == null) {
-                return NotFound();
+                TempData["error"] = " không tìm thấy <id>";
+                return RedirectToAction(nameof(Index));
             }
             ViewData["IdCard"] = new SelectList(_context.LibraryCards, "Id", "Id", borrow.IdCard);
 
@@ -295,7 +298,8 @@ namespace LibraryManagement.UI.Controllers
         public async Task<IActionResult> Edit(Guid id, [Bind("Id,DateBorrow,Note,IdUser,UserName,IdCard")] Borrow borrow)
         {
             if (id != borrow.Id) {
-                return NotFound();
+                TempData["error"] = " không tìm thấy <id>";
+                return RedirectToAction(nameof(Index));
             }
 
             if (ModelState.IsValid) {
@@ -304,7 +308,8 @@ namespace LibraryManagement.UI.Controllers
                     await _context.SaveChangesAsync();
                 } catch (DbUpdateConcurrencyException) {
                     if (!BorrowExists(borrow.Id)) {
-                        return NotFound();
+                        TempData["error"] = " không tìm thấy <id>";
+                        return RedirectToAction(nameof(Index));
                     } else {
                         throw;
                     }
@@ -321,14 +326,16 @@ namespace LibraryManagement.UI.Controllers
         public async Task<IActionResult> Delete(Guid? id)
         {
             if (id == null) {
-                return NotFound();
+                TempData["error"] = "id bị null";
+                return RedirectToAction(nameof(Index));
             }
 
             var borrow = await _context.Borrows
                 .Include(b => b.LibraryCard)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (borrow == null) {
-                return NotFound();
+                TempData["error"] = "Xóa thất bại";
+                return RedirectToAction(nameof(Index));
             }
 
             return View(borrow);
