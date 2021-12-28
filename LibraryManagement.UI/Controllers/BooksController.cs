@@ -61,12 +61,14 @@ namespace LibraryManagement.UI.Controllers
         public async Task<IActionResult> Details(string id)
         {
             if (id == null) {
-                return NotFound();
+                TempData["error"] = "Không tìm thấy sách";
+                return RedirectToAction(nameof(Index));
             }
 
             var book = await _book.GetBook(id);
             if (book == null) {
-                return NotFound();
+                TempData["error"] = "Không tìm thấy sách";
+                return RedirectToAction(nameof(Index));
             }
 
             return View(book);
@@ -103,12 +105,14 @@ namespace LibraryManagement.UI.Controllers
         public async Task<IActionResult> Edit(string id)
         {
             if (id == null) {
-                return NotFound();
+                TempData["error"] = "Không tìm thấy sách";
+                return RedirectToAction(nameof(Index));
             }
 
             var book = await _context.Books.FindAsync(id);
             if (book == null) {
-                return NotFound();
+                TempData["error"] = "Không tìm thấy sách";
+                return RedirectToAction(nameof(Index));
             }
 
             var bookRequest = book.ToRequest();
@@ -150,14 +154,16 @@ namespace LibraryManagement.UI.Controllers
         public async Task<IActionResult> Delete(string id)
         {
             if (id == null) {
-                return NotFound();
+                TempData["error"] = "Không tìm thấy sách";
+                return RedirectToAction(nameof(Index));
             }
 
             var book = await _context.Books
                 .Include(b => b.LibraryCode)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (book == null) {
-                return NotFound();
+                TempData["error"] = "Không tìm thấy sách";
+                return RedirectToAction(nameof(Index));
             }
 
             return View(book);
@@ -169,8 +175,10 @@ namespace LibraryManagement.UI.Controllers
         public async Task<IActionResult> DeleteConfirmed(string id)
         {
             var result = await _book.DeleteBook(id);
-            if (result is not 200)
-                return Conflict();
+            if (result is not 200) {
+                TempData["error"] = $"Đã xóa sách có id là {id} thất bại";
+                return RedirectToAction("Index");
+            }
             TempData["success"] = $"Đã xóa sách có id là {id} thành công";
             return RedirectToAction(nameof(Index));
         }

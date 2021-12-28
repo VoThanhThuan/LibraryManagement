@@ -56,13 +56,15 @@ namespace LibraryManagement.UI.Controllers
         public async Task<IActionResult> Details(Guid? id)
         {
             if (id == null) {
-                return NotFound();
+                TempData["error"] = "Không tìm thấy thẻ mượn";
+                return RedirectToAction(nameof(Index));
             }
 
             var libraryCard = await _context.LibraryCards
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (libraryCard == null) {
-                return NotFound();
+                TempData["error"] = "Không tìm thấy thẻ mượn";
+                return RedirectToAction(nameof(Index));
             }
 
             return View(libraryCard);
@@ -93,12 +95,14 @@ namespace LibraryManagement.UI.Controllers
         public async Task<IActionResult> Edit(Guid? id)
         {
             if (id == null) {
-                return NotFound();
+                TempData["error"] = "Không tìm thấy thẻ mượn";
+                return RedirectToAction(nameof(Index));
             }
 
             var libraryCard = await _context.LibraryCards.FindAsync(id);
             if (libraryCard == null) {
-                return NotFound();
+                TempData["error"] = "Không tìm thấy thẻ mượn";
+                return RedirectToAction(nameof(Index));
             }
             return View(libraryCard);
         }
@@ -111,7 +115,8 @@ namespace LibraryManagement.UI.Controllers
         public async Task<IActionResult> Edit(Guid id, [Bind("Id,MSSV,Name,Class,PhoneNumber,Karma,IsLock,Rank,Exp,ExpLevelUp,StatusCard")] LibraryCard libraryCard, IFormFile Image)
         {
             if (id != libraryCard.Id) {
-                return NotFound();
+                TempData["error"] = "Không tìm thấy thẻ mượn";
+                return RedirectToAction(nameof(Index));
             }
 
 
@@ -144,13 +149,15 @@ namespace LibraryManagement.UI.Controllers
         public async Task<IActionResult> Delete(Guid? id)
         {
             if (id == null) {
-                return NotFound();
+                TempData["error"] = "Không tìm thấy thẻ mượn";
+                return RedirectToAction(nameof(Index));
             }
 
             var libraryCard = await _context.LibraryCards
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (libraryCard == null) {
-                return NotFound();
+                TempData["error"] = "Không tìm thấy thẻ mượn";
+                return RedirectToAction(nameof(Index));
             }
 
             return View(libraryCard);

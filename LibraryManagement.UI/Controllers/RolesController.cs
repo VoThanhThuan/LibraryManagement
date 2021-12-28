@@ -75,7 +75,8 @@ namespace LibraryManagement.UI.Controllers
         public async Task<IActionResult> Edit(Guid? id)
         {
             if (id == null) {
-                return NotFound();
+                TempData["error"] = "Không tìm thấy quyền";
+                return RedirectToAction(nameof(Index));
             }
 
             var role = await _context.Roles.FindAsync(id);
@@ -93,7 +94,8 @@ namespace LibraryManagement.UI.Controllers
         public async Task<IActionResult> Edit(Guid id, [Bind("Description,Id,Name")] Role role)
         {
             if (id != role.Id) {
-                return NotFound();
+                TempData["error"] = "Không tìm thấy quyền";
+                return RedirectToAction(nameof(Index));
             }
 
             if (ModelState.IsValid) {
@@ -108,7 +110,8 @@ namespace LibraryManagement.UI.Controllers
                     //await _context.SaveChangesAsync();
                 } catch (DbUpdateConcurrencyException) {
                     if (!RoleExists(role.Id)) {
-                        return NotFound();
+                        TempData["error"] = "Không tìm thấy quyền";
+                        return RedirectToAction(nameof(Index));
                     } else {
                         throw;
                     }
@@ -122,13 +125,15 @@ namespace LibraryManagement.UI.Controllers
         public async Task<IActionResult> Delete(Guid? id)
         {
             if (id == null) {
-                return NotFound();
+                TempData["error"] = "Không tìm thấy quyền";
+                return RedirectToAction(nameof(Index));
             }
 
             var role = await _context.Roles
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (role == null) {
-                return NotFound();
+                TempData["error"] = "Không tìm thấy quyền";
+                return RedirectToAction(nameof(Index));
             }
 
             return View(role);
