@@ -26,7 +26,6 @@
         align-items: center;
         justify-content: center;
         right: 10px;
-        top: 10px;
     }
 
     .button-hint-export {
@@ -68,11 +67,10 @@
         -webkit-transform: translateX(-50%) translateY(15px);
         transform: translateX(-50%) translateY(15px);
 
-        @*bottom:100%;left:50%;*@
     }
 
     .button-hint-export:hover::after {
-        @*-webkit-transform:translateX(-100%)translateY(0px);*@transform: translateX(-155%) translateY(15px);
+        transform: translateX(-155%) translateY(15px);
         -webkit-transition-delay: 100ms;
         transition-delay: 100ms;
         visibility: visible;
@@ -81,7 +79,7 @@
     }
 
     .export-header {
-        padding: 20px 0;
+        margin: 20px 0;
     }
 
     .btn-export {
@@ -102,6 +100,7 @@
         border-color: #10cb8a;
         color: #10cb8a;
     }
+
 
     label {
         font-size: 1.5rem;
@@ -421,7 +420,7 @@
 
     function whatTable(format, name) {
         var table = document.getElementById(isTable);
-        table.exportData(format, name);
+        table.exportData(format, `${name}-${dateStartFormat}_${dateEndFormat}`);
     }
 
     document.getElementById('csv').addEventListener('click', function () {
