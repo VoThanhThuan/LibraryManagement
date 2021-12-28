@@ -56,7 +56,7 @@
                                 <label>Mã Sách</label>
                                 <div class="control has-icon">
                                     <span asp-validation-for="Id" class="text-danger"></span>
-                                    <input type="text" class="input" asp-for="Id">
+                                    <input type="text" class="input" asp-for="Id" readonly>
                                     <div class="form-icon" data-v-aad2da70="">
                                         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--feather" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" data-icon="feather:user" data-v-aad2da70=""><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></g></svg>
                                     </div>
@@ -170,7 +170,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="column is-6">
+                        @* <div class="column is-6">
                             <div class="field">
                                 <label>Hạng Mượn</label>
                                 <span asp-validation-for="Rank" class="text-danger"></span>
@@ -181,16 +181,16 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> *@
                         <div class="column is-6">
                             <div class="field">
                                 <label>Thể Loại</label>
                                 <span asp-validation-for="idGenres" class="text-danger"></span>
                                 <div class="control has-icon">
                                     <select id="selectgenre" asp-for="idGenres" name="idGenres" multiple class="input" asp-items="ViewBag.Genre"></select>
-                                    <div class="form-icon" data-v-aad2da70="">
+                                    @* <div class="form-icon" data-v-aad2da70="">
                                         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--feather" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" data-icon="feather:mail" data-v-aad2da70=""><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><path d="M22 6l-10 7L2 6"></path></g></svg>
-                                    </div>
+                                    </div> *@
                                 </div>
                             </div>
                         </div>

@@ -40,7 +40,7 @@
                                 </div>
                                 <span>Quay Lại</span>
                             </a>
-                            <input type="submit" value="Tạo Mới" class="button v-button is-primary">
+                            <input type="submit" value="Tạo Mới" class="button v-button is-primary" id="book-check">
                         </div>
                     </div>
                 </div>
@@ -58,7 +58,7 @@
                                 <span asp-validation-for="Id" class="text-danger"></span>
                                 <div class="control has-icon">
                                    
-                                    <input type="text" class="input" asp-for="Id">
+                                    <input type="text" class="input" asp-for="Id" maxlength="8">
                                     <div class="form-icon" data-v-aad2da70="">
                                         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--feather" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" data-icon="feather:user" data-v-aad2da70=""><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></g></svg>
                                     </div>
@@ -214,5 +214,9 @@
 @section Scripts
 {
     <partial name="_vanillaSelectBox" />
+
+    <script>
+       
+    </script>
 }
 

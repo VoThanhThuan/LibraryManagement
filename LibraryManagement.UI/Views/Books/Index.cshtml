@@ -53,11 +53,11 @@
         </div>
         <div class="flex-table">
             <div class="flex-table-header">
-                <span class="is-grow-2">Ảnh bìa</span>
-                <span>Nhà xuất bản</span>
-                <span>Số lượng</span>
-                <span>Mã thư viện</span>
-                <span>Số ngày mượn</span>
+                <span class="is-grow2b">Ảnh bìa</span>
+                <span class="is-grow05">Mã Sách</span>
+                <span class="is-grow05">Số lượng</span>
+                <span class="is-grow05">Mã thư viện</span>
+                <span class="is-grow05">Số ngày được mượn</span>
                 <span class="call-end">Hành động</span>
             </div>
 
@@ -66,7 +66,7 @@
                 <div class="flex-list-inner">
                     <div>
                         <div class="flex-table-item">
-                            <div class="flex-table-cell is-media is-grow2">
+                            <div class="flex-table-cell is-media is-grow2b">
                                 <div class="is-avatar is-medium">
                                     <img class="medium" src="@item.Thumbnail" alt="">
                                 </div>
@@ -75,19 +75,22 @@
                                     <span class="item-meta">
                                         <span>Tác giả: @item.Author</span>
                                     </span>
+                                    <span class="item-meta">
+                                        <span>@item.PublishingCompany</span>
+                                    </span>
                                 </div>
                             </div>
-                            <div class="flex-table-cell">
-                                <span class="light-text">@item.PublishingCompany</span>
+                            <div class="flex-table-cell is-grow05 padding-8">
+                                <span class="light-text ">@item.Id</span>
                             </div>
 
-                            <div class="flex-table-cell">
+                            <div class="flex-table-cell is-grow05 padding-8">
                                 <span class="light-text">@item.Amount QUYỂN</span>
                             </div>
-                            <div class="flex-table-cell">
+                            <div class="flex-table-cell is-grow05 padding-8">
                                 <span class="light-text">@item.AbbreviationLibraryCode</span>
                             </div>
-                            <div class="flex-table-cell">
+                            <div class="flex-table-cell is-grow05 padding-8">
                                 <span class="light-text">@item.DateCanBorrow Ngày</span>
                             </div>
                             <div class="flex-table-cell call-end">
