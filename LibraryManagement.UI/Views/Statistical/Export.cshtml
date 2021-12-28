@@ -166,7 +166,7 @@
 <!--Sách đã mượn-->
 
 
-<smart-table id="e-table-borrowed" class="table-hover tab-export tab-active" auto-load-state auto-save-state
+<smart-table id="e-table-borrowed" class="table-hover tab-export tab-active "paging auto-load-state auto-save-state
     column-resize column-reorder auto-save-state>
     <table>
         <thead>
@@ -442,6 +442,12 @@
     document.getElementById('xml').addEventListener('click', function () {
         whatTable('xml', nameExport);
     });
+
+const table = document.querySelectorAll('smart-table');
+table.forEach(e => {
+    e.paging = true
+    console.log(e.paging );
+})
 
 </script>
 
