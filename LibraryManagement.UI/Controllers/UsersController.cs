@@ -128,7 +128,8 @@ namespace LibraryManagement.UI.Controllers {
             var result = await _user.DeleteUser(id);
             if (result == 200)
                 return RedirectToAction(nameof(Index));
-            return Conflict($"Lỗi xóa {result}");
+            TempData["error"] = "Xóa thất bại";
+            return Redirect("/Users");
         }
 
     }

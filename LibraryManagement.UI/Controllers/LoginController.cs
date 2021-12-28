@@ -57,6 +57,10 @@ namespace LibraryManagement.UI.Controllers
             if (!ModelState.IsValid) return View(request);
 
             var user = await _userManager.FindByNameAsync(request.Username);
+            if(user == null) {
+                ModelState.AddModelError("", "Tài khoản hoặc mật khẩu sai");
+                return View(request);
+            }
             var result = await _signInManager.PasswordSignInAsync(user, request.Password, request.RememberMe, false);
             if (!result.Succeeded) {
                 ModelState.AddModelError("", "Tài khoản hoặc mật khẩu sai");
