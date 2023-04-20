@@ -1,0 +1,111 @@
+﻿@model Library.Library.Entities.Requests.LoginRequest
+
+@{
+    //ViewData["Title"] = "Login";
+    //Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = null;
+}
+
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+
+    <link rel="stylesheet" href="/css/reset.css">
+    <link rel="stylesheet" href="/css/login.css">
+
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.2.0/css/all.css">
+
+</head>
+<body>
+
+    <div class="is-form">
+        <div class="hero-body">
+            <div class="form-text">
+                <h2>Sign In</h2>
+                <p>Welcome back to your account.</p>
+            </div>
+            <form action="Login" class="login-wrapper" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <div class="control has-validation">
+                    <input asp-for="Username" type="text" class="input-border">
+                    <div class="auth-label">User Name</div>
+                    <div class="auth-icon">
+                        <i class="fal fa-user-circle" data-v-624364a8></i>
+                    </div>
+                    <span asp-validation-for="Username" class="text-danger"></span>
+                </div>
+                <div class="control has-validation">
+                    <input asp-for="Password" type="password" class="input-border">
+                    <div class="auth-label">Password</div>
+                    <div class="auth-icon">
+                        <i class="fal fa-lock-alt" data-v-624364a8=""></i>
+                    </div>
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+
+                <div class="control is-flex">
+                    <input asp-for="RememberMe" class="checkbox" type="checkbox" hidden>
+                    <label class="remember-toggle">
+                        <span class="toggler">
+                            <span class="active">
+                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--feather" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" data-icon="feather:check" data-v-624364a8=""><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"></path></g></svg>
+                            </span>
+                            <span class="inactive">
+                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--feather" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" data-icon="feather:circle" data-v-624364a8=""><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle></g></svg>
+                            </span>
+                        </span>
+                    </label>
+
+                    <div class="remember-me">Remember Me</div>
+                    <a href="#">Forgot Password?</a>
+                </div>
+                <div class="button-wrap" data-v-624364a8="">
+                    <button type="submit" id="login-button" aria-hidden="false" class="button v-button" data-v-624364a8="">
+                        <span> Sign In </span>
+                    </button>
+                    <span data-v-624364a8="">
+                        Or
+                        <a href="#" class="" data-v-624364a8="">
+                            Create
+                        </a>
+                        an account.
+                    </span>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const checked = document.querySelector('.checkbox')
+        const rememberToggle = document.querySelector('.remember-toggle')
+        const toggler = document.querySelector('.toggler')
+        const active = document.querySelector('.active')
+        const inactive = document.querySelector('.inactive')
+        const remember = document.querySelector('.remember-me')
+
+        rememberToggle.addEventListener('click',
+            () => {
+                if (checked.checked != true) {
+                    checked.checked = true
+                    inactive.classList.add('is-inactive')
+                    active.classList.add('is-active')
+                    toggler.classList.add('is-br')
+                    remember.classList.add('is-remember')
+                }
+                else {
+                    checked.checked = false
+                    inactive.classList.remove('is-inactive')
+                    active.classList.remove('is-active')
+                    toggler.classList.remove('is-br')
+                    remember.classList.remove('is-remember')
+                }
+            })
+    </script>
+</body>
+</html>

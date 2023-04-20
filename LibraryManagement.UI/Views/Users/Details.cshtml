@@ -1,0 +1,184 @@
+﻿@model Library.Library.Entities.ViewModels.UserVM
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="page-title text-center">
+<span class="menu-toggle">
+    <span class="icon-box-toggle">
+        <span>
+            <i class="fal fa-horizontal-rule icon-line-top"></i>
+            <i class="fal fa-horizontal-rule icon-line-center"></i>
+            <i class="fal fa-horizontal-rule icon-line-bottom"></i>
+        </span>
+    </span>
+</span>
+<div class="title-wrap">
+    <h1 class="title">Thông Tin Chi Tiết Tài Khoản</h1>
+</div>
+</div>
+
+<div class="page-content-inner">
+
+    <!-- Form create -->
+    <form class="form-layout">
+        <div class="form-outer">
+            <div class="form-header">
+                <div class="form-header-inner">
+                    <div class="left">
+                        <h3></h3>
+                    </div>
+                    <div class="right">
+                        <div class="buttons">
+                            <a asp-action="Index" class="button v-button is-dark-outline">
+                                <div class="icon">
+                                    <i class="far fa-long-arrow-alt-left"></i>
+                                </div>
+                                <span>Quay Lại</span>
+                            </a>
+                            <a asp-action="Edit" asp-route-id="@Model.Id" class="button v-button is-primary">Đi Đến Cập Nhật</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-body">
+                <div class="form-fieldset">
+                    <div class="fieldset-heading">
+                        <h4></h4>
+                        <p></p>
+                    </div>
+                    <div class="columns is-multiline">
+                        <div class="column is-6">
+                            <div class="field">
+                                <label>Họ và Tên</label>
+                                <div class="control has-icon">
+                                    <input class="input" value="@Model.Nickname" readonly>
+                                    <div class="form-icon" data-v-aad2da70="">
+                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--feather" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" data-icon="feather:user" data-v-aad2da70=""><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></g></svg>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="column is-6">
+                            <div class="field">
+                                <label>Số Điện Thoại</label>
+                                <div class="control has-icon">
+                                    <input class="input" value="@Model.PhoneNumber" readonly>
+                                    <div class="form-icon" data-v-aad2da70="">
+                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--feather" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" data-icon="feather:smartphone" data-v-aad2da70=""><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><path d="M12 18h.01"></path></g></svg>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="column is-12">
+                            <div class="field">
+                                <label>Email</label>
+                                <div class="control has-icon">
+                                    <input class="input" value="@Model.Email" readonly>
+                                    <div class="form-icon" data-v-aad2da70="">
+                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--feather" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" data-icon="feather:mail" data-v-aad2da70=""><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><path d="M22 6l-10 7L2 6"></path></g></svg>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="column is-12">
+                            <div class="field">
+                                <label>Địa Chỉ</label>
+                                <div class="control has-icon">
+                                    <input class="input" value="@Model.Address" readonly>
+                                    <div class="form-icon" data-v-aad2da70="">
+                                        <i class="fal fa-map-marker-alt"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="column is-6">
+                            <div class="field">
+                                <label>Ngày Sinh</label>
+                                <div class="control has-icon">
+                                    <input class="input date-of-birth" value="@Model.Dob" readonly>
+                                    <div class="form-icon" data-v-aad2da70="">
+                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--feather" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" data-icon="feather:calendar" data-v-aad2da70=""><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><path d="M16 2v4"></path><path d="M8 2v4"></path><path d="M3 10h18"></path></g></svg>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="column is-6">
+                            <div class="field">
+                                <label>Giới Tính</label>
+                                <div class="control">
+                                    <div class="switch-block input">
+                                        @if (Model.sex == true)
+                                        {
+                                            <div class="text">
+                                                <span class="text-librarian">Nam</span>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <span class="text-librarian">Nữ</span>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                      
+                    </div>
+                </div>
+                <div class="form-fieldset">
+                    <div class="fieldset-heading">
+                        <h4> </h4>
+                    </div>
+                    <div class="columns is-multiline">
+                        <div class="column is-12">
+                            <div class="field">
+                                <label>Tài Khoản</label>
+                                <div class="control has-icon">
+                                    <input class="input" value="@Model.Username" readonly>
+                                    <div class="form-icon" data-v-aad2da70="">
+                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--feather" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" data-icon="feather:user" data-v-aad2da70=""><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></g></svg>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="column is-6">
+                            <div class="field">
+                                <label>Mật Khẩu</label>
+                                <div class="control has-icon">
+                                    <input class="input" value="@Model.Password" readonly>
+                                    <div class="form-icon" data-v-aad2da70="">
+                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--feather" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" data-icon="feather:lock" data-v-aad2da70=""><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></g></svg>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="column is-6">
+                            <div class="field">
+                                <label>Quyền</label>
+                                <div class="control has-icon">
+                                    <div class="switch-block input">
+                                        @*<label for="switch-block-2" class="form-switch">
+                                            <input type="checkbox" id="switch-block-2" class="is-switch" disabled>
+                                            <i></i>
+                                        </label>*@
+                                        <div class="text">
+                                            <span class="text-librarian">@Html.DisplayFor(model => model.RoleName)</span>
+                                            @*<span>&nbsp; | &nbsp;</span>
+                                            <span class="text-admin">Admin</span>*@
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </form>
+    <!--  -->
+    <!--  -->
+</div>

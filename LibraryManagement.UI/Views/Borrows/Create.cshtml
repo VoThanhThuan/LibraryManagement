@@ -1,0 +1,297 @@
+﻿@using Library.Library.Entities
+@model Borrow
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="page-content-inner">
+
+    <div class="borrow-wrapper">
+        <div class="columns">
+            <div class="column is-8">
+                <div class="columns is-multiline">
+                    <div class="column is-12">
+                        <div class="header-borrow">
+                            <div class="header-image">
+                                <img src="/public/reading-book.svg" alt="">
+                            </div>
+                            <div class="header-info">
+                                @{
+                                    var libCard = (LibraryCard)ViewBag.LibraryCard;
+                                    <h3>Hello, @libCard.Name</h3>
+                                    <p>MSSV: @libCard.MSSV</p>
+                                }
+
+
+                                <a class="button v-button is-outline" href="/librarycards">
+                                    <span class="icon">
+                                        <i class="fas fa-arrow-left"></i>
+                                    </span>
+                                    <span>Quay Lại</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="column is-12">
+                        <div class="borrow-search">
+                            <h3>Tìm Kiếm Sách</h3>
+                            <div class="field">
+                                <div>
+                                    <div class="search">
+                                        <input id="search" type="text" class="input" placeholder="Search...">
+                                        <button class="search-button">
+                                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--feather" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" data-icon="feather:search"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><path d="M21 21l-4.35-4.35"></path></g></svg>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="column is-12">
+                        <div class="list-book">
+                            <div class="flex-table">
+                                <div class="flex-table-header">
+                                    <span class="flex-grow-4">Ảnh bìa</span>
+                                    <span class="call-end">actions</span>
+                                </div>
+                                <div class="flex-list-inner" id="book-search">
+
+                                    <!--JS add element-->
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="column is-4">
+                <div class="sticky-panel fixed-child">
+                    <div class="cart-widget side-section">
+                        <div class="widget-toolbar">
+                            <div class="left">
+                                <h3 class="is-bigger">My Order</h3>
+                            </div>
+                            <div class="right">
+                                <!-- <span class="tag is-curved">0 items</span> -->
+                            </div>
+                        </div>
+                        <div class="section-placeholder">
+                            <div class="placeholder-content">
+                                <img class="dark-image" src="/public/cart-placeholder.svg" alt="">
+                                <h3 class="dark-inverted">No Items</h3>
+                                <p>Your cart is currently empty. Start adding products.</p>
+                            </div>
+                        </div>
+                        <form asp-action="Create">
+
+                            <div class="cart-items has-slimscroll hidden" id="book-choose">
+                                <!--JS render-->
+                            </div>
+
+                            <div class="card-button">
+                                <div class="total">
+                                    <span class="label">Số Lượng </span>
+                                    <span class="quantity-book-choose">0 Quyển</span>
+                                </div>
+                                <button class="button v-button btn-save" type="submit">
+                                    <span>Lưu</span>
+                                </button>
+                            </div>
+
+                            <div asp-validation-summary="ModelOnly" class="text-danger" hidden></div>
+                            <div class="form-group" hidden>
+                                <label asp-for="Note" class="control-label"></label>
+                                <input asp-for="Note" name="Note" class="form-control" />
+                                <span asp-validation-for="Note" class="text-danger"></span>
+                            </div>
+                            <div class="form-group" hidden>
+                                <label asp-for="IdUser" class="control-label"></label>
+                                <input asp-for="IdUser" name="IdUser" class="form-control" value="@ViewData["Id-User"]" />
+                                <span asp-validation-for="IdUser" class="text-danger"></span>
+                            </div>
+                            <div class="form-group" hidden>
+                                <label asp-for="UserName" class="control-label"></label>
+                                <input asp-for="UserName" name="UserName" class="form-control" value="@ViewData["Name-User"]" />
+                                <span asp-validation-for="UserName" class="text-danger"></span>
+                            </div>
+                        </form>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--  -->
+</div>
+
+@section Scripts {
+
+    <script>
+
+        const url = window.location.origin;
+        function searchbook(content) {
+            fetch(`${url}/Books/SearchApi?content=${content}`)
+                .then(function (response) {
+                    return response.json();
+                })
+                .then(function (data) {
+                    //clear html dom
+                    $('#book-search').innerHTML = '';
+                    //append data to html dom
+                    data.forEach(function (book) {
+                        let bookName = book.name.toUpperCase()
+                        $('#book-search').innerHTML += `
+
+                                                        <div class="flex-table-cell" hidden>
+                                                            <span class="light-text">${book.id}</span>
+                                                        </div>
+                                                        <div class="flex-table-item">
+                                                            <div class="flex-table-cell is-media is-grow-lg">
+                                                                <div class="is-avatar is-medium">
+                                                                    <img class="medium" src="${book.thumbnail}" alt="">
+                                                                </div>
+                                                                <div>
+                                                                    <span class="item-name">${bookName}</span>
+                                                                    <span class="item-meta text-name">
+                                                                        <span>Tác giả: ${book.author}</span>
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                            
+                                                            <div class="" hidden>
+                                                                <span class="light-text">${book.idlibrarycode}</span>
+                                                            </div>
+                                                            <div class="flex-table-cell cell-end">
+                                                                <div>
+                                                                    <button type="button" class="button-hint hint--bubble add-book" data-amount="${book.amount}"  data-exist="false" data-hint="Thêm" value="${book.id}" data-quantity="${book.amount}" data-thumnail="${book.thumbnail}" data-bookname="${book.name}" data-author="${book.author}">
+                                                                        <span class="icon">
+                                                                            <i class="far fa-plus"></i>
+                                                                        </span>
+                                                                    </button>
+                                                                 </div>
+                                                                </div>
+                                                            </div>
+
+                                                                         `;
+
+                        $$('.add-book').forEach(function (button) {
+                            button.addEventListener('click',
+                                function () {
+                                   
+                                    $('.section-placeholder').classList.add('hidden')
+                                    $('.cart-items').classList.remove('hidden')
+
+                                    if (button.dataset.exist == 'false') {
+                                        button.dataset.exist = 'true';
+                                        $('#book-choose').innerHTML += `
+                                                        <div class="cart-item" id="cart-item-${button.value}">
+
+                                                            <div class="cover-book">
+                                                                <img src="${button.dataset.thumnail}" alt="">
+                                                            </div>
+                                                            <div class="meta">
+                                                                <span class="book-name">Tên Sách : ${button.dataset.bookname}</span>
+                                                                <span style="margin-top: 2px;" id="price-${button.value}" data-p="1">Số Lượng: 1</span>
+                                                            </div>
+                                                           
+                                                           
+                                                             <button type="button" class="button-hint hint--bubble remove-item" data-hint="Xóa" onclick="removeInput('${button.value}')" id="remove-item-${button.value}">
+                                                                <span class="icon">
+                                                                    <i style="font-size: 15px;" class="fal fa-trash-alt"></i>
+                                                                </span>
+                                                            </button>
+                                                            <div class="input-value-${button.value}">
+                                                                <input class="input-${button.value} input-book" name="idBooks" value="${button.value}" hidden>
+                                                            </div>
+                                                        </div>
+                                                     `;
+                                     
+                                    }
+                                    else {
+                                        var price = $(`#price-${button.value}`)
+                                        let quantity = parseInt(button.dataset.quantity)
+                                        let amount = parseInt(price.dataset.p)
+                                        let name = button.dataset.bookname.toUpperCase();
+                                        // Thêm thẻ input
+                                        if (quantity <= amount) {
+                                            alert(`Sách ${name} đã hết!`)
+                                        }
+                                        else{
+                                            const input = document.createElement('input');
+                                            input.setAttribute('class', `input-${button.value} input-book`);
+                                            input.setAttribute('value', button.value);
+                                            input.setAttribute('name', 'idBooks')
+                                            input.setAttribute('hidden', true);
+                                            const inputValue = $(`.input-value-${button.value}`);
+                                            inputValue.appendChild(input);
+
+                                          
+                                            price.innerHTML = `Số Lượng: ${amount + 1}`;
+                                            price.dataset.p = amount + 1;
+
+                                        }
+                                    }
+
+                                    let sumBook =  $('.quantity-book-choose') 
+                                    let sum = $$('.input-book').length;
+                                    sumBook.innerHTML = sum + ' QUYỂN';
+                                });
+                        });
+
+                    });
+                })
+
+        }
+
+        function removeInput(parameter) {
+ 
+            var cart = $(`#cart-item-${parameter}`);
+            var price = $(`#price-${parameter}`);
+            var inputValues = $$(`.input-${parameter}`);
+
+            if (inputValues.length > 1) {
+                inputValues[0].remove();
+            } else {
+                inputValues[0].remove();
+                cart.remove();
+                $$(".add-book").forEach(function (button) {
+                    if (button.value == parameter) {
+                        button.dataset.exist = 'false';
+                    }
+                });
+            }
+
+            price.innerHTML = `Số Lượng: ${parseInt(price.dataset.p) - 1}`;
+            price.dataset.p = parseInt(price.dataset.p) - 1; 
+
+            let sumBook =  $('.quantity-book-choose') 
+            let sum = $$('.input-book').length;
+            sumBook.innerHTML = sum + ' QUYỂN';
+        }
+
+
+        searchbook("!all");
+        //use fetch api to get data from server https://localhost:5001/Books/SearchApi/content, delay 1s for each text append
+
+        var is_search = true;
+        let quantity = 0;
+        $('#search').addEventListener('keyup',
+            function () {
+                const content = this.value;
+                if (content.length < 1) {
+                    //clear html dom
+                    //$('#book-search').innerHTML = '';
+                    setTimeout(searchbook("!all"),
+                        1000);
+                }
+                setTimeout(searchbook(content),
+                    1000);
+
+            });
+
+    </script>
+}

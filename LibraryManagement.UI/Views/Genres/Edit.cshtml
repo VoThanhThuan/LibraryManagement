@@ -1,0 +1,89 @@
+﻿@model Library.Library.Entities.Genre
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="page-title text-center">
+    <span class="menu-toggle">
+        <span class="icon-box-toggle">
+            <span>
+                <i class="fal fa-horizontal-rule icon-line-top"></i>
+                <i class="fal fa-horizontal-rule icon-line-center"></i>
+                <i class="fal fa-horizontal-rule icon-line-bottom"></i>
+            </span>
+        </span>
+    </span>
+    <div class="title-wrap">
+        <h1 class="title">Sửa Thể Loại</h1>
+    </div>
+</div>
+
+<div class="page-content-inner">
+
+    <form asp-action="Edit" class="form-layout">
+        <div class="form-outer">
+            <div class="form-header">
+                <div class="form-header-inner">
+                    <div class="left">
+                        <h3></h3>
+                    </div>
+                    <div class="right">
+                        <div class="buttons">
+                            <a asp-action="Index" class="button v-button is-dark-outline">
+                                <div class="icon">
+                                    <i class="far fa-long-arrow-alt-left"></i>
+                                </div>
+                                <span>Quay Lại</span>
+                            </a>
+                            <input type="submit" value="Sửa" class="button v-button is-primary">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-body">
+                <div class="form-fieldset">
+                    <div class="fieldset-heading">
+                        <h4>Nhập Thông Tin Cần Sửa</h4>
+                    </div>
+                    <div class="columns is-multiline">
+                        <div class="column is-12">
+                            <div class="field">
+                                <label>Tên Thể Loại</label>
+                                <div class="control has-icon">
+                                    <input asp-for="Name" class="input">
+                                    <div class="form-icon" data-v-aad2da70="">
+                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                            xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img"
+                                            class="iconify iconify--feather" width="1em" height="1em"
+                                            preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"
+                                            data-icon="feather:user" data-v-aad2da70="">
+                                            <g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                stroke-linejoin="round">
+                                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                                <circle cx="12" cy="7" r="4"></circle>
+                                            </g>
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="column is-12">
+                            <div class="field">
+                                <label>Mô tả</label>
+                                <div class="control">
+                                    <textarea asp-for="Description" class="textarea" rows="4" autocomplete="off"
+                                        autocapitalize="off" spellcheck="true"></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </form>
+
+</div>

@@ -1,0 +1,157 @@
+﻿
+@using System.Text.Json
+@using Library.Library.Entities.ViewModels
+@model Library.Library.Entities.ViewModels.StatisticalShortVM
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+@{
+    var json = Context.Request.Cookies["User"];
+    var user = new UserVM();
+    if (!string.IsNullOrEmpty(json))
+    {
+        user = JsonSerializer.Deserialize<UserVM>(json);
+    }
+}
+<div class="page-title text-center">
+    <span class="menu-toggle">
+        <span class="icon-box-toggle">
+            <span>
+                <i class="fal fa-horizontal-rule icon-line-top"></i>
+                <i class="fal fa-horizontal-rule icon-line-center"></i>
+                <i class="fal fa-horizontal-rule icon-line-bottom"></i>
+            </span>
+        </span>
+    </span>
+    <div class="title-wrap">
+        <h1 class="title">Trang Chủ</h1>
+    </div>
+</div>
+
+    <div class="is-12">
+        <div class="dashboard-header">
+            <div class="avatar is-xl">
+                <img src="@user.Avatar" alt="">
+                
+            </div>
+            <div class="user-meta">
+                <h3>Chào! @user.Nickname.</h3>
+                <p>Rất vui được gặp lại bạn.</p>
+               
+            </div>
+            <div class="sum-books">
+                <h3>@Model.TopBooks.Count()</h3>
+                <p>Tống số đầu sách trong thư viện</p>
+                <a href="/books">Quản Lý Sách</a>
+            </div>
+            <div class="sum-books">
+                <h3>@Model.TopBooks.Select(x => x.Amount).Sum()</h3>
+                <p>Tống số lượng sách trong thư viện</p>
+                <a href="/books">Quản Lý Sách</a>
+            </div>
+            <div class="cta">
+                <div class="inverted-text">
+                    <i class="far fa-chart-bar"></i>
+                    <p> Danh Sách Thống Kê Chi Tiết</p>
+                </div>
+                <a href="/statistical">Xem Ngay</a>
+            </div>
+        </div>
+    </div>
+    <div class="company-header is-bg-6">
+        <div class="header-time">
+            <div class="item-inner">
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--feather" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" data-icon="feather:briefcase"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></g></svg>
+                <span>@Model.TotalBookBorrowed</span>
+                <p>Sách đã mượn</p>
+            </div>
+        </div>
+        <div class="header-time">
+            <div class="item-inner">
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--feather" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" data-icon="feather:shopping-cart"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></g></svg>
+                <span>@Model.TotalBookBorrowing</span>
+                <p>Sách đang được mượn</p>
+            </div>
+        </div>
+        <div class="header-time">
+            <div class="item-inner">
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--feather" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" data-icon="feather:box"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><path d="M3.27 6.96L12 12.01l8.73-5.05"></path><path d="M12 22.08V12"></path></g></svg>
+                <span>@Model.TotalBookReturn</span>
+                <p>Sách đã được trả</p>
+            </div>
+        </div>
+        <div class="header-time">
+            <div class="item-inner">
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--feather" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" data-icon="feather:bell"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></g></svg>
+                <span>
+                    @{
+                        var total = Model.TotalBookBorrowed - (Model.TotalBookBorrowing + Model.TotalBookReturn);
+                        if (total > 0)
+                        {
+                            <span>@total</span>
+                        }
+                        else
+                        {
+                            <span>0</span>
+                        }
+                                }
+                            </span>
+                <p>Sách bị mất</p>
+            </div>
+        </div>
+    </div>
+    <div class="is-12">
+        <div class="t-5-book">Top sách được mượn nhiều nhất </div>
+        <div class="data-table-wrapper">
+            <div class="data-table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 14.1964%;">Ảnh Bìa</th>
+                            <th style="width: 24.5536%;">
+                                <a href="#" class="data-sorter">Tên Sách</a>
+                            </th>
+                            <th style="width: 23.3929%;">
+                                <a href="#" class="data-sorter">Tác giả</a>
+                            </th>
+                            <th style="width: 16.6071%;">
+                                <a href="#" class="data-sorter">Số lần mượn</a>
+                            </th>
+                            <th style="width: 21.25%;">
+                                <a href="#" class="data-sorter">Nhà xuất bản</a>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for(var i = 0; i < 5 && i < Model.TopBooks.Count; i++)
+                        {
+                            <tr>
+                                <td>
+                                    <div class="thumbnail">
+                                        <img src="@Model.TopBooks[i].Thumbnail" alt="">
+                                    </div>
+                                </td>
+                                <td>
+                                    <span>@Model.TopBooks[i].Name</span>
+                                </td>
+                                <td>
+                                    <span>@Model.TopBooks[i].Author</span>
+                                </td>
+                                <td>
+                                    <span>@Model.TopBooks[i].TotalBorrow</span>
+                                </td>
+                                <td>
+                                    <span>@Model.TopBooks[i].PublishingCompany</span>
+                                </td>
+
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+

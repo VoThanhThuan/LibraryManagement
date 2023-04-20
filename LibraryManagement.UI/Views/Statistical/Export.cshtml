@@ -1,0 +1,454 @@
+﻿@using Library.Library.Entities.ViewModels
+@model StatisticalVM
+
+<style>
+    .smart-table {
+        width: 800px;
+        height: 600px;
+    }
+
+    .smart-button {
+        cursor: pointer;
+        margin-top: 15px;
+    }
+
+    .smart-button img {
+        width: 50px;
+        height: 50px;
+
+    }
+
+    .options {
+        width: 50px;
+        position: fixed;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        right: 10px;
+        top: 100px;
+    }
+
+    .button-hint-export {
+        position: relative;
+        display: inline-block;
+        cursor: pointer;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        justify-content: center;
+        text-align: center;
+        white-space: nowrap;
+        -webkit-transition: all 0.3s;
+        transition: all 0.3s;
+    }
+
+    .button-hint-export:hover {
+        border-color: #10cb8a;
+        color: #10cb8a;
+    }
+
+    .button-hint-export::after {
+        border-radius: 100px !important;
+        font-size: 1rem !important;
+        text-transform: uppercase !important;
+        line-height: 12px;
+        white-space: nowrap;
+        background: #383838;
+        color: white;
+        padding: 8px 10px;
+        font-weight: 600 !important;
+        -webkit-transition: all 0.2s ease;
+        transition: all 0.2s ease;
+        opacity: 0;
+    }
+
+    .button-hint-export[data-hint]::after {
+        content: attr(data-hint);
+        position: absolute;
+        -webkit-transform: translateX(-50%) translateY(15px);
+        transform: translateX(-50%) translateY(15px);
+
+    }
+
+    .button-hint-export:hover::after {
+        transform: translateX(-155%) translateY(15px);
+        -webkit-transition-delay: 100ms;
+        transition-delay: 100ms;
+        visibility: visible;
+        opacity: 1;
+        background: #10cb8a;
+    }
+
+    .export-header {
+        margin: 20px 0;
+    }
+
+    .btn-export {
+        margin-top: 1rem;
+        width: 60px;
+        cursor: pointer;
+        padding: 1rem;
+        border-radius: 5rem;
+        border: .1rem solid #3f3f44;
+        background: #3b3b40;
+        white-space: nowrap;
+        color: #a2a5b9;
+        border: .1rem solid;
+        margin-left: 10px;
+    }
+
+    .btn-export:hover {
+        border-color: #10cb8a;
+        color: #10cb8a;
+    }
+
+
+    label {
+        font-size: 1.5rem;
+        margin: 0 10px;
+    }
+
+    .tab-export {
+        display: none !important;
+    }
+
+    .tab-active {
+        display: block !important;
+    }
+
+    table {
+        color: black !important;
+    }
+
+    th .wrapper .label {
+        color: #000 !important;
+        text-transform: uppercase
+    }
+</style>
+<link rel="stylesheet" href="/css/smart.default.css">
+
+<div class="page-title text-center">
+    <span class="menu-toggle">
+        <span class="icon-box-toggle">
+            <span>
+                <i class="fal fa-horizontal-rule icon-line-top"></i>
+                <i class="fal fa-horizontal-rule icon-line-center"></i>
+                <i class="fal fa-horizontal-rule icon-line-bottom"></i>
+            </span>
+        </span>
+    </span>
+    <div class="title-wrap">
+        <h1 class="title">Xuất File</h1>
+    </div>
+</div>
+
+<div class="export-header">
+
+    <form action="/Statistical/export" method="get">
+        <label for="date-start">Ngày Bắt Đầu</label>
+        <input type="date" name="start" id="date-start" value="@ViewData["start"]">
+        <label for="date-end">Ngày Kết Thúc</label>
+        <input type="date" name="end" id="date-end" value="@ViewData["end"]">
+        <button class="btn-export">Lọc</button>
+    </form>
+
+    <label for="choose">Chọn Loại Thống Kê</label>
+    <select name="choose" id="type_export" style="margin-top: 10px;">
+        <option value="borrowed">Sách Đã Mượn</option>
+        <option value="borrowing">Sách Đang Mượn</option>
+        <option value="return">Sách Đã Trả</option>
+        <option value="missing">Sách Mất</option>
+        <option value="libraryCard">Thẻ Thư Viện</option>
+
+    </select>
+</div>
+
+<!--Sách đã mượn-->
+
+
+<smart-table id="e-table-borrowed" class="table-hover tab-export tab-active "paging auto-load-state auto-save-state
+    column-resize column-reorder auto-save-state>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Tên</th>
+                <th>Số lượng đã mượn</th>
+                <th>Thời gian mượn</th>
+                <th>Thời gian trả</th>
+                <th>Thời gian trả thực</th>
+                <th>Người mượn</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.BooksBorrowed)
+            {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.Name</td>
+                    <td>@item.StatisticalAmount</td>
+                    <td>@item.TimeBorrowed</td>
+                    <td>@item.TimeReturn</td>
+                    <td>@item.TimeRealReturn</td>
+                    <td>@item.LibraryCard.Name</td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+</smart-table>
+<!--End [Sách đã mượn]-->
+<!--Sách đã đang mượn-->
+
+
+<smart-table id="e-table-borrowing" class="table-hover tab-export" auto-load-state auto-save-state column-resize
+    column-reorder auto-save-state>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Tên</th>
+                <th>Số lượng đã mượn</th>
+                <th>Thời gian mượn</th>
+                <th>Thời gian trả</th>
+                <th>Người mượn</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.BooksBorrowing)
+            {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.Name</td>
+                    <td>@item.StatisticalAmount</td>
+                    <td>@item.TimeBorrowed</td>
+                    <td>@item.TimeReturn</td>
+                    <td>@item.LibraryCard.Name</td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+</smart-table>
+<!--End [Sách đang mượn]-->
+<!--Sách đã trả-->
+
+
+<smart-table id="e-table-return" class="table-hover tab-export" auto-load-state auto-save-state column-resize
+    column-reorder auto-save-state>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Tên</th>
+                <th>Số lượng đã mượn</th>
+                <th>Thời gian mượn</th>
+                <th>Thời gian trả</th>
+                <th>Thời gian trả thực</th>
+                <th>Người mượn</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.BooksReturn)
+            {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.Name</td>
+                    <td>@item.StatisticalAmount</td>
+                    <td>@item.TimeBorrowed</td>
+                    <td>@item.TimeReturn</td>
+                    <td>@item.TimeRealReturn</td>
+                    <td>@item.LibraryCard.Name</td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+</smart-table>
+<!--End [Sách đã trả]-->
+<!--Sách bị mất-->
+
+<smart-table id="e-table-missing" class="table-hover tab-export" auto-load-state auto-save-state column-resize
+    column-reorder auto-save-state>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Tên</th>
+                <th>Số lượng đã mượn</th>
+                <th>Thời gian mượn</th>
+                <th>Thời gian trả</th>
+                <th>Người mượn</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.BooksMissing)
+            {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.Name</td>
+                    <td>@item.StatisticalAmount</td>
+                    <td>@item.TimeBorrowed</td>
+                    <td>@item.TimeReturn</td>
+                    <td>@item.LibraryCard.Name</td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+</smart-table>
+<!--End [Sách bị mất]-->
+<!--Top thẻ mượn-->
+
+<smart-table id="e-table-libraryCard" class="table-hover tab-export" auto-load-state auto-save-state column-resize
+    column-reorder auto-save-state>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Tên</th>
+                <th>MSSV</th>
+                <th>Lớp</th>
+                <th>Đẳng cấp</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.TopLibraryCards)
+            {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.Name</td>
+                    <td>@item.MSSV</td>
+                    <td>@item.Class</td>
+                    <td>@item.Rank</td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+</smart-table>
+<!--End [Top thẻ mượn]-->
+
+<div class="options">
+    <div class="smart-button button-hint-export" data-hint="Xuất File CSV" id="csv">
+        <img src="/public/csv-file.svg">
+    </div>
+
+    <div class="smart-button button-hint-export" data-hint="Xuất File HTML" id="html">
+        <img src="/public/html-file.svg">
+    </div>
+
+    <div class="smart-button button-hint-export" data-hint="Xuất File JSON" id="json">
+        <img src="/public/json-file.svg">
+    </div>
+
+    <div class="smart-button button-hint-export" data-hint="Xuất File PDF" id="pdf">
+        <img src="/public/pdf-file.svg">
+    </div>
+
+    <div class="smart-button button-hint-export" data-hint="Xuất File EXCEL" id="xlsx">
+        <img src="/public/xlsx-file.svg">
+    </div>
+
+    <div class="smart-button button-hint-export" data-hint="Xuất File XML" id="xml">
+        <img src="/public/xml-file.svg">
+    </div>
+</div>
+
+
+<script src="/js/export/jszip.min.js"></script>
+<script src="/js/export/pdfmake.min.js"></script>
+<script src="/js/export/smart.table.js"></script>
+<script src="/js/export/vfs_fonts.js"></script>
+@section Scripts{
+
+<script>
+
+
+    let dateStart = document.getElementById('date-start').value;
+    let dateEnd = document.getElementById('date-end').value;
+
+    let dateStartFormat = dateStart.split('-').reverse().join('-');
+    let dateEndFormat = dateEnd.split('-').reverse().join('-');
+
+
+    var isTable = "e-table-borrowed";
+    nameExport = "Sach_Da_Muon";
+    const tabExport = $$('.tab-export')
+    function changeTabExport(tab) {
+        tabExport.forEach(element => {
+            element.classList.remove("tab-active");
+            if (element.id == tab) {
+                element.classList.add("tab-active");
+            }
+
+        });
+    }
+    $("#type_export").addEventListener("change",
+        (e) => {
+            switch (e.target.value) {
+                case "borrowed":
+                    isTable = "e-table-borrowed";
+                    nameExport = "sach-da-muon";
+                    changeTabExport(isTable);
+                    break;
+                case "borrowing":
+                    isTable = "e-table-borrowing";
+                    nameExport = "sach-dang-muon";
+                    changeTabExport(isTable);
+                    break;
+                case "return":
+                    isTable = "e-table-return";
+                    nameExport = "sach-da-tra";
+                    changeTabExport(isTable);
+                    break;
+                case "missing":
+                    isTable = "e-table-missing";
+                    nameExport = "sach-bi-mat";
+                    changeTabExport(isTable);
+                    break;
+                case "libraryCard":
+                    isTable = "e-table-libraryCard";
+                    nameExport = `Top_The_Muon`;
+                    changeTabExport(isTable);
+                    break;
+                default:
+                    isTable = "e-table-borrowed";
+                    nameExport = `Sach_Da_Muon`;
+                    changeTabExport(isTable);
+            }
+        });
+
+    function whatTable(format, name) {
+        var table = document.getElementById(isTable);
+        table.exportData(format, `${name}-${dateStartFormat}_${dateEndFormat}`);
+    }
+
+    document.getElementById('csv').addEventListener('click', function () {
+        whatTable('csv', nameExport);
+    });
+    document.getElementById('html').addEventListener('click', function () {
+        whatTable('html', nameExport);
+    });
+    document.getElementById('json').addEventListener('click', function () {
+        whatTable('json', nameExport);
+    });
+    document.getElementById('pdf').addEventListener('click', function () {
+        whatTable('pdf', nameExport);
+    });
+    document.getElementById('xlsx').addEventListener('click', function () {
+        whatTable('xlsx', nameExport);
+    });
+    document.getElementById('xml').addEventListener('click', function () {
+        whatTable('xml', nameExport);
+    });
+
+const table = document.querySelectorAll('smart-table');
+table.forEach(e => {
+    e.paging = true
+    console.log(e.paging );
+})
+
+</script>
+
+}
